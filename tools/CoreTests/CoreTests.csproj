@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Unity を使わずに OrdinalScale.Core（純C#）をビルド・テストするためのプロジェクト。
+    Unity 側と同じソース・同じ NUnit テストをそのまま参照する（コピーはしない）。
+    LangVersion は Unity 6 の C# 9 に合わせ、Unity で使えない構文が混入しないようにする。
+  -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <UnityAssets>../../OrdinalScale/Assets/_Project</UnityAssets>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(UnityAssets)/Scripts/Core/**/*.cs" />
+    <Compile Include="$(UnityAssets)/Tests/EditMode/Core/**/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+  </ItemGroup>
+
+</Project>
