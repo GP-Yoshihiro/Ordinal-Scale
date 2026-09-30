@@ -1,6 +1,6 @@
 # iPhone AR S1 実機記録票
 
-状態：**未実施**。Claudeから共有ブランチのコミットとiOSビルド手順を受け取ってから使用する。[承認済み設計](../requirements/iPhone_AR_先行検証_設計案.md)のS1（iPhone 15 Proでの起動、カメラ映像、AR追跡状態）だけを判定する。判定結果は[受入記録](iPhone_AR_受入記録.md)へ転記する。
+状態：**未実施**。Unity実装は[ドラフトPR #1](https://github.com/GP-Yoshihiro/Ordinal-Scale/pull/1)で共有済み。MacとiPhoneではまだ確認していない。[Claudeの手順書](https://github.com/GP-Yoshihiro/Ordinal-Scale/blob/claude/awesome-knuth-jx7l51/Claude/docs/iphone-ar-setup.md)のパート1〜4に沿って実施し、[承認済み設計](../requirements/iPhone_AR_先行検証_設計案.md)のS1（iPhone 15 Proでの起動、カメラ映像、AR追跡状態）を判定する。結果は[受入記録](iPhone_AR_受入記録.md)へ転記する。
 
 ## 実施情報
 
