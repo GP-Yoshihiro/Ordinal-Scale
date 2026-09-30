@@ -6,7 +6,7 @@
 
 11月18日以降のQuest実機検証に備え、iPhone 15 Proで現実の床や周囲の空間に敵の仮モデルを表示し、配置の安定性と現実背景に対する見え方を先に確かめる。11月末〜12月上旬の受入目標は引き続きQuest 3／3Sで敵1体との戦闘を完結すること。iPhone上での剣操作や戦闘完結は、この先行検証の完了条件には含めない。
 
-iPhone 15 Proを使い、MacBookからXcodeで開発版を導入して試せることはユーザー回答済み。現在のMacBookではUnity `6000.5.10f1`、同版のiOS Build Support、Xcode `26.1.1` を確認した。ただし、対象UnityプロジェクトのiOSビルドとiPhone実機起動はまだ確認していない。Unityプロジェクトの骨格はClaude作業ブランチにあり、現時点のmainにはない。実装前に同じプロジェクトを利用可能な状態にする必要がある。
+iPhone 15 Proを使い、MacBookからXcodeで開発版を導入して試せることはユーザー回答済み。MacBookではUnity `6000.5.10f1`、同版のiOS Build Support、Xcode `26.1.1` を確認した。2026年10月1日にUnityのiOSビルドとXcodeの署名なしビルドは成功したが、iPhoneへの導入・起動はまだ確認していない。UnityプロジェクトはClaude作業ブランチと、それを基にしたiPhone AR準備ブランチにあり、現時点のmainにはない。
 
 ## 採用する構成
 
