@@ -21,7 +21,7 @@
 
 ## 2. 現行の照準レイ入力との差（変更理由）
 
-現行の `IInputController` は「照準レイ＋攻撃の瞬間」で、命中を入力（クリック・トリガー）が決め、距離に関係なく遠くの敵にも当たる。確定条件のうち C1・C2・C3・C5 は表現できない。
+旧 `IInputController`（S2 で `IPointerInput` に改名済み）は「照準レイ＋攻撃の瞬間」で、命中を入力（クリック・トリガー）が決め、距離に関係なく遠くの敵にも当たる。確定条件のうち C1・C2・C3・C5 は表現できない。
 
 | 観点 | 照準レイ（現行） | 確定条件が求めるもの |
 | --- | --- | --- |
@@ -37,7 +37,7 @@
 ### 3.1 入力を2つに分ける
 
 ```
-【指す・選ぶ】 IPointerInput（現 IInputController を改名・役割を限定）
+【指す・選ぶ】 IPointerInput（旧 IInputController を S2 で改名・役割を限定。実装済み）
     Editor: マウス / iPhone: 画面タップ（S2の配置） / Quest: レイ（メニュー操作）
     → 戦闘の命中判定には使わない
 
@@ -99,7 +99,7 @@
 | 合計（旧WBS 4 の置き換え） | **約4.5〜5時間**（開発者の Editor 確認 45分〜1時間） |
 
 - 旧WBS 3（敵の表示）・旧WBS 5（HP・撃破・再開始）・iPhone の S1〜S5 は影響を受けない。
-- `IInputController` の改名（`IPointerInput`）は、S2 の配置タップを実装するときに合わせて行う（S2 で最初に使うため）。
+- `IInputController` → `IPointerInput` の改名は S2 の配置タップ実装で完了した（`ScreenPointerInput` が Editor のクリックと iPhone のタップを扱う）。
 
 ## 6. Quest 実機で必ず確認すること（iPhone・Editor では確認できない）
 

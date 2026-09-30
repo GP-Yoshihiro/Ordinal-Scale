@@ -26,3 +26,18 @@ iPhone AR 先行検証（S1〜S5）の証拠を置く場所。Unity のメニュ
 | 気づいた問題・所要時間の実績 | 未実施 |
 
 - GPT 側の受入判定は `GPT/verification/` の記録票に転記される（読み取り専用）。ここには Claude が再現・判定に使う一次資料を置く。
+
+## S2 記録表（開発者が記入。S1 合格後）
+
+| 項目 | 記入欄 |
+| --- | --- |
+| 実施日時・実施者・コミット | 未実施 |
+| Editor（5-2）：Placed / Moved / TargetNotOnPlane / TargetNotHorizontal の結果 | 未実施（`S2_editor.png`） |
+| iPhone #1 平面が出る前のタップ | 未実施（`S2_blocked_noplane.png`） |
+| iPhone #2 床への配置 | 未実施（`S2_placed.png`） |
+| iPhone #3 再配置で1体のまま移動 | 未実施（`S2_moved.png`） |
+| iPhone #4 平面の外のタップ | 未実施（`S2_blocked_offplane.png`） |
+| iPhone #5 追跡不安定時のタップ | 未実施（`S2_blocked_tracking.png`） |
+| 誤って配置された（動いた）ことがあったか | 未実施 |
+| Xcode コンソールの `[OrdinalScale][S2]` 行 | 未実施（`S2_xcode_log.txt`） |
+| 敵の大きさ・色・浮き沈みなど気づいた点 | 未実施 |

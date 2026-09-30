@@ -10,16 +10,18 @@
 
 ```
 ┌──────────────────────────────────────────────┐
-│ UI / Gameplay（MonoBehaviour）                │  敵の表示・命中反応・HPバー・再開始
+│ UI / Gameplay（MonoBehaviour）                │  敵の配置（S2）・今後：命中反応・HPバー・再開始
 │   OrdinalScale.Gameplay                       │
 └──────────┬──────────────────────┬────────────┘
            │ 使う                  │ 使う（インターフェースのみ）
 ┌──────────▼──────────┐  ┌────────▼──────────────────────────────┐
 │ Core（純C#）         │  │ Platform                               │
 │ OrdinalScale.Core    │  │  Abstractions: IARSpatialProvider,     │
-│  Combat/Health       │  │                IInputController        │
-│  Spatial/            │  │  EditorSim / ARFoundation(iPhone) /    │
-│   PlacementGate      │  │  MetaQuest(予定) / Xreal(予定)          │
+│  Combat/Health       │  │    IPointerInput, EnvironmentHit       │
+│  Spatial/            │  │  Pointer/ScreenPointerInput（共通）    │
+│   PlacementGate,     │  │  EditorSim / ARFoundation(iPhone) /    │
+│   EnemyPlacement     │  │  MetaQuest(予定) / Xreal(予定)          │
+│   Session 等         │  │                                        │
 │  （今後: 振り判定等） │  │  PlatformRig（実装の解決窓口）          │
 └──────────────────────┘  └───────────────────────────────────────┘
 
@@ -33,8 +35,9 @@
 | アセンブリ | 置き場所 | コンパイルされる条件 |
 | --- | --- | --- |
 | `OrdinalScale.Core` | `Scripts/Core` | 常に（UnityEngine 参照なし） |
-| `OrdinalScale.Platform` | `Scripts/Platform`（Abstractions / EditorSim / PlatformRig） | 常に |
+| `OrdinalScale.Platform` | `Scripts/Platform`（Abstractions / Pointer / EditorSim / PlatformRig） | 常に |
 | `OrdinalScale.Platform.ARFoundation` | `Scripts/Platform/ARFoundation` | AR Foundation 導入時のみ（`OS_HAS_ARFOUNDATION`） |
+| `OrdinalScale.Gameplay` | `Scripts/Gameplay`（Placement/ = S2 の敵配置） | 常に（Core と Platform のインターフェースだけを使う） |
 | `OrdinalScale.Editor` | `Editor/` | Editor のみ |
 
 Unity 版は `6000.5.10f1` に固定（`ProjectSettings/ProjectVersion.txt`）。
@@ -75,40 +78,58 @@ tools/CoreTests/                    Unityなしで Core をテストする .NET 
 | `Status` | 置けない理由の元データ（許可・追跡段階・水平面数） | 常に許可済み・水平面1枚 | カメラ許可の問い合わせ結果＋セッション状態＋検出平面 | 同左 | 同左 |
 | `HeadPose` | 頭部姿勢 | Main Camera | XR Origin のカメラ | CenterEyeAnchor | NRSDK のヘッド姿勢 |
 | `TryGetFloorHeight` | 床の高さ | 固定値（0m） | 最も低い上向き水平面 | MRUK の床アンカー | 平面検出 |
-| `TryRaycastEnvironment` | 現実環境へのレイ | シーンのコライダー | 検出平面の境界内へのレイキャスト | MRUK の部屋メッシュ | 平面/メッシュ |
+| `TryRaycastEnvironment` | 現実環境へのレイ。当たった位置と**面の種類**（`EnvironmentHit.Surface`）を返す | シーンのコライダー（面の種類は法線から `SurfaceClassifier` で判定） | 検出平面の境界内へのレイキャスト（面の種類は平面の向き） | MRUK の部屋メッシュ | 平面/メッシュ |
 
-`Status` は Core の `PlacementGate` に渡し、「権限 → 対応端末 → 追跡 → 平面 → 選んだ位置」の順で配置できない理由を1つに決める（iPhone 実行計画の失敗条件表に対応）。
+`Status` と面の種類は Core の `PlacementGate` に渡し、「権限 → 対応端末 → 追跡 → 平面 → 選んだ位置（平面上か・上向き水平面か）」の順で配置できない理由を1つに決める（iPhone 実行計画の失敗条件表に対応）。
+
+### S2 敵の配置の流れ
+
+```
+ScreenPointerInput（クリック／タップ）──選択レイ──▶ EnemyPlacementController（Gameplay）
+                                                   │ IARSpatialProvider.Status（タップした瞬間の状態）
+                                                   │ IARSpatialProvider.TryRaycastEnvironment → EnvironmentHit（位置・面の種類）
+                                                   ▼
+                                     EnemyPlacementSession.Attempt（Core：PlacementGate で判定）
+                                  ┌────────────────┴────────────────┐
+                            Placed / Moved                        Blocked（理由）
+                     敵の仮モデルを置く・移す                敵は置かない・動かさない
+                     （プレイヤーの方を向く）
+                                  └────────── Attempted イベント ──┘
+                                      ▼                          ▼
+                          PlacementFeedbackView（画面下部）   Debug.Log「[OrdinalScale][S2] …」（Xcode のコンソール）
+```
+
+敵の仮モデルは `EnemyPlaceholder` が実行時に組み立てる（高さ1.6mのカプセル＋正面の目印、当たり判定はカプセル1つ）。敵は Ignore Raycast レイヤーに置き、Editor で敵自身が配置先にならないようにしている。
 
 **Quest で AR Foundation を使う選択肢**：Unity OpenXR: Meta パッケージは Quest 3 向けに AR Foundation の平面・レイキャスト・アンカーを提供している。これを採ると iPhone の `ARFoundationSpatialProvider` と配置処理を Quest でも使い回せる。Meta XR SDK（MRUK）を使う案との比較は、11月18日より前に机上で行い、実機で確定する（未確認）。
 
-### `IInputController` — 攻撃入力（**戦闘には使わない。改名予定**）
+### `IPointerInput` — 指す・選ぶ入力（戦闘の命中には使わない）
+
+S2 で旧 `IInputController`（照準レイ＋攻撃の瞬間）をこの名前に改め、役割を「指す・選ぶ」に限定した。敵の配置やメニュー操作に使う。
+
+| デバイス | 指し示しレイ | 選ぶ操作 | 実装 |
+| --- | --- | --- | --- |
+| Editor | マウス位置からのカメラレイ | 左クリック | `ScreenPointerInput` |
+| iPhone | タッチ位置からのカメラレイ | タップ（指1本目の押し始め） | `ScreenPointerInput`（同じクラス） |
+| Quest（予定） | コントローラのレイ | トリガー | 実機週に追加 |
+
+ゲーム側は `TryConsumeSelect` を Update で1回ポーリングする。イベント方式にしないのは、処理順を Gameplay 側で固定し、テストや再現をしやすくするため。
 
 > 剣の命中条件は確定済み（振っている最中に体に触れた時だけ、押し当ては不命中、1振り1命中、体全体が同じ当たり判定、Editor はマウスドラッグで代替）。
-> このインターフェースでは表現できないため、戦闘の命中は新設する `ISwordPoseSource` と Core の `SwingDetector`／`SwordHitJudge` で判定する。
-> 本インターフェースは「指す・選ぶ」用の `IPointerInput` に改名し（S2 の配置タップ実装時）、メニュー操作や配置にだけ使う。
-> 詳細と条件番号 C1〜C8 は [sword-input-design.md](sword-input-design.md)。
-
-デバイスごとの入力を **「照準レイ」＋「攻撃の瞬間」** に正規化する。
-
-| デバイス | 照準レイ | 攻撃の瞬間 |
-| --- | --- | --- |
-| Editor | マウス位置からのカメラレイ | 左クリック |
-| Quest（予定） | 手のポインターポーズ / コントローラ | ピンチ / トリガー |
-| XREAL（予定） | 頭部レイ or スマホコントローラ | タップ |
-
-ゲーム側は `TryConsumeAttack` を Update で1回ポーリングする。イベント方式にしないのは、処理順を Gameplay 側で固定し、テストや再現をしやすくするため。
+> 戦闘の命中は新設する `ISwordPoseSource` と Core の `SwingDetector`／`SwordHitJudge` で判定する。詳細と条件番号 C1〜C8 は [sword-input-design.md](sword-input-design.md)。
 
 ### `PlatformRig` — 実装の切り替え
 
-デバイスごとに「リグ」（`PlatformRig_Editor` / `PlatformRig_iPhone` / `PlatformRig_Quest` / `PlatformRig_Xreal`）を作り、子に各プロバイダ実装を置く。シーンには1つだけ置き、ゲーム側は `PlatformRig.Spatial` / `PlatformRig.Input` を使う。将来はビルドターゲットに応じて Bootstrap がリグを生成する。
+デバイスごとに「リグ」（`PlatformRig_Editor` / `PlatformRig_iPhone` / `PlatformRig_Quest` / `PlatformRig_Xreal`）を作り、子に各プロバイダ実装を置く。シーンには1つだけ置き、ゲーム側は `PlatformRig.Spatial` / `PlatformRig.Pointer` を使う。将来はビルドターゲットに応じて Bootstrap がリグを生成する。
 
-## STEP 1 最小デモの流れ（旧WBS 3〜5。攻撃部分は剣の設計で置き換える予定）
+## STEP 1 最小デモの流れ（旧WBS 3〜5。攻撃は剣の設計で置き換える）
 
 ```
-EditorInputController ──AttackInput(ray)──▶ AttackController（Gameplay）
-                                              │ Physics.Raycast（敵レイヤー）
-                                              ▼
-                                        EnemyHitbox → Enemy（Health を保持）
+ISwordPoseSource ──刃の姿勢──▶ SwordHitDetector（Gameplay）
+                                   │ 前後フレームの刃を掃引（敵の当たり判定のみ）
+                                   │ SwingDetector / SwordHitJudge（Core：C1〜C5）
+                                   ▼
+                              Enemy（Health を保持）
                                               │ Health.ApplyDamage()
                               ┌───────────────┼──────────────────┐
                         Damaged イベント    Died イベント      Revived イベント
@@ -116,7 +137,7 @@ EditorInputController ──AttackInput(ray)──▶ AttackController（Gamepla
                       命中フラッシュ/HPバー  撃破演出・再開始待ち   再配置・表示復帰
 ```
 
-予定クラス（Gameplay）：`EnemySpawner`（IARSpatialProvider から配置位置を決める）、`Enemy`（Core の `Health` を保持）、`EnemyView`（命中反応・HPバー）、`AttackController`（入力→レイキャスト→ダメージ）、`BattleLoop`（撃破→再開始）。
+予定クラス（Gameplay）：`Enemy`（Core の `Health` を保持。配置は S2 の `EnemyPlacementController` を流用）、`EnemyView`（命中反応・HPバー）、`SwordHitDetector`（剣の接触→ダメージ）、`BattleLoop`（撃破→再開始）。
 
 ## SAO風UIの方針（STEP 3 で本格化、今から守ること）
 

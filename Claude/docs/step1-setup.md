@@ -55,7 +55,7 @@ Edit > Project Settings > Player > Other Settings：
    - `Floor`：3D Object > Plane、Position (0, 0, 0)
    - 空のGameObject `PlatformRig_Editor` に **PlatformRig** を追加
      - 子 `Spatial` に **EditorSpatialProvider**（Head Camera に Main Camera）
-     - 子 `Input` に **EditorInputController**（Aim Camera に Main Camera）
+     - 子 `Pointer` に **ScreenPointerInput**（Pointer Camera に Main Camera）
 4. **再生**：Play して Console にエラー（特に「〜の実装が子階層に見つかりません」）が出ないこと。
 5. 生成された `.meta`・`ProjectSettings/`・`Packages/` と、作ったシーンをコミットして push。
 

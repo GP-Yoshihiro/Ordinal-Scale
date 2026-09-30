@@ -18,7 +18,7 @@ using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 namespace OrdinalScale.EditorTools
 {
     /// <summary>
-    /// iPhone AR 先行検証（S1）用の Editor メニュー。
+    /// iPhone AR 先行検証（S1〜S4）用の Editor メニュー。
     /// 1. Player 設定の適用 → 2. 設定の検証 → 3. iOS 開発ビルド の順に使う。
     /// 検証とビルドの結果は Claude/reports/evidence/ にテキストで残し、S1 の証拠にする。
     /// </summary>
@@ -27,7 +27,7 @@ namespace OrdinalScale.EditorTools
         /// <summary>チームで固定する Unity 版。ProjectSettings/ProjectVersion.txt と合わせる。</summary>
         public const string ExpectedUnityVersion = "6000.5.10f1";
 
-        public const string ScenePath = "Assets/_Project/Scenes/iPhone_AR_S1.unity";
+        public const string ScenePath = "Assets/_Project/Scenes/iPhone_AR.unity";
         public const string DefaultBundleId = "com.gpyoshihiro.ordinalscale";
         public const string BuildPath = "Builds/iOS";
 

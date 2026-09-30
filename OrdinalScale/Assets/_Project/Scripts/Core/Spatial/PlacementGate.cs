@@ -11,6 +11,8 @@ namespace OrdinalScale.Core.Spatial
         NoPlaneDetected,
         /// <summary>選んだ位置（タップ先など）が検出済みの平面上にない。</summary>
         TargetNotOnPlane,
+        /// <summary>選んだ位置は検出済みの面だが、上向きの水平面（床・机の天板など）ではない（壁・天井など）。</summary>
+        TargetNotHorizontal,
     }
 
     /// <summary>
@@ -38,13 +40,24 @@ namespace OrdinalScale.Core.Spatial
         }
 
         /// <summary>
-        /// 特定の位置への配置を試みたときの判定。状態が配置可能でも、選んだ位置が平面上でなければ拒否する。
+        /// 特定の位置への配置を試みたときの判定。状態が配置可能でも、選んだ位置が
+        /// 検出済みの上向き水平面でなければ拒否する。状態の問題を先に返す。
         /// </summary>
-        public static PlacementBlockReason EvaluateTarget(in SpatialStatus status, bool targetIsOnPlane)
+        public static PlacementBlockReason EvaluateTarget(in SpatialStatus status, SurfaceKind targetSurface)
         {
             var reason = Evaluate(status);
             if (reason != PlacementBlockReason.None) return reason;
-            return targetIsOnPlane ? PlacementBlockReason.None : PlacementBlockReason.TargetNotOnPlane;
+
+            switch (targetSurface)
+            {
+                case SurfaceKind.HorizontalUp: return PlacementBlockReason.None;
+                case SurfaceKind.None: return PlacementBlockReason.TargetNotOnPlane;
+                default: return PlacementBlockReason.TargetNotHorizontal;
+            }
         }
+
+        /// <summary>選んだ位置が上向き水平面か否かだけが分かる場合の簡易版。</summary>
+        public static PlacementBlockReason EvaluateTarget(in SpatialStatus status, bool targetIsOnPlane)
+            => EvaluateTarget(status, targetIsOnPlane ? SurfaceKind.HorizontalUp : SurfaceKind.None);
     }
 }

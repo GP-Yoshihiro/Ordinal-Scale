@@ -6,7 +6,7 @@ SAO『オーディナル・スケール』風ARバトルゲームのプロトタ
 - AI組織と連携手順: `Claude/docs/ai-organization.md`
 - アーキテクチャ: `Claude/docs/architecture.md`
 - STEP 1 のUnity設定手順: `Claude/docs/step1-setup.md`（Windows）、`Claude/docs/iphone-ar-setup.md`（Mac＋iPhone）
-- 剣の命中判定（条件確定・未実装）: `Claude/docs/sword-input-design.md`。剣・命中に関わる実装とテストは条件 C1〜C8 に従い、照準レイ（`IInputController`）で命中を判定しない。
+- 剣の命中判定（条件確定・未実装）: `Claude/docs/sword-input-design.md`。剣・命中に関わる実装とテストは条件 C1〜C8 に従い、指す・選ぶ入力（`IPointerInput`）で命中を判定しない。
 - Unity 版は **`6000.5.10f1` に固定**（`OrdinalScale/ProjectSettings/ProjectVersion.txt`）。変更する場合は理由をPMへ報告する。
 
 ## 基本ルール
@@ -37,7 +37,7 @@ tools/CoreTests/          … Unityなしで Core 層をビルド・テストす
 | `OrdinalScale.Platform` | `Scripts/Platform` | Core, UnityEngine（SDK非依存の抽象・Editor実装） |
 | `OrdinalScale.Platform.ARFoundation` | `Scripts/Platform/ARFoundation` | Core, Platform, AR Foundation（導入時のみコンパイル） |
 | `OrdinalScale.Editor` | `Editor/` | Editor専用ツール（iOS設定の適用・検証・ビルド） |
-| `OrdinalScale.Gameplay`（予定） | `Scripts/Gameplay` | Core, Platform の**インターフェースのみ** |
+| `OrdinalScale.Gameplay` | `Scripts/Gameplay` | Core, Platform の**インターフェースのみ**（S2 の敵配置から使用開始） |
 
 - Gameplay / UI から Meta XR SDK・NRSDK の型を直接参照しない。必要なら `Platform/Abstractions` にインターフェースを足す。
 - ゲームルール（HP・ダメージ・状態遷移）は Core に書き、`tools/CoreTests` でテストする。

@@ -7,7 +7,7 @@ using UnityEngine.XR.ARFoundation;
 namespace OrdinalScale.Platform.ARFoundation
 {
     /// <summary>
-    /// iPhone 先行検証（S1）の証拠用オーバーレイ。
+    /// iPhone 先行検証（S1〜）の証拠用オーバーレイ。
     /// 端末・OS・Unity版、カメラ許可、ARセッション状態、検出平面数、配置可否とその理由、FPS、時刻を画面に出し、
     /// スクリーンショット1枚で「いつ・どの環境で・どういう状態だったか」を残せるようにする。
     /// UI 素材やシーン設定を増やさないため IMGUI で描く（検証用。製品UIには使わない）。
@@ -37,7 +37,7 @@ namespace OrdinalScale.Platform.ARFoundation
         {
             if (spatial == null) spatial = FindAnyObjectByType<ARFoundationSpatialProvider>();
             _staticInfo =
-                $"Ordinal-Scale iPhone AR S1  app {Application.version}\n" +
+                $"Ordinal-Scale iPhone AR  app {Application.version}\n" +
                 $"Unity {Application.unityVersion} | {SystemInfo.operatingSystem}\n" +
                 $"Device {SystemInfo.deviceModel}";
         }
@@ -72,27 +72,12 @@ namespace OrdinalScale.Platform.ARFoundation
                 _sb.Append("Placement: ")
                     .Append(reason == PlacementBlockReason.None ? "READY" : "BLOCKED " + reason)
                     .AppendLine();
-                if (reason != PlacementBlockReason.None) _sb.Append("  -> ").AppendLine(Hint(reason));
+                if (reason != PlacementBlockReason.None) _sb.Append("  -> ").AppendLine(PlacementMessages.Hint(reason));
             }
 
             _sb.Append("FPS: ").Append(_smoothedFps.ToString("0.0")).AppendLine();
             _sb.Append("Time: ").Append(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             return _sb.ToString();
-        }
-
-        /// <summary>利用者が次にすべきことの案内。日本語が表示できない場合に備え、英語の理由コードも併記している。</summary>
-        private static string Hint(PlacementBlockReason reason)
-        {
-            switch (reason)
-            {
-                case PlacementBlockReason.CameraPermissionDenied: return "設定アプリ > OrdinalScale > カメラ をオンにして再起動";
-                case PlacementBlockReason.TrackingUnsupported: return "この端末ではAR追跡を使えません";
-                case PlacementBlockReason.TrackingInitializing: return "AR追跡を準備中です。端末をゆっくり動かしてください";
-                case PlacementBlockReason.TrackingLimited: return "追跡が不安定です（暗い・模様が少ない・動きが速い）";
-                case PlacementBlockReason.NoPlaneDetected: return "床をゆっくり映して平面を検出させてください";
-                case PlacementBlockReason.TargetNotOnPlane: return "検出された平面の上を選んでください";
-                default: return string.Empty;
-            }
         }
 
         private void OnGUI()

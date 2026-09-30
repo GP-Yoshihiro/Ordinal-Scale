@@ -87,19 +87,35 @@ namespace OrdinalScale.Platform.ARFoundation
             return found;
         }
 
-        public bool TryRaycastEnvironment(Ray ray, float maxDistance, out Pose hitPose)
+        public bool TryRaycastEnvironment(Ray ray, float maxDistance, out EnvironmentHit hit)
         {
-            // 平面の境界内だけを対象にする。境界外（無限平面扱い）に当てると「未検出の場所」に置けてしまうため
+            // 平面の境界内だけを対象にする。境界外（無限平面扱い）に当てると「未検出の場所」に置けてしまうため。
+            // 結果は近い順に並ぶので、最も手前の面を「タップした面」とみなす
             if (raycastManager != null
                 && raycastManager.Raycast(ray, s_Hits, TrackableType.PlaneWithinPolygon)
                 && s_Hits[0].distance <= maxDistance)
             {
-                hitPose = s_Hits[0].pose;
+                var first = s_Hits[0];
+                var plane = first.trackable as ARPlane;
+                var surface = plane != null && plane.subsumedBy == null ? ToSurfaceKind(plane.alignment) : SurfaceKind.None;
+                hit = new EnvironmentHit(first.pose, surface, first.distance);
                 return true;
             }
 
-            hitPose = default;
+            hit = default;
             return false;
+        }
+
+        /// <summary>AR Foundation の平面の向きを、デバイス共通の面の種類へ写像する。</summary>
+        public static SurfaceKind ToSurfaceKind(PlaneAlignment alignment)
+        {
+            switch (alignment)
+            {
+                case PlaneAlignment.HorizontalUp: return SurfaceKind.HorizontalUp;
+                case PlaneAlignment.HorizontalDown: return SurfaceKind.HorizontalDown;
+                case PlaneAlignment.Vertical: return SurfaceKind.Vertical;
+                default: return SurfaceKind.Other;
+            }
         }
 
         /// <summary>AR Foundation のセッション状態を、デバイス共通の追跡段階へ写像する。</summary>

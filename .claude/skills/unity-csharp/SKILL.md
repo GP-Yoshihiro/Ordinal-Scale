@@ -11,12 +11,13 @@ description: Ordinal-Scale の Unity C# コードを書く・直す・レビュ�
 OrdinalScale/Assets/_Project/
   Scripts/Core/        OrdinalScale.Core        純C#。noEngineReferences=true
   Scripts/Platform/    OrdinalScale.Platform    Abstractions/ にインターフェース、デバイス別実装はサブフォルダ
-    Abstractions/        IARSpatialProvider, IInputController, AttackInput
+    Abstractions/        IARSpatialProvider, IPointerInput, EnvironmentHit
+    Pointer/             ScreenPointerInput（Editor のクリックと iPhone のタップを共通処理）
     EditorSim/           Editor 用シミュレータ実装
     ARFoundation/        AR Foundation 実装（iPhone）。asmdef を分け、versionDefines＋defineConstraints で未導入時はコンパイルしない
     MetaQuest/  (予定)   Meta XR SDK 実装。同上
     Xreal/      (予定)   NRSDK 実装。同上
-  Scripts/Gameplay/    OrdinalScale.Gameplay（予定） 敵・攻撃・HP表示などの MonoBehaviour
+  Scripts/Gameplay/    OrdinalScale.Gameplay    敵の配置（Placement/）、今後：命中・HP表示などの MonoBehaviour
   Scripts/UI/          SAO風HUD
   Scripts/Bootstrap/   シーン起動処理
   Editor/              Editor 専用ツール（OrdinalScale.Editor。名前空間は OrdinalScale.EditorTools：UnityEditor.Editor と衝突させない）
@@ -29,8 +30,8 @@ OrdinalScale/Assets/_Project/
 
 ## 抽象化の原則
 
-- Gameplay は `PlatformRig` から `IARSpatialProvider` / `IInputController` を受け取り、具体クラスを知らない。
-- デバイス差は「照準レイ＋攻撃の瞬間」「頭部姿勢」「床・環境へのレイキャスト」に正規化する。新しい能力（手の位置、平面検出など）が必要ならインターフェースを増やし、Editor 実装も同時に用意する（Editor で再現できない機能を作らない）。
+- Gameplay は `PlatformRig` から `IARSpatialProvider` / `IPointerInput` を受け取り、具体クラスを知らない。
+- デバイス差は「指し示しレイ＋選ぶ瞬間」「頭部姿勢」「床・環境へのレイキャスト（面の種類つき）」に正規化する。新しい能力（手の位置、平面検出など）が必要ならインターフェースを増やし、Editor 実装も同時に用意する（Editor で再現できない機能を作らない）。
 - ゲームルール（HP・ダメージ・クールダウン・状態遷移）は Core の純C#クラスに置き、MonoBehaviour はそれを保持してイベントで見た目を更新するだけにする。
 - 剣の命中は `Claude/docs/sword-input-design.md` の確定条件 C1〜C8（振り中の接触開始のみ・押し当ては不命中・1振り1命中・体全体が同じ当たり判定・速度値は設定アセットで調整）に従う。判定ロジックは Core に置き、同書の「実装時に必ず書くテスト」をすべて用意する。照準レイで命中を判定しない。
 

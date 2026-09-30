@@ -69,5 +69,24 @@ namespace OrdinalScale.Core.Tests
             var status = Status(CameraPermission.Granted, TrackingPhase.Limited, 1);
             Assert.That(PlacementGate.EvaluateTarget(status, targetIsOnPlane: true), Is.EqualTo(PlacementBlockReason.TrackingLimited));
         }
+
+        [TestCase(SurfaceKind.HorizontalUp, PlacementBlockReason.None)]
+        [TestCase(SurfaceKind.None, PlacementBlockReason.TargetNotOnPlane)]
+        [TestCase(SurfaceKind.Vertical, PlacementBlockReason.TargetNotHorizontal)]
+        [TestCase(SurfaceKind.HorizontalDown, PlacementBlockReason.TargetNotHorizontal)]
+        [TestCase(SurfaceKind.Other, PlacementBlockReason.TargetNotHorizontal)]
+        public void OnlyUpwardHorizontalSurfaceAcceptsPlacement(SurfaceKind surface, PlacementBlockReason expected)
+        {
+            var status = Status(CameraPermission.Granted, TrackingPhase.Tracking, 2);
+            Assert.That(PlacementGate.EvaluateTarget(status, surface), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void SurfaceCheckComesAfterStateChecks()
+        {
+            // 壁をタップしても、まだ平面が1枚も無ければ「平面未検出」を先に伝える
+            var status = Status(CameraPermission.Granted, TrackingPhase.Tracking, 0);
+            Assert.That(PlacementGate.EvaluateTarget(status, SurfaceKind.Vertical), Is.EqualTo(PlacementBlockReason.NoPlaneDetected));
+        }
     }
 }

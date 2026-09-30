@@ -1,6 +1,6 @@
-# iPhone AR 先行検証：MacBook＋iPhone 作業手順（順序1・2／S1）
+# iPhone AR 先行検証：MacBook＋iPhone 作業手順（順序1〜3／S1・S2）
 
-対象：開発者がMacBook（M2 / 8GB）とiPhone 15 Proで行う作業。GPTの[実行計画](../../GPT/plans/2026-09-29_iPhone_AR先行検証.md)の**順序1（共通プロジェクトのEditor確認）**と**順序2（iOSビルドと実機での初回起動＝S1）**をカバーする。
+対象：開発者がMacBook（M2 / 8GB）とiPhone 15 Proで行う作業。GPTの[実行計画](../../GPT/plans/2026-09-29_iPhone_AR先行検証.md)の**順序1（共通プロジェクトのEditor確認）**、**順序2（iOSビルドと実機での初回起動＝S1）**、**順序3（床への敵の配置＝S2）**をカバーする。**S2（パート5）は S1 に合格してから行う。**
 
 - 今週は **Mac 1台で完結** させる。Unity `6000.5.10f1`・iOS Build Support・Xcode `26.1.1` がすでにMacに入っているため、Windows機への同じ版の導入は来週以降でよい。
 - クラウド側のClaudeはUnityもiPhoneも動かせない。以下の「確認」はすべて**開発者が実行して初めて確認済み**になる。
@@ -12,6 +12,7 @@
 | 2 | iOS設定・AR用シーン作成・設定検証・iOSビルド | 60〜90分 |
 | 3 | Xcodeで署名・iPhoneへ導入・初回起動・S1の証拠取得 | 45〜75分 |
 | 4 | 証拠のコミット | 10分 |
+| 5 | S2：Editor でクリック配置を確認 → iPhone でタップ配置・抑止の確認 | 60〜100分（S1 合格後） |
 
 初回ビルドとXcodeでの「実機の準備」に時間がかかるため、パート2〜3は**連続した2〜3時間**を確保するとよい。
 
@@ -59,7 +60,7 @@ git clone -b claude/awesome-knuth-jx7l51 https://github.com/GP-Yoshihiro/Ordinal
 ### 1-5. Editor での確認（順序1の完了条件）
 
 1. **コンパイル**：Console（Window > General > Console）に赤いエラーが0件。
-2. **テスト**：Window > General > Test Runner > **EditMode** > Run All → **17件すべて緑**（HealthTests 7件＋PlacementGateTests 10件）。
+2. **テスト**：Window > General > Test Runner > **EditMode** > Run All → **48件すべて緑**（Health・PlacementGate・SurfaceClassifier・EnemyPlacementSession・PlacementMessages・PlacementMath）。
 3. **Editor用シーン**：[step1-setup.md の A-5 手順3](step1-setup.md) の `Step1_EditorDemo` シーンを作って Play → Console に赤いエラーが出ない。
 4. Console・Test Runner の画面をスクリーンショットで保存（`⌘+Shift+4`）。
 
@@ -80,7 +81,7 @@ Edit > Project Settings > **XR Plug-in Management** → **iOSタブ（iPhoneの�
 
 ### 2-3. AR 用シーンを作る（約10分）
 
-1. File > New Scene → **Basic (URP)**（一覧に無ければ Basic / Empty でもよい。Empty の場合は GameObject > Light > Directional Light を足す）→ `Assets/_Project/Scenes/iPhone_AR_S1.unity` として保存。
+1. File > New Scene → **Basic (URP)**（一覧に無ければ Basic / Empty でもよい。Empty の場合は GameObject > Light > Directional Light を足す）→ `Assets/_Project/Scenes/iPhone_AR.unity` として保存（S1〜S4 で同じシーンを使う）。
 2. Hierarchy にある **Main Camera を削除**する（次の XR Origin が専用のカメラを持つため）。Directional Light は残す。
 3. Hierarchy で右クリック → **XR > AR Session**。
 4. Hierarchy で右クリック → **XR > XR Origin (Mobile AR)**。
@@ -192,6 +193,71 @@ push 後に Claude に「S1 の証拠を push した」と伝える。Claude が
 
 ---
 
+## パート5：S2 敵の仮モデルを床に置く（順序3。**S1 合格後**）
+
+S2 の完了条件（GPT 設計案）：検出した水平面を選ぶと敵の仮モデル1体が置かれ、未検出時には誤って配置されない。
+クラウドの Claude は Unity・iPhone を動かせないため、以下はすべて**未検証**の手順。詰まったら Console / Xcode のログ全文を Claude に渡す。
+
+### 5-1. 最新のコードを取り込む
+
+```bash
+cd ~/dev/Ordinal-Scale && git pull origin claude/awesome-knuth-jx7l51
+```
+
+Unity に戻ると再コンパイルが走る。Console に赤いエラーが無いこと、Test Runner（EditMode）が **48件すべて緑** であることを確認する。
+
+### 5-2. Editor で先に確かめる（約20分）
+
+`Step1_EditorDemo` シーンで、実機なしに配置の判定を確認する。
+
+1. `PlatformRig_Editor` の子 `Pointer` に **Screen Pointer Input** があることを確認（無ければ追加し、Pointer Camera に Main Camera を設定）。
+2. 空の GameObject `EnemyPlacement` を作り、**Enemy Placement Controller** と **Placement Feedback View** を追加（Rig・Controller 欄が空ならドラッグ）。
+3. 検証用の壁：3D Object > Cube を作り、Position (0, 1, 4)・Scale (4, 2, 0.2) にする。
+4. Play して次を確かめる（画面下部に結果、Console に `[OrdinalScale][S2]` の行が出る）。
+
+| 操作 | 期待する結果 |
+| --- | --- |
+| 床（Plane）をクリック | `Placed`。オレンジのカプセルが立ち、水色の目印がカメラの方を向く |
+| 床の別の場所をクリック | `Moved`。敵は1体のまま移動する |
+| 空（何もない所）をクリック | `Blocked TargetNotOnPlane`。敵は動かない |
+| 壁（Cube の側面）をクリック | `Blocked TargetNotHorizontal`。敵は動かない |
+| 敵のカプセルをクリック | 敵の後ろの床に当たれば `Moved`、何も無ければ `TargetNotOnPlane`（敵自身には置かれない） |
+
+5. Game ビューのスクリーンショットを `Claude/reports/evidence/S2_editor.png` として保存。
+
+### 5-3. iPhone 用シーンに部品を足す（約10分）
+
+`iPhone_AR` シーンを開き、次を足して保存する。
+
+1. `PlatformRig_iPhone` の子に空の GameObject `Pointer` を作り、**Screen Pointer Input** を追加。Pointer Camera に `XR Origin > Camera Offset > Main Camera` をドラッグ。
+2. 空の GameObject `EnemyPlacement` を作り、**Enemy Placement Controller** と **Placement Feedback View** を追加。
+3. `XR Origin` の **AR Plane Manager** の Detection Mode が **Horizontal** のままであること（壁は検出しない）。
+
+その後、パート2-4（設定の適用・検証）→ 2-5（iOS ビルド）→ パート3-2（Xcode で ▶）をもう一度行う。
+
+### 5-4. iPhone での確認（約30〜45分）
+
+周囲に人や障害物が無い、安全な場所で行う。各項目でスクリーンショットを1枚撮り、全体を1本の画面収録にしてもよい。
+Xcode 下部のコンソールに `[OrdinalScale][S2]` で始まる行が出るので、最後にまとめてコピーして保存する（`S2_xcode_log.txt`）。
+
+| # | 操作 | 期待する結果（画面下部の表示） | 証拠の名前 |
+| --- | --- | --- | --- |
+| 1 | 起動直後、平面が出る前に画面をタップ | `Blocked NoPlaneDetected` または `TrackingInitializing`。敵は出ない | `S2_blocked_noplane.png` |
+| 2 | 床をゆっくり映し、表示された平面の上をタップ | `Placed`。敵が床に立ち、こちらを向く | `S2_placed.png` |
+| 3 | 別の床の位置をタップ | `Moved`。敵は1体のまま | `S2_moved.png` |
+| 4 | 平面が表示されていない所（遠くの壁・空中・平面の外側）をタップ | `Blocked TargetNotOnPlane`。敵は元の位置のまま | `S2_blocked_offplane.png` |
+| 5 | カメラを指で覆った直後にタップ | `Blocked TrackingLimited` など追跡の理由。敵は動かない | `S2_blocked_tracking.png` |
+| 6 | （任意）机の天板など床以外の水平面をタップ | `Placed`/`Moved`（上向きの水平面なら置ける仕様） | `S2_table.png` |
+
+判定の目安：#2・#3 で敵が1体だけ置かれ、#1・#4・#5 で**一度も誤って置かれない（動かない）**こと。
+敵の大きさ・色・床からの浮き沈み・ずれが気になった場合は、気づいた内容を記録する（S3・S4 で扱う）。
+
+### 5-5. 記録してコミット
+
+[evidence/README.md](../reports/evidence/README.md) の **S2 記録表** に結果を書き、パート4と同じ手順でコミット・push する。
+
+---
+
 ## 詰まったとき
 
 | 症状 | 原因の候補と対処 |
@@ -202,4 +268,6 @@ push 後に Claude に「S1 の証拠を push した」と伝える。Claude が
 | ビルドで camera usage description のエラー | メニュー「1. Player設定を適用」を再実行 |
 | Xcode の署名エラー | Team 未選択／Bundle ID 重複（3-2 の手順3） |
 | Xcode のビルドがメモリ不足で極端に遅い | Unity を終了し、Xcode 以外を閉じてから再ビルド |
+| タップしても何も表示されない（S2） | `Pointer` の Screen Pointer Input が無い、または Pointer Camera が空。`EnemyPlacement` に Enemy Placement Controller と Placement Feedback View があるか確認 |
+| 敵が表示されず Console に Shader / Material のエラー（S2） | 仮モデルの色付けが URP で失敗している可能性。エラー全文を Claude に渡す |
 | Unity 6000.5.10f1 と Xcode 26.1.1 の組み合わせでビルドできない | 未確認の組み合わせ。エラー全文を Claude に渡す（版の変更はClaudeが判断してPMに報告する） |

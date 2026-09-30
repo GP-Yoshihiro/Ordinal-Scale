@@ -11,7 +11,8 @@ namespace OrdinalScale.Platform.EditorSim
     {
         [SerializeField] private Camera headCamera;
         [SerializeField] private float floorY = 0f;
-        [SerializeField] private LayerMask environmentLayers = ~0;
+        [Tooltip("現実環境の代わりとして扱うレイヤー。既定は Ignore Raycast 以外。敵の仮モデルは Ignore Raycast に置き、配置先にならないようにしている。")]
+        [SerializeField] private LayerMask environmentLayers = Physics.DefaultRaycastLayers;
 
         public bool IsReady => headCamera != null;
 
@@ -41,7 +42,7 @@ namespace OrdinalScale.Platform.EditorSim
             return true;
         }
 
-        public bool TryRaycastEnvironment(Ray ray, float maxDistance, out Pose hitPose)
+        public bool TryRaycastEnvironment(Ray ray, float maxDistance, out EnvironmentHit environmentHit)
         {
             if (Physics.Raycast(ray, out var hit, maxDistance, environmentLayers, QueryTriggerInteraction.Ignore))
             {
@@ -50,11 +51,13 @@ namespace OrdinalScale.Platform.EditorSim
                 if (forward.sqrMagnitude < 1e-6f) forward = Vector3.Cross(hit.normal, Vector3.right);
                 if (forward.sqrMagnitude < 1e-6f) forward = Vector3.Cross(hit.normal, Vector3.forward);
 
-                hitPose = new Pose(hit.point, Quaternion.LookRotation(forward.normalized, hit.normal));
+                var pose = new Pose(hit.point, Quaternion.LookRotation(forward.normalized, hit.normal));
+                // Editor では面の向きを法線から判定する（AR SDK では検出平面の向きをそのまま使う）
+                environmentHit = new EnvironmentHit(pose, SurfaceClassifier.Classify(hit.normal.y), hit.distance);
                 return true;
             }
 
-            hitPose = default;
+            environmentHit = default;
             return false;
         }
     }
