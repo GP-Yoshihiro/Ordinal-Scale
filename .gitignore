@@ -1,1 +1,6 @@
 .DS_Store
+
+# .NET (tools/CoreTests)
+bin/
+obj/
+TestResults/
