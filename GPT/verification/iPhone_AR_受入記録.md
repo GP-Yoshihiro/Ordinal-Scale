@@ -2,7 +2,7 @@
 
 対象：[設計案](../requirements/iPhone_AR_先行検証_設計案.md)のS1〜S5。検証機はiPhone 15 Pro。**現在は全項目未確認**。実際の端末操作とClaudeの証拠を確認してから状態を更新する。
 
-S1の実施情報と操作結果は[実機記録票](iPhone_AR_S1_実機記録票.md)に残す。
+S1の実施情報と操作結果は[S1実機記録票](iPhone_AR_S1_実機記録票.md)、S2は[S2実機記録票](iPhone_AR_S2_実機記録票.md)に残す。
 
 | ID | 確認内容 | 状態 | 証拠・実施日 | 問題／Questで再確認する点 |
 | --- | --- | --- | --- | --- |
@@ -16,7 +16,7 @@ S1の実施情報と操作結果は[実機記録票](iPhone_AR_S1_実機記録�
 
 Claudeの実装報告やEditorの成功だけでS1〜S4を完了にしない。iPhoneで得られた結果もQuestの戦闘・剣入力・パススルーの受入とは別に判定する。
 
-## 検証準備の状況（2026-09-29）
+## 検証準備の状況
 
 Claudeの作業画面では、iPhone用AR経路と追跡状態表示、iOS設定ツールの作成が進んでいる。配置可否の純C#テスト17件と、APIスタブを使った自作Unity側コードの入力設定2通りのコンパイルは成功との報告を確認した。これはUnity Editorでの実コンパイルやiOSビルドの証拠ではない。GitHubのClaude作業ブランチにも今回の変更はまだ反映されていないため、再現可能な成果物としては未受領。S1〜S5の受入状態は上表のとおり未実施のままとする。
 
@@ -27,3 +27,5 @@ Claudeアプリは9月29日に週次利用上限で応答を終了した。表�
 同日、Claude作業ブランチ`b0c75fa`で[着手報告](https://github.com/GP-Yoshihiro/Ordinal-Scale/blob/b0c75fa/Claude/reports/2026-09-30_iPhone_AR%E5%85%88%E8%A1%8C%E6%A4%9C%E8%A8%BC_%E7%9D%80%E6%89%8B%E5%A0%B1%E5%91%8A.md)と[実機手順書](https://github.com/GP-Yoshihiro/Ordinal-Scale/blob/b0c75fa/Claude/docs/iphone-ar-setup.md)を受領した。Claudeの報告は純C#テスト17件成功、Unity APIスタブでの限定的なコンパイル成功、Mac上のUnity Editor・Test Runner・iOSビルド・iPhone起動はすべて未実施。GPTは共有コミットと差分の空白チェックを確認したが、Unity上の動作は検証していない。パッケージ版もMacでの導入後に確定する。S1〜S5の状態は未実施のままとする。
 
 [ドラフトPR #1](https://github.com/GP-Yoshihiro/Ordinal-Scale/pull/1)に作業ブランチ`bed7609`までの成果を共有した。PRに自動チェックの報告はない。実機で確認した結果を[実機記録票](iPhone_AR_S1_実機記録票.md)へ記入するまではS1を合格にしない。
+
+9月30日、Claude作業ブランチ`db509d8`で[S2実装報告](https://github.com/GP-Yoshihiro/Ordinal-Scale/blob/db509d8/Claude/reports/2026-09-30_iPhone_AR_S2%E5%AE%9F%E8%A3%85%E5%A0%B1%E5%91%8A.md)を受領した。検出した上向き水平面への敵1体の配置、未検出・平面外・追跡不可時の抑止と理由表示がコードに追加され、ドラフトPR #1に反映された。純C#テスト48件成功とUnity APIスタブでのコンパイル成功はClaudeの報告であり、GPTはUnity本体で検証していない。S1の端末合格後、[S2実機記録票](iPhone_AR_S2_実機記録票.md)とClaude手順書のパート5で確認するまでS2は未実施とする。現段階では上向きの水平面なら机の天板にも配置できるため、床だけに限定する必要があるかはS2の観察結果を見て判断する。
