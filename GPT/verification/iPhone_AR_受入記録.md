@@ -25,3 +25,5 @@ Claudeアプリは9月29日に週次利用上限で応答を終了した。表�
 9月30日にClaudeの同セッションが再開し、手順書と剣入力の設計メモの作成が画面上で確認できた。再開直後は報告書が作成途中で、GitHub上の作業ブランチも更新されていなかった。
 
 同日、Claude作業ブランチ`b0c75fa`で[着手報告](https://github.com/GP-Yoshihiro/Ordinal-Scale/blob/b0c75fa/Claude/reports/2026-09-30_iPhone_AR%E5%85%88%E8%A1%8C%E6%A4%9C%E8%A8%BC_%E7%9D%80%E6%89%8B%E5%A0%B1%E5%91%8A.md)と[実機手順書](https://github.com/GP-Yoshihiro/Ordinal-Scale/blob/b0c75fa/Claude/docs/iphone-ar-setup.md)を受領した。Claudeの報告は純C#テスト17件成功、Unity APIスタブでの限定的なコンパイル成功、Mac上のUnity Editor・Test Runner・iOSビルド・iPhone起動はすべて未実施。GPTは共有コミットと差分の空白チェックを確認したが、Unity上の動作は検証していない。パッケージ版もMacでの導入後に確定する。S1〜S5の状態は未実施のままとする。
+
+[ドラフトPR #1](https://github.com/GP-Yoshihiro/Ordinal-Scale/pull/1)に作業ブランチ`bed7609`までの成果を共有した。PRに自動チェックの報告はない。実機で確認した結果を[実機記録票](iPhone_AR_S1_実機記録票.md)へ記入するまではS1を合格にしない。
