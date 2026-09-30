@@ -5,7 +5,9 @@ SAO『オーディナル・スケール』風ARバトルゲームのプロトタ
 - 役割の原本: `Claude/gemini-code-1790556139517.md`（必ずこれを前提にする）
 - AI組織と連携手順: `Claude/docs/ai-organization.md`
 - アーキテクチャ: `Claude/docs/architecture.md`
-- STEP 1 のUnity設定手順: `Claude/docs/step1-setup.md`
+- STEP 1 のUnity設定手順: `Claude/docs/step1-setup.md`（Windows）、`Claude/docs/iphone-ar-setup.md`（Mac＋iPhone）
+- 剣の入力設計（検討中）: `Claude/docs/sword-input-design.md`
+- Unity 版は **`6000.5.10f1` に固定**（`OrdinalScale/ProjectSettings/ProjectVersion.txt`）。変更する場合は理由をPMへ報告する。
 
 ## 基本ルール
 
@@ -21,7 +23,7 @@ CLAUDE.md                 … このファイル
 .claude/agents/           … サブエージェント（code-generator / asset-manager / qa-tester）
 .claude/skills/           … 作業手順スキル（ordinal-techlead / unity-csharp）
 .claude/hooks/            … クラウドセッション起動時に .NET SDK を用意
-Claude/                   … Claude側の役割定義・設計書・PM向け報告
+Claude/                   … Claude側の役割定義・設計書・PM向け報告（reports/evidence/ に実機・Editorの証拠）
 GPT/                      … PM（GPT）の領域（書き換え禁止）
 OrdinalScale/             … Unityプロジェクト
 tools/CoreTests/          … Unityなしで Core 層をビルド・テストする .NET プロジェクト
@@ -32,7 +34,9 @@ tools/CoreTests/          … Unityなしで Core 層をビルド・テストす
 | アセンブリ | 置き場所 | 依存してよいもの |
 | --- | --- | --- |
 | `OrdinalScale.Core` | `Scripts/Core` | なし（**UnityEngine禁止**、純C#） |
-| `OrdinalScale.Platform` | `Scripts/Platform` | Core, UnityEngine, 各XR SDK |
+| `OrdinalScale.Platform` | `Scripts/Platform` | Core, UnityEngine（SDK非依存の抽象・Editor実装） |
+| `OrdinalScale.Platform.ARFoundation` | `Scripts/Platform/ARFoundation` | Core, Platform, AR Foundation（導入時のみコンパイル） |
+| `OrdinalScale.Editor` | `Editor/` | Editor専用ツール（iOS設定の適用・検証・ビルド） |
 | `OrdinalScale.Gameplay`（予定） | `Scripts/Gameplay` | Core, Platform の**インターフェースのみ** |
 
 - Gameplay / UI から Meta XR SDK・NRSDK の型を直接参照しない。必要なら `Platform/Abstractions` にインターフェースを足す。

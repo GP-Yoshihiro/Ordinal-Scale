@@ -19,7 +19,8 @@ namespace OrdinalScale.Platform
             Input = GetComponentInChildren<IInputController>(true);
 
             if (Spatial == null) Debug.LogError($"[{nameof(PlatformRig)}] {nameof(IARSpatialProvider)} の実装が子階層に見つかりません。", this);
-            if (Input == null) Debug.LogError($"[{nameof(PlatformRig)}] {nameof(IInputController)} の実装が子階層に見つかりません。", this);
+            // iPhone先行検証のように攻撃入力を使わない構成もあるため、入力の欠落は警告に留める
+            if (Input == null) Debug.LogWarning($"[{nameof(PlatformRig)}] {nameof(IInputController)} の実装が子階層にありません（攻撃入力なしで動作）。", this);
         }
     }
 }

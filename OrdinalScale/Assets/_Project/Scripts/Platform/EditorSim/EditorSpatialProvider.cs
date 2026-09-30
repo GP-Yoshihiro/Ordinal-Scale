@@ -1,3 +1,4 @@
+using OrdinalScale.Core.Spatial;
 using UnityEngine;
 
 namespace OrdinalScale.Platform.EditorSim
@@ -13,6 +14,12 @@ namespace OrdinalScale.Platform.EditorSim
         [SerializeField] private LayerMask environmentLayers = ~0;
 
         public bool IsReady => headCamera != null;
+
+        // Editor ではカメラ許可は不要で、シーン上の仮の床を「検出済みの水平面1枚」とみなす
+        public SpatialStatus Status => new SpatialStatus(
+            CameraPermission.Granted,
+            IsReady ? TrackingPhase.Tracking : TrackingPhase.Initializing,
+            horizontalPlaneCount: 1);
 
         public Pose HeadPose => headCamera != null
             ? new Pose(headCamera.transform.position, headCamera.transform.rotation)

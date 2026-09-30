@@ -2,7 +2,7 @@
 
 ## 設計の狙い
 
-1. **同じゲームロジックを Editor / Quest / XREAL で動かす。** デバイス固有のSDKは Platform 層に閉じ込め、ゲーム側はインターフェースだけを見る。
+1. **同じゲームロジックを Editor / iPhone / Quest / XREAL で動かす。** デバイス固有のSDKは Platform 層に閉じ込め、ゲーム側はインターフェースだけを見る。
 2. **実機がない週でも前に進める。** すべての抽象に Editor 用の実装を用意し、マウス＋キーボードで同じ流れを再現できるようにする。
 3. **ゲームルールはUnityなしでテストする。** HP・ダメージ・状態遷移は純C#の Core 層に置き、`dotnet test` と Unity Test Runner の両方で同じテストを回す。
 
@@ -18,12 +18,26 @@
 │ Core（純C#）         │  │ Platform                               │
 │ OrdinalScale.Core    │  │  Abstractions: IARSpatialProvider,     │
 │  Combat/Health       │  │                IInputController        │
-│  （今後: 敵の状態遷移、│  │  EditorSim / MetaQuest(予定) / Xreal(予定) │
-│   ダメージ計算など）  │  │  PlatformRig（実装の解決窓口）          │
+│  Spatial/            │  │  EditorSim / ARFoundation(iPhone) /    │
+│   PlacementGate      │  │  MetaQuest(予定) / Xreal(予定)          │
+│  （今後: 振り判定等） │  │  PlatformRig（実装の解決窓口）          │
 └──────────────────────┘  └───────────────────────────────────────┘
+
+┌──────────────────────────────────────────────┐
+│ Editor ツール（OrdinalScale.Editor）          │  iOS 設定の適用・検証・ビルド（Editor専用）
+└──────────────────────────────────────────────┘
 ```
 
 依存の向きは上から下のみ。Core は何にも依存しない。
+
+| アセンブリ | 置き場所 | コンパイルされる条件 |
+| --- | --- | --- |
+| `OrdinalScale.Core` | `Scripts/Core` | 常に（UnityEngine 参照なし） |
+| `OrdinalScale.Platform` | `Scripts/Platform`（Abstractions / EditorSim / PlatformRig） | 常に |
+| `OrdinalScale.Platform.ARFoundation` | `Scripts/Platform/ARFoundation` | AR Foundation 導入時のみ（`OS_HAS_ARFOUNDATION`） |
+| `OrdinalScale.Editor` | `Editor/` | Editor のみ |
+
+Unity 版は `6000.5.10f1` に固定（`ProjectSettings/ProjectVersion.txt`）。
 
 ## フォルダ構成
 
@@ -36,11 +50,13 @@ OrdinalScale/                       Unityプロジェクトのルート
         Platform/
           Abstractions/             デバイス抽象インターフェース
           EditorSim/                Editor用シミュレータ実装
+          ARFoundation/             AR Foundation 実装（iPhone。Quest で使えるかは要検証）
           MetaQuest/                （Quest実機週に追加）
           Xreal/                    （STEP 2で追加）
         Gameplay/                   敵・攻撃・ゲーム進行
         UI/                         SAO風HUD
         Bootstrap/                  シーン起動・デバイス別リグの生成
+      Editor/                       iOS設定の適用・検証・ビルドのメニュー
       Tests/EditMode/Core/          Core のNUnitテスト
       Scenes/  Prefabs/  Materials/  Shaders/  Art/
       Settings/                     URPアセット等
@@ -53,14 +69,22 @@ tools/CoreTests/                    Unityなしで Core をテストする .NET 
 
 ### `IARSpatialProvider` — 空間認識
 
-| メンバー | 役割 | Editor | Quest（予定） | XREAL（予定） |
-| --- | --- | --- | --- | --- |
-| `IsReady` | 配置してよいか | カメラがあれば true | MRUK のシーン読込完了 | NRSDK トラッキング開始 |
-| `HeadPose` | 頭部姿勢 | Main Camera | CenterEyeAnchor | NRSDK のヘッド姿勢 |
-| `TryGetFloorHeight` | 床の高さ | 固定値（0m） | MRUK の床アンカー | 平面検出 |
-| `TryRaycastEnvironment` | 現実環境へのレイ | シーンのコライダー | MRUK の部屋メッシュ | 平面/メッシュ |
+| メンバー | 役割 | Editor | iPhone（AR Foundation＋ARKit） | Quest（予定） | XREAL（予定） |
+| --- | --- | --- | --- | --- | --- |
+| `IsReady` | 追跡が正常か | カメラがあれば true | `ARSession.state == SessionTracking` | MRUK または AR Foundation | NRSDK トラッキング開始 |
+| `Status` | 置けない理由の元データ（許可・追跡段階・水平面数） | 常に許可済み・水平面1枚 | カメラ許可の問い合わせ結果＋セッション状態＋検出平面 | 同左 | 同左 |
+| `HeadPose` | 頭部姿勢 | Main Camera | XR Origin のカメラ | CenterEyeAnchor | NRSDK のヘッド姿勢 |
+| `TryGetFloorHeight` | 床の高さ | 固定値（0m） | 最も低い上向き水平面 | MRUK の床アンカー | 平面検出 |
+| `TryRaycastEnvironment` | 現実環境へのレイ | シーンのコライダー | 検出平面の境界内へのレイキャスト | MRUK の部屋メッシュ | 平面/メッシュ |
 
-### `IInputController` — 攻撃入力
+`Status` は Core の `PlacementGate` に渡し、「権限 → 対応端末 → 追跡 → 平面 → 選んだ位置」の順で配置できない理由を1つに決める（iPhone 実行計画の失敗条件表に対応）。
+
+**Quest で AR Foundation を使う選択肢**：Unity OpenXR: Meta パッケージは Quest 3 向けに AR Foundation の平面・レイキャスト・アンカーを提供している。これを採ると iPhone の `ARFoundationSpatialProvider` と配置処理を Quest でも使い回せる。Meta XR SDK（MRUK）を使う案との比較は、11月18日より前に机上で行い、実機で確定する（未確認）。
+
+### `IInputController` — 攻撃入力（**見直し予定**）
+
+> Quest の剣（振った刃が敵の体に触れたら命中）はこのインターフェースでは表現できない。
+> 「指す・選ぶ」用の入力と「剣の姿勢」用の入力に分ける提案を [sword-input-design.md](sword-input-design.md) にまとめた。旧WBS 4 の実装前に確定する。
 
 デバイスごとの入力を **「照準レイ」＋「攻撃の瞬間」** に正規化する。
 
@@ -74,9 +98,9 @@ tools/CoreTests/                    Unityなしで Core をテストする .NET 
 
 ### `PlatformRig` — 実装の切り替え
 
-デバイスごとに「リグ」プレハブ（`PlatformRig_Editor` / `PlatformRig_Quest` / `PlatformRig_Xreal`）を作り、子に各プロバイダ実装を置く。シーンには1つだけ置き、ゲーム側は `PlatformRig.Spatial` / `PlatformRig.Input` を使う。将来はビルドターゲットに応じて Bootstrap がリグを生成する。
+デバイスごとに「リグ」（`PlatformRig_Editor` / `PlatformRig_iPhone` / `PlatformRig_Quest` / `PlatformRig_Xreal`）を作り、子に各プロバイダ実装を置く。シーンには1つだけ置き、ゲーム側は `PlatformRig.Spatial` / `PlatformRig.Input` を使う。将来はビルドターゲットに応じて Bootstrap がリグを生成する。
 
-## STEP 1 最小デモの流れ（WBS 3〜5 で実装）
+## STEP 1 最小デモの流れ（旧WBS 3〜5。攻撃部分は剣の設計で置き換える予定）
 
 ```
 EditorInputController ──AttackInput(ray)──▶ AttackController（Gameplay）

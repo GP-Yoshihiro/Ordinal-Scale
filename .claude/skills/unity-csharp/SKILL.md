@@ -13,11 +13,13 @@ OrdinalScale/Assets/_Project/
   Scripts/Platform/    OrdinalScale.Platform    Abstractions/ にインターフェース、デバイス別実装はサブフォルダ
     Abstractions/        IARSpatialProvider, IInputController, AttackInput
     EditorSim/           Editor 用シミュレータ実装
-    MetaQuest/  (予定)   Meta XR SDK 実装。asmdef を分け、defineConstraints で SDK 有無を切り替える
+    ARFoundation/        AR Foundation 実装（iPhone）。asmdef を分け、versionDefines＋defineConstraints で未導入時はコンパイルしない
+    MetaQuest/  (予定)   Meta XR SDK 実装。同上
     Xreal/      (予定)   NRSDK 実装。同上
   Scripts/Gameplay/    OrdinalScale.Gameplay（予定） 敵・攻撃・HP表示などの MonoBehaviour
   Scripts/UI/          SAO風HUD
   Scripts/Bootstrap/   シーン起動処理
+  Editor/              Editor 専用ツール（OrdinalScale.Editor。名前空間は OrdinalScale.EditorTools：UnityEditor.Editor と衝突させない）
   Tests/EditMode/Core/ Core の NUnit テスト（tools/CoreTests からも実行される）
 ```
 

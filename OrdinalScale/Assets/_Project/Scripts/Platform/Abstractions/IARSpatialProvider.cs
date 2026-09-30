@@ -1,3 +1,4 @@
+using OrdinalScale.Core.Spatial;
 using UnityEngine;
 
 namespace OrdinalScale.Platform
@@ -10,6 +11,12 @@ namespace OrdinalScale.Platform
     {
         /// <summary>トラッキング・空間認識の準備が整ったか。false の間は敵を配置しない。</summary>
         bool IsReady { get; }
+
+        /// <summary>
+        /// カメラ許可・追跡段階・検出平面数のスナップショット。配置可否は Core の PlacementGate で判定する。
+        /// 利用者に「なぜ置けないか」を示すため、IsReady より細かい理由を返す。
+        /// </summary>
+        SpatialStatus Status { get; }
 
         /// <summary>プレイヤー頭部（HMD / グラス / Editorカメラ）のワールド姿勢。</summary>
         Pose HeadPose { get; }

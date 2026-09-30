@@ -1,0 +1,25 @@
+{
+    "name": "OrdinalScale.Editor",
+    "rootNamespace": "OrdinalScale.EditorTools",
+    "references": [
+        "Unity.XR.Management",
+        "Unity.XR.Management.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.xr.management",
+            "expression": "4.0.0",
+            "define": "OS_HAS_XR_MANAGEMENT"
+        }
+    ],
+    "noEngineReferences": false
+}
