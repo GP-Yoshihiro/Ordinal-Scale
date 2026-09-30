@@ -3,8 +3,10 @@ using UnityEngine;
 namespace OrdinalScale.Platform
 {
     /// <summary>
-    /// 攻撃入力の抽象。Editor ではマウス、Quest ではハンドトラッキング/コントローラ、
-    /// ARグラスではスマホコントローラ等、デバイスごとの入力を「照準レイ＋攻撃の瞬間」に正規化する。
+    /// 「照準レイ＋入力の瞬間」の抽象。Editor ではマウス、iPhone では画面タップ等に対応させる。
+    /// 注意：剣の命中判定には使わない。剣は「振っている最中に刃が体に触れた時だけ・1振り1命中」が確定条件のため、
+    /// ISwordPoseSource（新設予定）と Core の振り判定で扱う（Claude/docs/sword-input-design.md）。
+    /// 本インターフェースは S2 の配置タップ実装時に IPointerInput（指す・選ぶ）へ改名する予定。
     /// </summary>
     public interface IInputController
     {

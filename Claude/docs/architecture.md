@@ -81,10 +81,12 @@ tools/CoreTests/                    Unityなしで Core をテストする .NET 
 
 **Quest で AR Foundation を使う選択肢**：Unity OpenXR: Meta パッケージは Quest 3 向けに AR Foundation の平面・レイキャスト・アンカーを提供している。これを採ると iPhone の `ARFoundationSpatialProvider` と配置処理を Quest でも使い回せる。Meta XR SDK（MRUK）を使う案との比較は、11月18日より前に机上で行い、実機で確定する（未確認）。
 
-### `IInputController` — 攻撃入力（**見直し予定**）
+### `IInputController` — 攻撃入力（**戦闘には使わない。改名予定**）
 
-> Quest の剣（振った刃が敵の体に触れたら命中）はこのインターフェースでは表現できない。
-> 「指す・選ぶ」用の入力と「剣の姿勢」用の入力に分ける提案を [sword-input-design.md](sword-input-design.md) にまとめた。旧WBS 4 の実装前に確定する。
+> 剣の命中条件は確定済み（振っている最中に体に触れた時だけ、押し当ては不命中、1振り1命中、体全体が同じ当たり判定、Editor はマウスドラッグで代替）。
+> このインターフェースでは表現できないため、戦闘の命中は新設する `ISwordPoseSource` と Core の `SwingDetector`／`SwordHitJudge` で判定する。
+> 本インターフェースは「指す・選ぶ」用の `IPointerInput` に改名し（S2 の配置タップ実装時）、メニュー操作や配置にだけ使う。
+> 詳細と条件番号 C1〜C8 は [sword-input-design.md](sword-input-design.md)。
 
 デバイスごとの入力を **「照準レイ」＋「攻撃の瞬間」** に正規化する。
 
