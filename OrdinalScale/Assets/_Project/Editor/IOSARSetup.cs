@@ -32,6 +32,7 @@ namespace OrdinalScale.EditorTools
         public const string BuildPath = "Builds/iOS";
 
         private const string CameraUsageDescription = "敵を現実の空間に重ねて表示するためにカメラを使用します。";
+        private const string XcodeDeveloperDir = "/Applications/Xcode.app/Contents/Developer";
         private const string MenuRoot = "OrdinalScale/iOS AR/";
 
         private static readonly string[] s_Packages =
@@ -224,12 +225,18 @@ namespace OrdinalScale.EditorTools
 
             try
             {
-                using (var p = Process.Start(new ProcessStartInfo("xcodebuild", "-version")
+                var psi = new ProcessStartInfo("xcodebuild", "-version")
                 {
                     RedirectStandardOutput = true,
                     UseShellExecute = false,
                     CreateNoWindow = true,
-                }))
+                };
+
+                // 既定の開発者ディレクトリが Command Line Tools だと xcodebuild が使えないため、
+                // Xcode 本体があればそちらを明示する（xcode-select の設定は変えない）
+                if (Directory.Exists(XcodeDeveloperDir)) psi.EnvironmentVariables["DEVELOPER_DIR"] = XcodeDeveloperDir;
+
+                using (var p = Process.Start(psi))
                 {
                     if (p == null) return "取得失敗";
                     var output = p.StandardOutput.ReadToEnd();

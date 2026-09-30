@@ -22,11 +22,13 @@ Quest 実機は 11月18日以降に使える。それまでは Part A（Editor�
 1. このリポジトリを `git clone` する（`C:\dev\Ordinal-Scale` など、日本語・空白を含まないパス）。
 2. Unity Hub →「追加」→「ディスクから追加」→ `Ordinal-Scale\OrdinalScale` フォルダを選ぶ。
 3. エディターバージョンを聞かれたら A-1 で入れた版を選んで開く。
-   初回は `Library/`・`ProjectSettings/`・`Packages/manifest.json`・各 `.meta` が自動生成される（数分かかる）。
-   Hub がフォルダを追加できない場合は、コマンドで直接開く：
+   リポジトリには `Packages/manifest.json`（パッケージと版）と `ProjectSettings/` の最小構成（`ProjectVersion.txt`・`ProjectSettings.asset`・`EditorSettings.asset`）が入っている。初回は `Library/`・残りの設定ファイル・各 `.meta` が自動生成される（15〜30分）。初回起動では Unity の利用規約への同意とライセンスの有効化が必要（本人が判断する）。
+   Hub が「Unity プロジェクトが見つかりません」とする場合は、コマンドで直接開く：
    `"C:\Program Files\Unity\Hub\Editor\<版>\Editor\Unity.exe" -projectPath C:\dev\Ordinal-Scale\OrdinalScale`
 
-### A-3. パッケージの導入（Window > Package Manager > Unity Registry）
+### A-3. パッケージの確認（Window > Package Manager > In Project）
+
+パッケージは `Packages/manifest.json` で指定済み（Input System 1.20.0、Universal RP 17.5.0、AR Foundation 6.5.1、Apple ARKit XR Plugin 6.5.1、Test Framework 1.4.6 ほか）。自分でインストールする必要はなく、下表が一覧にあることを確認する。詳細は [unity-project-files.md](unity-project-files.md)。
 
 | パッケージ | 用途 | 備考 |
 | --- | --- | --- |
@@ -42,7 +44,7 @@ URP の有効化（Mac で設定・push 済みなら不要）：
 
 ### A-4. Player Settings
 
-Edit > Project Settings > Player > Other Settings：
+Edit > Project Settings > Player > Other Settings（リポジトリの `ProjectSettings.asset` で設定済み。確認のみ）：
 - **Active Input Handling**：`Input System Package (New)`（`Both` でも動く。スクリプトは両対応済み）
 - **Color Space**：Linear（URP既定）
 

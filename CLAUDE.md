@@ -8,6 +8,7 @@ SAO『オーディナル・スケール』風ARバトルゲームのプロトタ
 - STEP 1 のUnity設定手順: `Claude/docs/step1-setup.md`（Windows）、`Claude/docs/iphone-ar-setup.md`（Mac＋iPhone）
 - 剣の命中判定（条件確定・未実装）: `Claude/docs/sword-input-design.md`。剣・命中に関わる実装とテストは条件 C1〜C8 に従い、指す・選ぶ入力（`IPointerInput`）で命中を判定しない。
 - Unity 版は **`6000.5.10f1` に固定**（`OrdinalScale/ProjectSettings/ProjectVersion.txt`）。変更する場合は理由をPMへ報告する。
+- `Packages/manifest.json` と `ProjectSettings/` の出所・変更点: `Claude/docs/unity-project-files.md`。設定ファイルはクラウドで生成できないため、Unity 公式の生成物を使い、手書きしない。
 
 ## 基本ルール
 
@@ -55,5 +56,5 @@ dotnet format whitespace tools/CoreTests/CoreTests.csproj --verify-no-changes   
 
 ## Git
 
-- `.meta` ファイルは必ずコミットする（Unityが生成したもの）。`Library/` `Temp/` などは `OrdinalScale/.gitignore` で除外済み。
+- `.meta` ファイル、初回に生成される `Packages/packages-lock.json` と `ProjectSettings/*.asset` は必ずコミットする（Unityが生成したもの）。`Library/` `Temp/` などは `OrdinalScale/.gitignore` で除外済み。
 - シーン・プレハブの YAML を手で書き換えない。Editor での作成手順を文書で渡す。

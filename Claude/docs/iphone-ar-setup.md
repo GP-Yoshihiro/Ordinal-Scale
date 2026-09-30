@@ -25,30 +25,53 @@
 ```bash
 mkdir -p ~/dev && cd ~/dev
 git clone -b claude/awesome-knuth-jx7l51 https://github.com/GP-Yoshihiro/Ordinal-Scale.git
-# すでに clone 済みなら:
-#   cd ~/dev/Ordinal-Scale && git fetch origin && git switch claude/awesome-knuth-jx7l51 && git pull
+# すでに clone 済みなら（試験的に追加したファイルは先に消しておく）:
+#   cd ~/dev/Ordinal-Scale && git status          # 未追跡の Packages/manifest.json 等があれば削除する
+#   git fetch origin && git switch claude/awesome-knuth-jx7l51 && git pull
 ```
 
 パスに日本語・空白を含めない（`~/dev/Ordinal-Scale` を推奨）。
+取得後、`OrdinalScale/` に次の4つがあることを確認する（9月30日の修正で追加。これが無い古いコミットは Hub に認識されない）。
+
+```
+OrdinalScale/Assets/                              自作コード
+OrdinalScale/Packages/manifest.json               使うパッケージと版
+OrdinalScale/ProjectSettings/ProjectVersion.txt   6000.5.10f1（リビジョン 3bd4f66ad299）
+OrdinalScale/ProjectSettings/ProjectSettings.asset・EditorSettings.asset
+```
 
 ### 1-2. Unity で開く
+
+**初回の Unity Editor 起動では、Unity の利用規約への同意とライセンス（Personal 等）の有効化を求められる。これは開発者本人の判断で行う。** 同意しないと以降の手順は進められない。
 
 1. メモリ節約のため、ブラウザのタブ・Xcode・その他のアプリを閉じる。
 2. Unity Hub →「Add」→「Add project from disk」→ `~/dev/Ordinal-Scale/OrdinalScale` を選ぶ。
 3. 一覧に **6000.5.10f1** と出ることを確認して開く。版の変更（Upgrade）を促されたら**キャンセル**する（版はチームで固定）。
-4. 初回は `Library/`・`ProjectSettings/`・`Packages/` が自動生成される（10〜20分）。
+4. Hub が「Unity プロジェクトが見つかりません」と表示する場合は、ターミナルから Editor で直接開く（Hub の判定を通らない）。一度開けば、以後は Hub の一覧に出る。
 
-### 1-3. パッケージを入れる（Window > Package Manager > Unity Registry）
+   ```bash
+   /Applications/Unity/Hub/Editor/6000.5.10f1/Unity.app/Contents/MacOS/Unity -projectPath ~/dev/Ordinal-Scale/OrdinalScale
+   ```
 
-表の順に、**Package Managerが既定で選ぶ版**をそのままInstallする。版の数字は後の検証メニューが自動で記録するので、メモは不要。
+   Editor の場所が違う場合は Hub の Installs 画面の「…」→「Show in Finder」で確認する。どちらの方法で開いたかを記録する。
+5. 初回は `manifest.json` のパッケージのダウンロードと `Library/` の生成で 15〜30 分かかる（ネット接続が必要）。足りない設定ファイルは Unity が既定値で作る。
 
-| パッケージ | 用途 | 備考 |
+### 1-3. パッケージと入力方式を確かめる（Window > Package Manager > In Project）
+
+パッケージは `manifest.json` で指定済みなので、**自分でインストールする必要はない**。一覧に次があることを確認する。
+
+| パッケージ | manifest の版 | 用途 |
 | --- | --- | --- |
-| Input System | Editor・iPhone・Questの入力 | 「新しい入力バックエンドを有効にして再起動」は **Yes** |
-| Universal RP | 描画パイプライン（全端末共通） | 既に入っていれば不要 |
-| AR Foundation | AR機能の共通層（平面・レイキャスト等） | XR Plug-in Management・XR Core Utilities も自動で入る |
-| Apple ARKit XR Plugin | iPhoneのARKit接続 | |
-| Test Framework | ユニットテスト | 既に入っていれば不要 |
+| Input System | 1.20.0 | Editor・iPhone・Quest の入力 |
+| Universal RP | 17.5.0 | 描画パイプライン（全端末共通） |
+| AR Foundation | 6.5.1 | AR 機能の共通層（XR Plug-in Management・XR Core Utilities も自動で入る） |
+| Apple ARKit XR Plugin | 6.5.1 | iPhone の ARKit 接続 |
+| Test Framework | 1.4.6 | ユニットテスト |
+| uGUI・IDE 連携（Visual Studio / Rider） | 2.5.0 / 2.0.28 / 3.0.40 | UI・エディタ連携 |
+
+- Universal RP・uGUI・Test Framework は Unity 本体に固定された版に置き換わることがある。その場合は表示された版をそのまま使う（版は後の検証メニューが自動で記録する）。
+- パッケージの解決に失敗した（赤いエラー、Safe Mode の案内など）場合は、エラー文の全文を Claude に渡す。
+- 入力方式は設定済み（Project Settings > Player > Active Input Handling = **Input System Package (New)**）。再起動を促された場合だけ **Yes**。
 
 ### 1-4. URP を設定する
 
@@ -104,7 +127,7 @@ Edit > Project Settings > **XR Plug-in Management** → **iOSタブ（iPhoneの�
 
 | NG の項目 | 直し方 |
 | --- | --- |
-| Package … 未導入 | 1-3 のパッケージを入れる |
+| Package … 未導入 | `Packages/manifest.json` が最新か（1-1）を確認し、Package Manager の In Project で状態を見る。直らなければエラー全文を Claude に渡す |
 | URP アセット 未設定 | 1-4 の手順2 |
 | AR Background Renderer Feature 未追加 | 1-4 の手順3 |
 | XR Plug-in (iOS) Apple ARKit | 2-2 |
@@ -262,7 +285,7 @@ Xcode 下部のコンソールに `[OrdinalScale][S2]` で始まる行が出る�
 
 | 症状 | 原因の候補と対処 |
 | --- | --- |
-| Hub がプロジェクトを開けない | `/Applications/Unity/Hub/Editor/6000.5.10f1/Unity.app/Contents/MacOS/Unity -projectPath ~/dev/Ordinal-Scale/OrdinalScale` で直接開く |
+| Hub が「Unity プロジェクトが見つかりません」と表示する | 1-1 の4ファイルがあるか確認（古いコミットでないか）。あっても出る場合は 1-2 手順4 のコマンドで直接開く |
 | 画面が真っ黒でオーバーレイだけ出る | AR Background Renderer Feature 未追加（1-4）。検証メニューで NG になっているはず |
 | Session が `Unsupported` のまま | XR Plug-in Management の iOS タブで Apple ARKit が未チェック（2-2） |
 | ビルドで camera usage description のエラー | メニュー「1. Player設定を適用」を再実行 |
@@ -270,4 +293,5 @@ Xcode 下部のコンソールに `[OrdinalScale][S2]` で始まる行が出る�
 | Xcode のビルドがメモリ不足で極端に遅い | Unity を終了し、Xcode 以外を閉じてから再ビルド |
 | タップしても何も表示されない（S2） | `Pointer` の Screen Pointer Input が無い、または Pointer Camera が空。`EnemyPlacement` に Enemy Placement Controller と Placement Feedback View があるか確認 |
 | 敵が表示されず Console に Shader / Material のエラー（S2） | 仮モデルの色付けが URP で失敗している可能性。エラー全文を Claude に渡す |
+| 検証メニューの Xcode 欄が「取得失敗」 | 既定の開発者ディレクトリが Command Line Tools になっている。メニューは Xcode.app を明示して読むので通常は取得できる。Xcode アプリ自体の署名・実行には影響しない（ターミナルで使う場合は `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer` を付ける） |
 | Unity 6000.5.10f1 と Xcode 26.1.1 の組み合わせでビルドできない | 未確認の組み合わせ。エラー全文を Claude に渡す（版の変更はClaudeが判断してPMに報告する） |

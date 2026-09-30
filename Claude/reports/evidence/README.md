@@ -11,6 +11,7 @@ iPhone AR 先行検証（S1〜S5）の証拠を置く場所。Unity のメニュ
 | --- | --- |
 | 実施日時・実施者 | 未実施 |
 | Mac（機種・macOS版） | 未実施 |
+| Unity の開き方（Hub から追加できたか／コマンドで直接開いたか） | 未実施 |
 | Unity 版 | 未実施（設定検証テキストに自動記録） |
 | Xcode 版 | 未実施（設定検証テキストに自動記録） |
 | パッケージ版（Input System / URP / AR Foundation / Apple ARKit / XR Management） | 未実施（設定検証テキストに自動記録） |
