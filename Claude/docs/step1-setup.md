@@ -15,7 +15,7 @@ Quest 実機は 11月18日以降に使える。それまでは Part A（Editor�
 3. IDE は Visual Studio 2022（Game development with Unity）か JetBrains Rider。
 
 > 版を `6000.5.10f1` に固定する理由：iOS ビルドを行う MacBook に、この版と iOS Build Support がすでに入っているため（8GB の Mac で別の版を入れ直す時間を省く）。
-> 注意：Unity 6.5 は LTS ではなく、次の版（6.6）が出た時点で更新が止まる「Supported release」と報告されている（検索結果による・一次情報は未確認）。Quest 作業に入る前に、Meta 向けパッケージの対応状況と合わせて版の更新要否を判断する。
+> 注意：`6000.5` 系の今後の更新提供状況は未確認。Quest 作業に入る前に、Meta 向けパッケージの対応状況と合わせて版の更新要否を判断する。
 
 ### A-2. プロジェクトを開く
 
