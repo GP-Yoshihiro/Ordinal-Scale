@@ -6,7 +6,7 @@ using UnityEngine;
 namespace OrdinalScale.Gameplay.Placement
 {
     /// <summary>
-    /// S2：検出した水平面をタップ（Editor ではクリック）して敵の仮モデル1体を置く。
+    /// S2：検出した水平面をタップ（Editor ではクリック）して敵を1体置く。
     /// 置けるかどうかは Core の EnemyPlacementSession（内部で PlacementGate）が決め、
     /// 抑止したときは敵を置かず・動かさず、理由を Attempted イベントとログで知らせる。
     /// デバイス差は PlatformRig の IARSpatialProvider / IPointerInput で吸収するので、Editor と iPhone で同じ処理が動く。
@@ -14,7 +14,7 @@ namespace OrdinalScale.Gameplay.Placement
     public sealed class EnemyPlacementController : MonoBehaviour
     {
         [SerializeField] private PlatformRig rig;
-        [Tooltip("敵の見た目。未設定なら仮モデル（高さ1.6mのカプセル＋正面の目印）を実行時に作る。")]
+        [Tooltip("敵の見た目。未設定時はローカルのDemonLord2を使い、見つからなければ仮モデルを作る。")]
         [SerializeField] private GameObject enemyPrefab = null;
         [Tooltip("タップ位置からこの距離（m）より遠い面には置かない。")]
         [SerializeField] private float maxPlacementDistance = 8f;
@@ -83,8 +83,10 @@ namespace OrdinalScale.Gameplay.Placement
         {
             if (_enemy == null)
             {
-                _enemy = enemyPrefab != null
-                    ? Instantiate(enemyPrefab)
+                // 公開リポジトリへ再配布できないモデルは、ローカルの Resources に置いてビルドへ含める。
+                var prefab = enemyPrefab != null ? enemyPrefab : Resources.Load<GameObject>("DemonLord2");
+                _enemy = prefab != null
+                    ? Instantiate(prefab)
                     : EnemyPlaceholder.Create(placeholderBodyColor, placeholderFaceColor);
 
                 // 敵自身が配置先の面として拾われないようにする（Editor の物理レイキャスト対策）。

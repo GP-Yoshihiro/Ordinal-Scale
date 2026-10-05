@@ -36,7 +36,10 @@ namespace OrdinalScale.Core.Spatial
 
         public SpatialStatus(CameraPermission cameraPermission, TrackingPhase trackingPhase, int horizontalPlaneCount)
         {
-            CameraPermission = cameraPermission;
+            // 実際に追跡中ならカメラは稼働中。WebCam API の古い拒否値より実測状態を優先する。
+            CameraPermission = trackingPhase == TrackingPhase.Tracking
+                ? CameraPermission.Granted
+                : cameraPermission;
             TrackingPhase = trackingPhase;
             HorizontalPlaneCount = horizontalPlaneCount < 0 ? 0 : horizontalPlaneCount;
         }

@@ -636,6 +636,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1703080538}
   - component: {fileID: 1703080537}
+  - component: {fileID: 1703080539}
+  - component: {fileID: 1703080540}
+  - component: {fileID: 1703080541}
   m_Layer: 0
   m_Name: PlatformRig_iPhone
   m_TagString: Untagged
@@ -655,6 +658,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 816892f71aff9440797deb355ef5a711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: OrdinalScale.Platform::OrdinalScale.Platform.PlatformRig
+--- !u!114 &1703080539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703080536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e73fa2fbc42462f9369c6ab49549a8, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: OrdinalScale.Platform::OrdinalScale.Platform.ScreenPointerInput
+  pointerCamera: {fileID: 965731693}
+--- !u!114 &1703080540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703080536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54d816d021444607b169ea0e90c7fa8, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: OrdinalScale.Gameplay::OrdinalScale.Gameplay.Placement.EnemyPlacementController
+  rig: {fileID: 1703080537}
+  enemyPrefab: {fileID: 0}
+  maxPlacementDistance: 8
+  placeholderBodyColor: {r: 1, g: 0.45, b: 0.1, a: 1}
+  placeholderFaceColor: {r: 0.1, g: 0.9, b: 1, a: 1}
+--- !u!114 &1703080541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703080536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea5fb0e56f2641af82984fa6fc02a8ae, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: OrdinalScale.Gameplay::OrdinalScale.Gameplay.Placement.EnemyAnimationPreview
+  placement: {fileID: 1703080540}
+  idleState: Base Layer.Idle1
+  attackState: Base Layer.Attack1
 --- !u!4 &1703080538
 Transform:
   m_ObjectHideFlags: 0

@@ -9,6 +9,10 @@
 /[Mm]emoryCaptures/
 /[Rr]ecordings/
 
+# Licensed Fab assets are imported only into local Unity builds (public repository).
+/Assets/LocalLicensed/
+/Assets/LocalLicensed.meta
+
 # IDE
 .vs/
 .vscode/
