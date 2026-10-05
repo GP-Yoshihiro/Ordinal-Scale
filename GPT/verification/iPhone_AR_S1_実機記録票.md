@@ -1,6 +1,6 @@
 # iPhone AR S1 実機記録票
 
-状態：**S1実機判定は未実施**。Unity Editorの起動・EditModeテスト48件、iOS向け設定検証NG 0件、UnityのiOSビルド、Xcodeの署名なしビルドを確認した。iPhoneへの導入・起動・カメラ映像・AR追跡は未確認。[Claudeの手順書](https://github.com/GP-Yoshihiro/Ordinal-Scale/blob/claude/awesome-knuth-jx7l51/Claude/docs/iphone-ar-setup.md)のパート3から再開し、[承認済み設計](../requirements/iPhone_AR_先行検証_設計案.md)のS1を判定する。結果は[受入記録](iPhone_AR_受入記録.md)へ転記する。
+状態：**S1実機判定は未了**。Unity EditorのEditModeテスト48件、iOS向け設定検証NG 0件、UnityのiOSビルド、Xcodeの署名付き実機ビルド、iPhoneへのインストールを確認した。端末側が初回起動を拒否したため、カメラ映像・AR追跡は未確認。[Claudeの手順書](https://github.com/GP-Yoshihiro/Ordinal-Scale/blob/claude/awesome-knuth-jx7l51/Claude/docs/iphone-ar-setup.md)のパート3から再開し、[承認済み設計](../requirements/iPhone_AR_先行検証_設計案.md)のS1を判定する。結果は[受入記録](iPhone_AR_受入記録.md)へ転記する。
 
 ## 接続・環境の事前確認（2026-09-30）
 
@@ -46,30 +46,33 @@
 - Xcodeの「Apple Accounts」は未登録。署名付きビルドは`No Accounts`と対象Bundle IDのプロビジョニングプロファイル不在で失敗した。本人によるApple IDログインが必要。検証用Xcodeプロジェクトには既存証明書のTeamを設定済みだが、生成物なのでUnity再ビルド時には設定し直す。
 - 実機を指定したビルドでは、iPhoneのロック中に開発用ディスクイメージをマウントできず、Xcodeが端末を利用可能と判定しなかった。ユーザーへロック解除とUSB接続維持を依頼した。
 - 署名付きビルドのログは検証コピーの`OrdinalScale/Logs/IOSGenericSignedBuild.log`と`IOSDeviceBuild.log`。端末へのインストール・起動・S1の観察は引き続き**未実施**。
+- その後、iPhoneのロック解除とXcodeへのApple ID登録を画面・開発サービスの状態で確認した。Xcodeで本人のPersonal Teamを選択し、Xcode管理の開発用プロファイルが作成された。
+- XcodeのiPhone向け**署名付きDebugビルドは終了コード0**。ログは検証コピーの`OrdinalScale/Logs/IOSDeviceBuildAfterTeamRefresh.log`。`OrdinalScale.app`のBundle IDは`com.gpyoshihiro.ordinalscale`で、`codesign --verify --deep --strict`も終了コード0だった。埋込プロファイルには対象iPhoneが登録され、アプリの署名証明書・Team ID・App ID・権限と整合する。個人用チームのプロファイル期限は2026-10-12であり、後日の再検証では再生成が必要になりうる。
+- `devicectl`によるiPhoneへのインストールは**終了コード0**。続く起動は**終了コード1**で、iOSが「invalid code signature, inadequate entitlements or its profile has not been explicitly trusted by the user」として拒否した。署名・プロファイルのローカル検証は通っているため、iPhone上の表示と開発元の信頼状態をユーザーに確認依頼中。原因はまだ確定していない。カメラ権限・映像・追跡は未確認。
 
 ## 実施情報
 
 | 項目 | 記録 |
 | --- | --- |
-| 実施日時・実施者 | 未記入 |
+| 実施日時・実施者 | 2026-10-05・GPT（ビルド・導入・起動試行）。iPhone画面の観察者は未記入 |
 | Unityプロジェクトのブランチ・コミット | `codex/iphone-ar-prep`・`906d630`（実機準備） |
 | Unity Editor・iOS Build Supportの版 | 6000.5.10f1・同版のiOS Build Support |
 | AR Foundation・ARKit等のパッケージ版 | AR Foundation 6.5.1、ARKit 6.5.1、URP 17.5.0、XR Management 4.6.1 |
 | Xcode・iOSの版 | Xcode 26.1.1、接続端末iOS 26.6.2。端末上の起動版は未確認 |
 | 使用機器 | iPhone 15 Pro |
-| ビルドログ・端末画面の保存先 | Unityの証拠は`Claude/reports/evidence/`、ローカルのUnityログは`~/dev/Ordinal-Scale/OrdinalScale/Logs/`。端末画面は未取得 |
+| ビルドログ・端末画面の保存先 | Unityの証拠は`Claude/reports/evidence/`、署名付きビルドのローカルログは`~/dev/Ordinal-Scale/OrdinalScale/Logs/IOSDeviceBuildAfterTeamRefresh.log`。端末画面は未取得 |
 
 ## 確認手順と結果
 
 | 順序 | 実施する確認 | 結果・証拠 |
 | --- | --- | --- |
 | 1 | Claudeの手順に従い、共有されたコミットのUnityプロジェクトをMac上のEditorで開く。コンパイルエラーの有無を記録する | 実施済み。Console赤エラー0件、EditModeテスト48件成功 |
-| 2 | iOS向けにビルドし、XcodeでiPhone 15 Proへ導入する。ビルド・署名・導入の成否とログを記録する | UnityビルドとXcode署名なしビルドは成功。署名・端末導入は未実施 |
-| 3 | 端末でアプリを起動する。カメラ権限の表示と選択結果を記録する | 未実施 |
+| 2 | iOS向けにビルドし、XcodeでiPhone 15 Proへ導入する。ビルド・署名・導入の成否とログを記録する | Unityビルド、Xcode署名付きDebugビルド、`devicectl`での導入はいずれも成功 |
+| 3 | 端末でアプリを起動する。カメラ権限の表示と選択結果を記録する | 起動試行はiOSの署名・信頼に関する拒否で失敗。カメラ権限は未確認 |
 | 4 | 実際のカメラ映像が見えるかを確認し、画面の証拠を残す | 未実施 |
 | 5 | AR追跡の状態が画面またはログで判別できるかを確認し、表示内容を記録する | 未実施 |
-| 6 | エラーが出た場合は文言、操作、再現手順、ログの保存先を記録する | 未実施 |
+| 6 | エラーが出た場合は文言、操作、再現手順、ログの保存先を記録する | 導入直後に`devicectl device process launch`を実行すると、CoreDeviceError 10002／FBSOpenApplicationErrorDomain 3（Security）。端末画面の文言と信頼状態は確認待ち |
 
-**S1の判定**：未実施。端末で起動し、カメラ映像とAR追跡状態の両方を確認できた場合に限り「合格」とする。Editor起動、APIスタブでのコンパイル、iOSビルドだけでは合格にしない。
+**S1の判定**：未了。端末で起動し、カメラ映像とAR追跡状態の両方を確認できた場合に限り「合格」とする。署名付きビルド・端末への導入だけでは合格にしない。
 
 **次への引継ぎ**：S1合格後、S2の床面検出・敵配置へ進む。S1で分かったカメラ権限・追跡状態の問題はS2の前提条件として共有する。
