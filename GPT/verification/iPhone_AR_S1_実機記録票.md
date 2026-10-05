@@ -1,6 +1,6 @@
 # iPhone AR S1 実機記録票
 
-状態：**S1実機判定は未了**。Unity EditorのEditModeテスト48件、iOS向け設定検証NG 0件、UnityのiOSビルド、Xcodeの署名付き実機ビルド、iPhoneへのインストールを確認した。端末側が初回起動を拒否したため、カメラ映像・AR追跡は未確認。[Claudeの手順書](https://github.com/GP-Yoshihiro/Ordinal-Scale/blob/claude/awesome-knuth-jx7l51/Claude/docs/iphone-ar-setup.md)のパート3から再開し、[承認済み設計](../requirements/iPhone_AR_先行検証_設計案.md)のS1を判定する。結果は[受入記録](iPhone_AR_受入記録.md)へ転記する。
+状態：**S1実機合格（2026-10-05）**。iPhone 15 Proで起動し、本人がカメラ権限を許可した後、実際のカメラ映像と`Session: SessionTracking`・`Tracking: Tracking`を確認した。画面の`Camera: Denied`は実動作と矛盾する表示不具合で、S2の配置判定にも影響する。[承認済み設計](../requirements/iPhone_AR_先行検証_設計案.md)のS1は満たしたが、S2は未判定。[受入記録](iPhone_AR_受入記録.md)へ結果を転記する。
 
 ## 接続・環境の事前確認（2026-09-30）
 
@@ -50,17 +50,27 @@
 - XcodeのiPhone向け**署名付きDebugビルドは終了コード0**。ログは検証コピーの`OrdinalScale/Logs/IOSDeviceBuildAfterTeamRefresh.log`。`OrdinalScale.app`のBundle IDは`com.gpyoshihiro.ordinalscale`で、`codesign --verify --deep --strict`も終了コード0だった。埋込プロファイルには対象iPhoneが登録され、アプリの署名証明書・Team ID・App ID・権限と整合する。個人用チームのプロファイル期限は2026-10-12であり、後日の再検証では再生成が必要になりうる。
 - `devicectl`によるiPhoneへのインストールは**終了コード0**。続く起動は**終了コード1**で、iOSが「invalid code signature, inadequate entitlements or its profile has not been explicitly trusted by the user」として拒否した。署名・プロファイルのローカル検証は通っているため、iPhone上の表示と開発元の信頼状態をユーザーに確認依頼中。原因はまだ確定していない。カメラ権限・映像・追跡は未確認。
 
+## 2026-10-05 カメラ権限とARKitの再検証
+
+- ユーザーが開発元の信頼設定を済ませた後、アプリは起動したが、iOSのカメラ許可ダイアログは現れず、アプリは`Camera: Denied`、`Session: None`を表示した。設定アプリのOrdinalScale画面にも「カメラ」項目がなかった。iPhone標準カメラは正常に起動した。
+- 接続端末はXcodeの製品名で**iPhone 15 Pro**。`iPhone16,1`はこの機種の内部識別子であり、別機種への誤導入ではない。個体識別子は記録しない。
+- 初回ビルドの端末ログ`OrdinalScale/Logs/IOSCameraPermissionConsole.log`には`Unable to load plugin UnityARKit for subsystem ARKit-Input`と`Failed to load session subsystem`が出た。生成Xcodeプロジェクトに`UnityARKit.m`と`libUnityARKit.a`がなかった。iOS設定検証NG 0件ではこの欠落を検出できていなかった。
+- UnityのiOS用`scriptingDefineSymbols`に`UNITY_XR_ARKIT_LOADER_ENABLED`を設定して再ビルドした。生成Xcodeプロジェクトには上記ネイティブファイルが含まれ、Unityビルド、Xcodeの署名付きDebugビルド、署名検証、端末への更新版導入が成功した。設定は検証ブランチの[`f3b63c1`](https://github.com/GP-Yoshihiro/Ordinal-Scale/commit/f3b63c1)としてGitHubへpush済み。Unityログは`OrdinalScale/Logs/IOSBuildAfterARKitDefine.log`、Xcodeログは`OrdinalScale/Logs/IOSDeviceBuildWithARKit.log`、ビルド報告は`Claude/reports/evidence/20261005-140357_S1_iOSビルド.txt`（いずれも検証コピー内）。
+- 更新版の端末ログ`OrdinalScale/Logs/IOSCameraPermissionAfterARKit.log`では`UnityARKit successfully registered Provider`とARKitのセッション構成を確認し、前回の読み込み失敗は出なかった。`devicectl`の30秒コンソール取得は時間切れで終了コード2だが、アプリ自体の異常終了を示すものではない。
+- iPhoneでiOSのカメラ許可ダイアログが表示され、ユーザーが**許可**を選択。ユーザーの実機観察ではカメラ映像が見え、画面は`Session: SessionTracking`、`Tracking: Tracking`、空間内の物体へ色が付く表示となった。これによりS1の起動・映像・追跡条件を実機で確認した。端末画面の保存ファイルは未取得。
+- 一方、画面には`Camera: Denied`が残る。`ARFoundationSpatialProvider.Start()`は`Application.HasUserAuthorization(WebCam)`の一度の結果を保存し、`Status`はその値を表示し続ける。ARKit側の`ARCameraManager.permissionGranted`は参照していないため、実際の許可・カメラ稼働と表示が食い違う可能性がある。`PlacementGate`は`Denied`で配置を止めるため、S2に進む前にClaudeが原因と修正を確認する。
+
 ## 実施情報
 
 | 項目 | 記録 |
 | --- | --- |
-| 実施日時・実施者 | 2026-10-05・GPT（ビルド・導入・起動試行）。iPhone画面の観察者は未記入 |
-| Unityプロジェクトのブランチ・コミット | `codex/iphone-ar-prep`・`906d630`（実機準備） |
+| 実施日時・実施者 | 2026-10-05・GPT（ビルド・導入・ログ確認）、ユーザー（iPhone画面の観察とカメラ権限の許可） |
+| Unityプロジェクトのブランチ・コミット | `codex/iphone-ar-prep`・[`f3b63c1`](https://github.com/GP-Yoshihiro/Ordinal-Scale/commit/f3b63c1) |
 | Unity Editor・iOS Build Supportの版 | 6000.5.10f1・同版のiOS Build Support |
 | AR Foundation・ARKit等のパッケージ版 | AR Foundation 6.5.1、ARKit 6.5.1、URP 17.5.0、XR Management 4.6.1 |
 | Xcode・iOSの版 | Xcode 26.1.1、接続端末iOS 26.6.2。端末上の起動版は未確認 |
 | 使用機器 | iPhone 15 Pro |
-| ビルドログ・端末画面の保存先 | Unityの証拠は`Claude/reports/evidence/`、署名付きビルドのローカルログは`~/dev/Ordinal-Scale/OrdinalScale/Logs/IOSDeviceBuildAfterTeamRefresh.log`。端末画面は未取得 |
+| ビルドログ・端末画面の保存先 | Unityの証拠は検証コピーの`Claude/reports/evidence/`、署名付きビルドと端末コンソールのローカルログは`~/dev/Ordinal-Scale/OrdinalScale/Logs/`。端末画面の保存ファイルは未取得 |
 
 ## 確認手順と結果
 
@@ -68,11 +78,11 @@
 | --- | --- | --- |
 | 1 | Claudeの手順に従い、共有されたコミットのUnityプロジェクトをMac上のEditorで開く。コンパイルエラーの有無を記録する | 実施済み。Console赤エラー0件、EditModeテスト48件成功 |
 | 2 | iOS向けにビルドし、XcodeでiPhone 15 Proへ導入する。ビルド・署名・導入の成否とログを記録する | Unityビルド、Xcode署名付きDebugビルド、`devicectl`での導入はいずれも成功 |
-| 3 | 端末でアプリを起動する。カメラ権限の表示と選択結果を記録する | 起動試行はiOSの署名・信頼に関する拒否で失敗。カメラ権限は未確認 |
-| 4 | 実際のカメラ映像が見えるかを確認し、画面の証拠を残す | 未実施 |
-| 5 | AR追跡の状態が画面またはログで判別できるかを確認し、表示内容を記録する | 未実施 |
-| 6 | エラーが出た場合は文言、操作、再現手順、ログの保存先を記録する | 導入直後に`devicectl device process launch`を実行すると、CoreDeviceError 10002／FBSOpenApplicationErrorDomain 3（Security）。端末画面の文言と信頼状態は確認待ち |
+| 3 | 端末でアプリを起動する。カメラ権限の表示と選択結果を記録する | 更新版で起動し、iOSのカメラ許可ダイアログが表示。ユーザーが「許可」を選択 |
+| 4 | 実際のカメラ映像が見えるかを確認し、画面の証拠を残す | ユーザーが実機で映像を確認。画面の保存ファイルは未取得 |
+| 5 | AR追跡の状態が画面またはログで判別できるかを確認し、表示内容を記録する | 実機画面で`SessionTracking`、`Tracking`。端末ログにもARKitのセッション構成あり |
+| 6 | エラーが出た場合は文言、操作、再現手順、ログの保存先を記録する | 初回ビルドはUnityARKitプラグイン欠落でセッションが開始しなかった。更新版で解消。`Camera: Denied`の誤表示は残存し、S2に影響 |
 
-**S1の判定**：未了。端末で起動し、カメラ映像とAR追跡状態の両方を確認できた場合に限り「合格」とする。署名付きビルド・端末への導入だけでは合格にしない。
+**S1の判定**：**合格**。ユーザーがiPhone 15 Proでカメラ映像とAR追跡状態の両方を確認した。`Camera: Denied`は実状態と異なる表示不具合として別途修正する。
 
-**次への引継ぎ**：S1合格後、S2の床面検出・敵配置へ進む。S1で分かったカメラ権限・追跡状態の問題はS2の前提条件として共有する。
+**次への引継ぎ**：Claudeが権限表示と配置判定の不整合を修正・検証した後、S2の床面検出・敵配置へ進む。iOS用ARKit定義と、生成Xcodeプロジェクトにネイティブプラグインが含まれることをビルド検証にも追加する。
