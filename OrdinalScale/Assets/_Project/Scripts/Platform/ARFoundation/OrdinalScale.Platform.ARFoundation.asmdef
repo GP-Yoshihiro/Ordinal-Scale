@@ -1,0 +1,28 @@
+{
+    "name": "OrdinalScale.Platform.ARFoundation",
+    "rootNamespace": "OrdinalScale.Platform.ARFoundation",
+    "references": [
+        "OrdinalScale.Core",
+        "OrdinalScale.Platform",
+        "Unity.XR.ARFoundation",
+        "Unity.XR.ARSubsystems",
+        "Unity.XR.CoreUtils"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "OS_HAS_ARFOUNDATION"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.xr.arfoundation",
+            "expression": "6.0.0",
+            "define": "OS_HAS_ARFOUNDATION"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,64 @@
+using OrdinalScale.Core.Spatial;
+using UnityEngine;
+
+namespace OrdinalScale.Platform.EditorSim
+{
+    /// <summary>
+    /// 実機なしで動かすための空間認識シミュレータ。
+    /// 頭部＝指定カメラ、床＝固定の高さ、環境＝Physics コライダー（シーンに置いた仮の床・壁）として扱う。
+    /// </summary>
+    public sealed class EditorSpatialProvider : MonoBehaviour, IARSpatialProvider
+    {
+        [SerializeField] private Camera headCamera;
+        [SerializeField] private float floorY = 0f;
+        [Tooltip("現実環境の代わりとして扱うレイヤー。既定は Ignore Raycast 以外。敵の仮モデルは Ignore Raycast に置き、配置先にならないようにしている。")]
+        [SerializeField] private LayerMask environmentLayers = Physics.DefaultRaycastLayers;
+
+        public bool IsReady => headCamera != null;
+
+        // Editor ではカメラ許可は不要で、シーン上の仮の床を「検出済みの水平面1枚」とみなす
+        public SpatialStatus Status => new SpatialStatus(
+            CameraPermission.Granted,
+            IsReady ? TrackingPhase.Tracking : TrackingPhase.Initializing,
+            horizontalPlaneCount: 1);
+
+        public Pose HeadPose => headCamera != null
+            ? new Pose(headCamera.transform.position, headCamera.transform.rotation)
+            : Pose.identity;
+
+        private void Reset()
+        {
+            headCamera = Camera.main;
+        }
+
+        private void Awake()
+        {
+            if (headCamera == null) headCamera = Camera.main;
+        }
+
+        public bool TryGetFloorHeight(out float y)
+        {
+            y = floorY;
+            return true;
+        }
+
+        public bool TryRaycastEnvironment(Ray ray, float maxDistance, out EnvironmentHit environmentHit)
+        {
+            if (Physics.Raycast(ray, out var hit, maxDistance, environmentLayers, QueryTriggerInteraction.Ignore))
+            {
+                // 面に沿った前方向。レイが面に垂直だと射影が0になるので、その場合は任意の接線を使う。
+                var forward = Vector3.ProjectOnPlane(ray.direction, hit.normal);
+                if (forward.sqrMagnitude < 1e-6f) forward = Vector3.Cross(hit.normal, Vector3.right);
+                if (forward.sqrMagnitude < 1e-6f) forward = Vector3.Cross(hit.normal, Vector3.forward);
+
+                var pose = new Pose(hit.point, Quaternion.LookRotation(forward.normalized, hit.normal));
+                // Editor では面の向きを法線から判定する（AR SDK では検出平面の向きをそのまま使う）
+                environmentHit = new EnvironmentHit(pose, SurfaceClassifier.Classify(hit.normal.y), hit.distance);
+                return true;
+            }
+
+            environmentHit = default;
+            return false;
+        }
+    }
+}

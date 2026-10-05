@@ -1,0 +1,17 @@
+{
+    "name": "OrdinalScale.Gameplay",
+    "rootNamespace": "OrdinalScale.Gameplay",
+    "references": [
+        "OrdinalScale.Core",
+        "OrdinalScale.Platform"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

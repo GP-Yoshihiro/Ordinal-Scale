@@ -1,0 +1,11 @@
+# S1 iOSビルド  2026-10-01 00:29:32
+Machine: Mac OS X 26.6.2 / 8192MB RAM
+[OK] ビルド結果: Succeeded
+[--] 出力先: /Users/macbook/dev/Ordinal-Scale/OrdinalScale/Builds/iOS
+[--] 所要時間: 00:17:34
+[--] エラー／警告: 0 / 0
+[--] シーン: Assets/_Project/Scenes/iPhone_AR.unity
+[--] Unity版: 6000.5.10f1
+[--] Bundle ID: com.gpyoshihiro.ordinalscale
+[--] Xcode: Xcode 26.1.1 Build version 17B100
+NG: 0
