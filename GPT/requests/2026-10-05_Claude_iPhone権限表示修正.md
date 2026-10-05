@@ -6,7 +6,7 @@
 
 ## 再現と証拠
 
-1. 検証ブランチ`codex/iphone-ar-prep`の[`f3b63c1`](https://github.com/GP-Yoshihiro/Ordinal-Scale/commit/f3b63c1)を参照する。iOS用`UNITY_XR_ARKIT_LOADER_ENABLED`がない旧ビルドは`UnityARKit`のネイティブプラグインをXcodeプロジェクトへ含めず、`Session: None`となった。設定追加後はプラグインが組み込まれ、iOSのカメラ許可ダイアログとARKitセッションが動作した。
+1. 検証ブランチ`codex/iphone-ar-prep`の[`f3b63c1`](https://github.com/GP-Yoshihiro/Ordinal-Scale/commit/f3b63c1)と、Claude作業ブランチ宛ての[ドラフトPR #2](https://github.com/GP-Yoshihiro/Ordinal-Scale/pull/2)を参照する。iOS用`UNITY_XR_ARKIT_LOADER_ENABLED`がない旧ビルドは`UnityARKit`のネイティブプラグインをXcodeプロジェクトへ含めず、`Session: None`となった。設定追加後はプラグインが組み込まれ、iOSのカメラ許可ダイアログとARKitセッションが動作した。
 2. ユーザーはカメラ許可ダイアログで「許可」を選び、実映像・`SessionTracking`・`Tracking`を観察した。それでも`Camera: Denied`が残った。設定アプリのカメラ項目が許可後に現れたかは確認待ち。
 3. `OrdinalScale/Assets/_Project/Scripts/Platform/ARFoundation/ARFoundationSpatialProvider.cs`の`Start()`は`Application.RequestUserAuthorization(WebCam)`後の`Application.HasUserAuthorization(WebCam)`を一度だけ`_cameraPermission`に保存し、`Status`はその値を読み続ける。`ARCameraManager.permissionGranted`は参照していない。インストール済みAR Foundation 6.5.1の同APIはカメラサブシステムの権限状態を返し、ARKit側の実装はネイティブ権限判定を使う。誤表示の直接原因は保存値とARKit稼働状態の不一致だが、`HasUserAuthorization`がなぜ偽になったかは未確定。
 4. ローカルの端末ログ：旧ビルド`~/dev/Ordinal-Scale/OrdinalScale/Logs/IOSCameraPermissionConsole.log`、更新版`IOSCameraPermissionAfterARKit.log`。個人識別子・カメラ映像は共有しない。S1の実績は[実機記録票](../verification/iPhone_AR_S1_実機記録票.md)。
