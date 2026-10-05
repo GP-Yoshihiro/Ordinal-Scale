@@ -1,0 +1,21 @@
+# S1 設定検証  2026-10-01 00:11:02
+Machine: Mac OS X 26.6.2 / 8192MB RAM
+[OK] Unity版: 6000.5.10f1（固定版: 6000.5.10f1）
+[OK] ビルドターゲット: iOS
+[OK] Package com.unity.inputsystem: 1.20.0
+[OK] Package com.unity.render-pipelines.universal: 17.5.0
+[OK] Package com.unity.xr.arfoundation: 6.5.1
+[OK] Package com.unity.xr.arkit: 6.5.1
+[OK] Package com.unity.xr.management: 4.6.1
+[OK] Package com.unity.xr.core-utils: 2.6.0
+[OK] Package com.unity.test-framework: 1.7.0
+[OK] URP アセット: OS_URP(UniversalRenderPipelineAsset)
+[OK] AR Background Renderer Feature (OS_URP_Renderer): 追加済み
+[OK] XR Plug-in (iOS) Apple ARKit: ARKitLoader
+[OK] XR Initialize on Startup (iOS): True
+[OK] Bundle ID: com.gpyoshihiro.ordinalscale
+[OK] カメラ使用目的の文言: Uses the camera to show enemies in your real surroundings.
+[OK] ビルド対象の先頭シーン: Assets/_Project/Scenes/iPhone_AR.unity
+[--] iOS最小バージョン: 15.0
+[--] Xcode: Xcode 26.1.1 Build version 17B100
+NG: 0
