@@ -1,3 +1,4 @@
+using OrdinalScale.Platform;
 using UnityEngine;
 
 namespace OrdinalScale.Gameplay.Placement
@@ -12,10 +13,20 @@ namespace OrdinalScale.Gameplay.Placement
         private GameObject _observedEnemy;
         private Animator _animator;
         private GUIStyle _buttonStyle;
+        private ScreenPointerInput _screenPointer;
 
         private void Awake()
         {
             if (placement == null) placement = FindAnyObjectByType<EnemyPlacementController>();
+            _screenPointer = FindAnyObjectByType<ScreenPointerInput>();
+            if (_screenPointer != null)
+                _screenPointer.AddSelectionExclusion(IsAttackButtonPointer);
+        }
+
+        private void OnDestroy()
+        {
+            if (_screenPointer != null)
+                _screenPointer.RemoveSelectionExclusion(IsAttackButtonPointer);
         }
 
         private void Update()
@@ -27,7 +38,7 @@ namespace OrdinalScale.Gameplay.Placement
                 _animator = enemy != null ? enemy.GetComponentInChildren<Animator>(true) : null;
                 if (_animator != null)
                 {
-                    // 攻撃が初期状態の配布コントローラでも、配置直後は待機を表示する。
+                    // Controllerの初期状態に依存せず、配置直後は待機を表示する。
                     _animator.applyRootMotion = false;
                     _animator.Play(idleState, 0, 0f);
                     Debug.Log($"[OrdinalScale][S3] モデル表示・待機再生: {enemy.name}", this);
@@ -38,7 +49,7 @@ namespace OrdinalScale.Gameplay.Placement
             var state = _animator.GetCurrentAnimatorStateInfo(0);
             if ((state.IsName(idleState) || state.IsName(attackState)) && state.normalizedTime >= 1f)
             {
-                // 配布クリップのLoop設定に依存せず待機へ戻す。
+                // クリップのLoop設定に依存せず待機へ戻す。
                 _animator.Play(idleState, 0, 0f);
             }
         }
@@ -51,20 +62,37 @@ namespace OrdinalScale.Gameplay.Placement
                 _buttonStyle = new GUIStyle(GUI.skin.button) { fontSize = 16 };
             }
 
-            var scale = Mathf.Max(1f, Screen.dpi > 0f ? Screen.dpi / 160f : Screen.height / 800f);
+            var scale = PreviewScale();
             var saved = GUI.matrix;
             GUI.matrix = Matrix4x4.Scale(new Vector3(scale, scale, 1f));
-            var safe = Screen.safeArea;
-            const float width = 140f;
-            const float height = 46f;
-            var x = safe.xMax / scale - width - 8f;
-            var y = (Screen.height - safe.yMin) / scale - height - 8f;
-            if (GUI.Button(new Rect(x, y, width, height), "Attack preview", _buttonStyle))
+            var screenRect = AttackButtonScreenRect(scale);
+            var guiRect = new Rect(screenRect.x / scale,
+                (Screen.height - screenRect.yMax) / scale,
+                screenRect.width / scale, screenRect.height / scale);
+            if (GUI.Button(guiRect, "Attack preview", _buttonStyle))
             {
                 _animator.Play(attackState, 0, 0f);
                 Debug.Log($"[OrdinalScale][S3] 攻撃アニメ再生: {attackState}", this);
             }
             GUI.matrix = saved;
+        }
+
+        private bool IsAttackButtonPointer(Vector2 screenPosition)
+        {
+            return _animator != null && _animator.isActiveAndEnabled &&
+                   AttackButtonScreenRect(PreviewScale()).Contains(screenPosition);
+        }
+
+        private static float PreviewScale()
+        {
+            return Mathf.Max(1f, Screen.dpi > 0f ? Screen.dpi / 160f : Screen.height / 800f);
+        }
+
+        private static Rect AttackButtonScreenRect(float scale)
+        {
+            var safe = Screen.safeArea;
+            return new Rect(safe.xMax - 148f * scale, safe.yMin + 8f * scale,
+                140f * scale, 46f * scale);
         }
     }
 }
