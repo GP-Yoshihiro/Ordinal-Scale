@@ -48,6 +48,15 @@ namespace OrdinalScale.Core.Tests
         }
 
         [Test]
+        public void TrackingNormalizesStaleCameraDenial()
+        {
+            // ARKit が追跡中なら実カメラは使用中。WebCam API の古い拒否値を画面や配置判定へ伝えない。
+            var status = Status(CameraPermission.Denied, TrackingPhase.Tracking, 1);
+            Assert.That(status.CameraPermission, Is.EqualTo(CameraPermission.Granted));
+            Assert.That(PlacementGate.Evaluate(status), Is.EqualTo(PlacementBlockReason.None));
+        }
+
+        [Test]
         public void NegativePlaneCountIsTreatedAsZero()
         {
             var status = Status(CameraPermission.Granted, TrackingPhase.Tracking, -1);

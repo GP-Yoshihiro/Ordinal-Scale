@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 #if OS_HAS_INPUT_SYSTEM && ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -18,6 +20,7 @@ namespace OrdinalScale.Platform
         private bool _selectPending;
         private Ray _selectRay;
         private Ray _pointerRay;
+        private readonly List<Func<Vector2, bool>> _selectionExclusions = new();
 
         public Ray PointerRay => _pointerRay;
 
@@ -38,6 +41,8 @@ namespace OrdinalScale.Platform
 
             _pointerRay = pointerCamera.ScreenPointToRay(screenPos);
             if (!pressedThisFrame) return;
+            foreach (var exclusion in _selectionExclusions)
+                if (exclusion(screenPos)) return;
 
             // 同じフレームに複数回押されても1件として扱う（呼び出し側は1フレーム1回ポーリング）
             _selectPending = true;
@@ -51,6 +56,18 @@ namespace OrdinalScale.Platform
 
             _selectPending = false;
             return true;
+        }
+
+        /// <summary>画面上の操作領域を、床配置などの選択入力から除外する。</summary>
+        public void AddSelectionExclusion(Func<Vector2, bool> exclusion)
+        {
+            if (exclusion != null && !_selectionExclusions.Contains(exclusion))
+                _selectionExclusions.Add(exclusion);
+        }
+
+        public void RemoveSelectionExclusion(Func<Vector2, bool> exclusion)
+        {
+            _selectionExclusions.Remove(exclusion);
         }
 
         private static bool TryReadPointer(out Vector2 screenPos, out bool pressedThisFrame)
