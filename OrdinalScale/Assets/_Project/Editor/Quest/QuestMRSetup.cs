@@ -19,6 +19,7 @@ namespace OrdinalScale.EditorTools
     /// Quest 3／3S（Q0）用の Editor メニュー。XR パッケージ導入後にコンパイルされる。
     /// 1. パッケージ追加（QuestPackageInstaller）→ 2. 設定適用 → 3. シーン作成 → 4. 検証 → 5. APK ビルド の順に使う。
     /// iPhone 用の設定（iOS の XR ローダー・ビルド対象シーン・縦持ち固定）には触れない。
+    /// ただし画面の向きは Android と iOS で共有の値なので、APK ビルドの間だけ Landscape Left にして戻す（QuestBuildOrientation）。
     /// 検証とビルドの結果は Claude/reports/evidence/ に残す。Quest 実機での合否はここでは判定しない。
     /// </summary>
     public static class QuestMRSetup
@@ -167,11 +168,25 @@ namespace OrdinalScale.EditorTools
                 options = BuildOptions.Development,
             };
 
-            var report = BuildPipeline.BuildPlayer(options);
+            // 画面の向きは Android と iOS で共有。ビルドの間だけ Quest 用（Landscape Left）にし、
+            // 成功・失敗・例外のいずれでも using の終わりで iPhone 用の値（通常 Portrait）に戻す
+            BuildReport report;
+            UIOrientation originalOrientation;
+            bool orientationChanged;
+            using (var orientation = QuestBuildOrientation.Apply())
+            {
+                originalOrientation = orientation.Original;
+                orientationChanged = orientation.Changed;
+                report = BuildPipeline.BuildPlayer(options);
+            }
+
             var s = report.summary;
+            var restored = PlayerSettings.defaultInterfaceOrientation;
 
             var r = new EvidenceReport("Q0 Androidビルド");
             r.Check("ビルド結果", s.result == BuildResult.Succeeded, s.result.ToString());
+            r.Info("ビルド中の画面の向き", $"{QuestBuildOrientation.Required}（変更前 {originalOrientation}、{(orientationChanged ? "一時的に変更" : "変更なし")}）");
+            r.Check("ビルド後の画面の向き（元の値に復元）", restored == originalOrientation, restored.ToString());
             r.Info("出力先", Path.GetFullPath(ApkPath));
             r.Info("APKサイズ", File.Exists(ApkPath) ? $"{new FileInfo(ApkPath).Length / (1024f * 1024f):0.0} MB" : "なし");
             r.Info("所要時間", s.totalTime.ToString(@"hh\:mm\:ss"));
@@ -244,6 +259,18 @@ namespace OrdinalScale.EditorTools
             r.Check("iPhone: XR Plug-in (iOS) Apple ARKit のまま", iosLoaders.Contains("ARKitLoader"), iosLoaders.Length > 0 ? string.Join(", ", iosLoaders) : "なし");
             var firstScene = EditorBuildSettings.scenes.FirstOrDefault(sc => sc.enabled);
             r.Check("iPhone: ビルド対象の先頭シーン", firstScene != null && firstScene.path == IPhoneScenePath, firstScene != null ? firstScene.path : "なし");
+
+            // 画面の向きは Android と iOS で共有の1つの値。保存値は iPhone 用（Portrait）のままにし、
+            // Quest の Landscape Left はメニュー5／BuildApkFromCommandLine がビルドの間だけ適用する
+            var orientation = PlayerSettings.defaultInterfaceOrientation;
+            r.Check("画面の向き（保存値は iPhone 用の Portrait）", orientation == UIOrientation.Portrait,
+                orientation == UIOrientation.Portrait
+                    ? "Portrait（Quest ビルド時だけ Landscape Left に切り替え、ビルド後に戻す）"
+                    : $"{orientation}（iPhone 用のメニュー OrdinalScale > iOS AR > 1 で Portrait に戻す）");
+            var pending = QuestBuildOrientation.HasPendingBackup(out var pendingOriginal);
+            r.Check("Quest ビルドの一時変更が残っていない", !pending,
+                pending ? $"残っている（元の値 {pendingOriginal}。Editor を開き直すと自動で戻る）" : "なし");
+            r.Info("Quest の APK ビルド方法", "メニュー5 または BuildApkFromCommandLine を使う（File > Build Profiles から直接ビルドすると向きの検証で失敗する）");
 
             // --- シーン ---
             QuestSceneBuilder.Inspect(r);
