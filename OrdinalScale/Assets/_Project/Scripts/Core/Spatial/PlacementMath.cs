@@ -26,5 +26,32 @@ namespace OrdinalScale.Core.Spatial
             yawDegrees = (float)(Math.Atan2(dx, dz) * 180.0 / Math.PI);
             return true;
         }
+
+        /// <summary>
+        /// 視線の水平成分がこれより短いと（真下・真上を見ている）前方が決まらないとみなす。
+        /// 単位ベクトルの水平成分なので、約84°以上うつむく・見上げると false になる。
+        /// </summary>
+        public const float MinHorizontalForward = 0.1f;
+
+        /// <summary>
+        /// 頭の位置 (headX, headZ) から、視線 (forwardX, forwardZ) の水平方向へ distance(m) 進んだ床上の点。
+        /// Quest の固定配置（起動時に正面へ敵を置く）で使う。視線の上下成分は無視する。
+        /// 前方が決まらない、または距離が正でない場合は false。
+        /// </summary>
+        public static bool TryPointInFront(float headX, float headZ, float forwardX, float forwardZ, float distance,
+            out float x, out float z)
+        {
+            var length = (float)Math.Sqrt(forwardX * forwardX + forwardZ * forwardZ);
+            if (distance <= 0f || length < MinHorizontalForward)
+            {
+                x = headX;
+                z = headZ;
+                return false;
+            }
+
+            x = headX + forwardX / length * distance;
+            z = headZ + forwardZ / length * distance;
+            return true;
+        }
     }
 }
