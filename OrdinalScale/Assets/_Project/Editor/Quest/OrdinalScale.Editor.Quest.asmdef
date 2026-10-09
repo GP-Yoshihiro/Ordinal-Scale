@@ -1,0 +1,51 @@
+{
+    "name": "OrdinalScale.Editor.Quest",
+    "rootNamespace": "OrdinalScale.EditorTools",
+    "references": [
+        "OrdinalScale.Platform",
+        "OrdinalScale.Gameplay",
+        "Unity.InputSystem",
+        "Unity.XR.ARFoundation",
+        "Unity.XR.CoreUtils",
+        "Unity.XR.Management",
+        "Unity.XR.Management.Editor",
+        "Unity.XR.OpenXR",
+        "Unity.XR.OpenXR.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "OS_HAS_ARFOUNDATION",
+        "OS_HAS_OPENXR",
+        "OS_HAS_XR_MANAGEMENT"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.xr.arfoundation",
+            "expression": "6.0.0",
+            "define": "OS_HAS_ARFOUNDATION"
+        },
+        {
+            "name": "com.unity.xr.openxr",
+            "expression": "1.10.0",
+            "define": "OS_HAS_OPENXR"
+        },
+        {
+            "name": "com.unity.xr.management",
+            "expression": "4.0.0",
+            "define": "OS_HAS_XR_MANAGEMENT"
+        },
+        {
+            "name": "com.unity.xr.meta-openxr",
+            "expression": "2.0.0",
+            "define": "OS_HAS_META_OPENXR"
+        }
+    ],
+    "noEngineReferences": false
+}
