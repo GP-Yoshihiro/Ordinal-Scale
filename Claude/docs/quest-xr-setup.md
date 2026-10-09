@@ -39,7 +39,7 @@
 | ― | File > Build Profiles で **Android に Switch Platform** | ― | ― |
 | 3 | Questシーンを作成 | `Assets/_Project/Scenes/Quest_MR.unity` をコードで組み立てて保存（構成は `QuestSceneBuilder` の冒頭コメント）。ビルド対象一覧には追加しない | シーンが開き、Hierarchy に `XR Origin (Quest)`・`PlatformRig_Quest`・`Battle` がある |
 | 4 | 設定を検証（証拠を保存） | Unity 版・Android モジュール・パッケージ版・Android 設定・XR ローダー・OpenXR 機能・iPhone 経路の回帰・シーン構成を OK/NG で記録 | `Claude/reports/evidence/YYYYMMDD-HHMMSS_Q0_Quest設定検証.txt` の NG が 0 |
-| 5 | Android開発ビルド（APK） | Quest シーンだけを指定して `Builds/Android/OrdinalScale_Quest_dev.apk` を作る（Unity 既定のデバッグ鍵） | `…_Q0_Androidビルド.txt` の「ビルド結果」が OK |
+| 5 | Android開発ビルド（APK） | Quest シーンだけを指定して `Builds/Android/OrdinalScale_Quest_dev.apk` を作る（Unity 既定のデバッグ鍵）。**ビルドの間だけ画面の向きを Landscape Left にし、終わったら（失敗しても）元の Portrait に戻す**（2-5） | `…_Q0_Androidビルド.txt` の「ビルド結果」と「ビルド後の画面の向き（元の値に復元）」が OK |
 
 コマンドラインでビルドする場合（2〜3 を済ませた後。Mac の例）：
 
@@ -67,6 +67,19 @@ echo $?   # 0 = 成功
 
 - コミットする：`Packages/manifest.json`・`Packages/packages-lock.json`、`ProjectSettings/*.asset`、`Assets/XR/` 配下（OpenXR の設定アセットを含む）、`Assets/_Project/Scenes/Quest_MR.unity`、新しく生成された `.meta`、`Claude/reports/evidence/` の検証・ビルドのテキスト。
 - コミットしない：`Builds/`（APK）、キーストア、`Assets/LocalLicensed/`（Fab 原本。`.gitignore` 済み）、`UserSettings/`。
+
+### 2-5. 画面の向き（iPhone の縦持ちと Quest の Landscape Left）
+
+`PlayerSettings.defaultInterfaceOrientation`（Player 設定の Default Orientation）は **Android と iOS で共有の1つの値**。iPhone 用のメニュー（`OrdinalScale > iOS AR > 1`）は Portrait に固定し、OpenXR の Meta Quest Support は Landscape Left 以外をビルド前の検証でエラーにする（`Meta Quest HMDs only support Landscape Left orientation.`、com.unity.xr.openxr 1.17.1 の `MetaQuestFeature`）。2026-10-09 に開発者の Mac で、メニュー5の初回ビルドがこのエラーで失敗した。
+
+対応（`Editor/Quest/QuestBuildOrientation.cs`）：
+
+- 保存しておく値は **Portrait のまま**（iPhone の経路を壊さない）。
+- メニュー5と `BuildApkFromCommandLine` は、`BuildPipeline.BuildPlayer` の直前に Landscape Left にし、成功・失敗・例外のいずれでも直後に元の値へ戻して `ProjectSettings` を保存し直す。
+- ビルド中に Unity が落ちた場合に備え、変更前の値を `Library/OrdinalScale_QuestOrientationBackup.txt` に控え、次に Editor を開いたとき自動で戻す（`Library/` はコミットされない）。
+- メニュー4の設定検証は「保存値が Portrait」「一時変更が残っていない」を確認する。
+- **File > Build Profiles から直接 Android をビルドすると、この切り替えが働かず同じエラーで失敗する**。Quest の APK は必ずメニュー5かコマンドラインで作る。
+- Project Validation の「Fix」で Landscape Left に直さない（iPhone 用の値が変わる）。直してしまった場合は `OrdinalScale > iOS AR > 1` で Portrait に戻す。
 
 ## 3. コードの構成（Q0 で追加）
 
