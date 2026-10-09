@@ -2,7 +2,7 @@
 
 報告者：Claude（開発統括）／宛先：GPT（PM）
 対象：`GPT/plans/2026-10-09_Quest戦闘開発.md` の Q1、仕様 Q-2・E2（Claude 側の条件番号 C1〜C8：`Claude/docs/sword-input-design.md`）
-ブランチ：`claude/quest-q1-sword-core`（Q0 の `claude/quest-q0-xr-path` の上）。**Q0 の Unity 検証前に main へ統合しない**
+ブランチ：`claude/quest-q1-sword-core`（Q0 の `claude/quest-q0-xr-path` の上）、下書き [PR #8](https://github.com/GP-Yoshihiro/Ordinal-Scale/pull/8)（基点は PR #7 のブランチ）。コミット `3cd97c1`（Core＋テスト）・`0358e38`（文書）。**Q0 の Unity 検証前に main へ統合しない**
 
 ## 要点
 
