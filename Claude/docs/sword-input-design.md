@@ -1,6 +1,6 @@
 # 剣の命中判定の設計（Quest の剣入力／Editor の代替操作）
 
-状態：**命中条件は確定**（2026-09-30 ユーザー決定。GPT 仕様書 main `206cb12` の E2・Q-2、要件インタビュー Q6）。実装方式は Claude が決める。速度などの数値は仮置きで、Quest 実機で調整する。**判定は未実装**（Q1 で着手）。2026-10-09 の Q0 で入力の境界（`ISwordPoseSource`・`BladePose`・Core の `BladeSample`）と、Quest／Editor の姿勢の入力源を実装した（[quest-xr-setup.md](quest-xr-setup.md)）。
+状態：**命中条件は確定**（2026-09-30 ユーザー決定。GPT 仕様書 main `206cb12` の E2・Q-2、要件インタビュー Q6）。実装方式は Claude が決める。速度などの数値は仮置きで、Quest 実機で調整する。2026-10-09 の Q0 で入力の境界（`ISwordPoseSource`・`BladePose`・Core の `BladeSample`）と、Quest／Editor の姿勢の入力源を実装した（[quest-xr-setup.md](quest-xr-setup.md)）。同日、**Q1 の Core 側の判定（3.2 の規則・振り判定・接触の掃引）を先行実装**し、`dotnet test` 相当で4章のテストを含む53件が成功（7章）。**Unity（Gameplay への接続・Editor 操作）と Quest 実機では未確認**。
 
 ## 1. 確定した命中条件
 
@@ -65,7 +65,9 @@
 | `SwingDetector` | Core（純C#） | 刃先の速さ・追跡の有無・時刻から振りの開始／継続／終了を判定。ヒステリシスと最短時間を持ち、追跡が無効なサンプルや不自然な位置の飛びを除外 | C1・C2・C5・C8 | `dotnet test` |
 | `SwordHitJudge` | Core（純C#） | 敵ごとの前フレーム接触状態と、振りごとの命中済み集合を持ち、3.2 の規則で命中を返す | C1〜C5 | `dotnet test` |
 | `SwordTuning` | Core の設定値＋Unity の ScriptableObject | しきい値・刃の長さなどをコード外に置き、Quest で調整・受入時に固定できるようにする | C8 | 設定値を報告に記録 |
-| `SwordHitDetector` | Gameplay | 前フレームと今フレームの刃の間を補間しながらカプセルで重なり判定（敵の当たり判定レイヤーのみ）→ `SwordHitJudge` → `Health.ApplyDamage(1)` | C6・すり抜け対策 | Editor で確認 |
+| `SwordContact`・`BodyCapsule` | Core（純C#） | 前フレームと今フレームの刃の間を補間しながら、刃の線分と体のカプセル（縦1本）の距離で接触を判定（Q1 先行実装で Core へ移した。物理エンジンに頼らずテストできるようにするため） | C6・すり抜け対策 | `dotnet test` |
+| `SwordStrikeTracker` | Core（純C#） | `BladeSample` を毎フレーム受け、上の部品をまとめて敵ごとの命中（と不命中の理由）を返す入口 | C1〜C6 | `dotnet test` |
+| `SwordHitDetector` | Gameplay | `ISwordPoseSource` → `BladePose.ToSample()` → `SwordStrikeTracker`。敵の Transform から `BodyCapsule` を作り、命中を通知（`Health.ApplyDamage(1)` への接続は Q2） | ― | Editor で確認（未実装） |
 | `EditorSwordEmulator` | Platform/EditorSim | カメラ前方約0.5mを手元とし、マウスドラッグで刃を動かす。ドラッグの速さが刃先の速さになるので、速いドラッグ＝振り、遅いドラッグ＝押し当て を再現できる | C7 | Editor で確認 |
 | `QuestSwordPoseSource` | Platform（Quest） | コントローラ姿勢から刃を作る | ― | 11月18日以降に実機 |
 
@@ -107,3 +109,16 @@
 - 速い振りで命中が抜けないか（すり抜け）
 - コントローラの追跡遅延と、追跡の途切れ・復帰時の誤命中
 - パススルー越しに敵の体と刃の位置が一致して見えるか
+
+## 7. Q1 先行実装の状況（2026-10-09）
+
+| 項目 | 状況 |
+| --- | --- |
+| Core：`SwordTuning`・`SwingDetector`・`SwordContact`・`SwordHitJudge`・`SwordStrikeTracker` | 実装済み（ブランチ `claude/quest-q1-sword-core`、Q0 の PR #7 の上に積んだ下書き PR） |
+| 4章のテスト | 「10回の有効な命中で `Health(10)` が撃破」以外はすべて実装。撃破は Q2 の範囲のため「10回の振りで命中10回」までを確認 |
+| 追加したテスト | 振りの最短時間・ヒステリシス・サンプル間隔の空き・同時刻サンプル、体全体が同じ当たり判定（C6）、刃の太さ、1振りで複数の敵、しきい値を変えると同じ動きが命中／押し当てに変わること（C8） |
+| テストの効き目 | 規則（C1/C2・C3・C5・掃引・飛び・ヒステリシス・最短時間）を1つずつ外した版で、それぞれ対応するテストが失敗することを確認 |
+| 未実装（Unity 側） | `SwordHitDetector`（Gameplay）、`EditorSwordPoseSource` のドラッグ操作と画面速度→刃先速度の換算、`SwordTuning` を Unity から調整する ScriptableObject |
+| 未確認 | Unity Editor でのコンパイル・Test Runner での実行、Quest 実機での全項目（6章）。しきい値はすべて仮の値 |
+
+判定の順序（同じフレームで「接触していない」→「触れ続け」→「振り中でない」→「この振りで命中済み」の順に理由を1つ返す）は、ログで不命中の原因を区別できるようにするため。
