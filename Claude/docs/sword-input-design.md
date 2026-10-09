@@ -1,6 +1,6 @@
 # 剣の命中判定の設計（Quest の剣入力／Editor の代替操作）
 
-状態：**命中条件は確定**（2026-09-30 ユーザー決定。GPT 仕様書 main `206cb12` の E2・Q-2、要件インタビュー Q6）。実装方式は Claude が決める。速度などの数値は仮置きで、Quest 実機で調整する。**未実装**（旧WBS 3〜6 の再配置後に着手）。
+状態：**命中条件は確定**（2026-09-30 ユーザー決定。GPT 仕様書 main `206cb12` の E2・Q-2、要件インタビュー Q6）。実装方式は Claude が決める。速度などの数値は仮置きで、Quest 実機で調整する。**判定は未実装**（Q1 で着手）。2026-10-09 の Q0 で入力の境界（`ISwordPoseSource`・`BladePose`・Core の `BladeSample`）と、Quest／Editor の姿勢の入力源を実装した（[quest-xr-setup.md](quest-xr-setup.md)）。
 
 ## 1. 確定した命中条件
 
@@ -41,7 +41,7 @@
     Editor: マウス / iPhone: 画面タップ（S2の配置） / Quest: レイ（メニュー操作）
     → 戦闘の命中判定には使わない
 
-【剣】 ISwordPoseSource（新設）
+【剣】 ISwordPoseSource（Q0 で実装）
     bool TryGetBladePose(out BladePose pose)   // 手元・刃先の位置、時刻、追跡が有効か
     Quest : コントローラのグリップ姿勢＋刃の長さ・角度のオフセット
     Editor: マウスドラッグから刃の姿勢を作る（C7）

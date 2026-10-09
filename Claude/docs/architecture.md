@@ -20,7 +20,7 @@
 │  Combat/Health       │  │    IPointerInput, EnvironmentHit       │
 │  Spatial/            │  │  Pointer/ScreenPointerInput（共通）    │
 │   PlacementGate,     │  │  EditorSim / ARFoundation(iPhone) /    │
-│   EnemyPlacement     │  │  MetaQuest(予定) / Xreal(予定)          │
+│   EnemyPlacement     │  │  XR(Quest, Q0) / Xreal(予定)            │
 │   Session 等         │  │                                        │
 │  （今後: 振り判定等） │  │  PlatformRig（実装の解決窓口）          │
 └──────────────────────┘  └───────────────────────────────────────┘
@@ -54,7 +54,7 @@ OrdinalScale/                       Unityプロジェクトのルート
           Abstractions/             デバイス抽象インターフェース
           EditorSim/                Editor用シミュレータ実装
           ARFoundation/             AR Foundation 実装（iPhone。Quest で使えるかは要検証）
-          MetaQuest/                （Quest実機週に追加）
+          XR/                       Quest（OpenXR）用：頭部・床・コントローラの剣（Q0。SDK型を使わず組み込みの UnityEngine.XR だけで書く）
           Xreal/                    （STEP 2で追加）
         Gameplay/                   敵・攻撃・ゲーム進行
         UI/                         SAO風HUD
@@ -72,7 +72,7 @@ tools/CoreTests/                    Unityなしで Core をテストする .NET 
 
 ### `IARSpatialProvider` — 空間認識
 
-| メンバー | 役割 | Editor | iPhone（AR Foundation＋ARKit） | Quest（予定） | XREAL（予定） |
+| メンバー | 役割 | Editor | iPhone（AR Foundation＋ARKit） | Quest（`XRHeadSpatialProvider`、Q0） | XREAL（予定） |
 | --- | --- | --- | --- | --- | --- |
 | `IsReady` | 追跡が正常か | カメラがあれば true | `ARSession.state == SessionTracking` | MRUK または AR Foundation | NRSDK トラッキング開始 |
 | `Status` | 置けない理由の元データ（許可・追跡段階・水平面数） | 常に許可済み・水平面1枚 | カメラ許可の問い合わせ結果＋セッション状態＋検出平面 | 同左 | 同左 |
@@ -116,7 +116,7 @@ S2 で旧 `IInputController`（照準レイ＋攻撃の瞬間）をこの名前�
 ゲーム側は `TryConsumeSelect` を Update で1回ポーリングする。イベント方式にしないのは、処理順を Gameplay 側で固定し、テストや再現をしやすくするため。
 
 > 剣の命中条件は確定済み（振っている最中に体に触れた時だけ、押し当ては不命中、1振り1命中、体全体が同じ当たり判定、Editor はマウスドラッグで代替）。
-> 戦闘の命中は新設する `ISwordPoseSource` と Core の `SwingDetector`／`SwordHitJudge` で判定する。詳細と条件番号 C1〜C8 は [sword-input-design.md](sword-input-design.md)。
+> 戦闘の命中は `ISwordPoseSource`（Q0 で追加：Quest は `XRControllerSwordPoseSource`、Editor は `EditorSwordPoseSource`）と、Q1 で追加する Core の `SwingDetector`／`SwordHitJudge` で判定する。Quest の XR 方式と Q0 の手順は [quest-xr-setup.md](quest-xr-setup.md)。詳細と条件番号 C1〜C8 は [sword-input-design.md](sword-input-design.md)。
 
 ### `PlatformRig` — 実装の切り替え
 

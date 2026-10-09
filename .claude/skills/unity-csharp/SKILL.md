@@ -15,7 +15,7 @@ OrdinalScale/Assets/_Project/
     Pointer/             ScreenPointerInput（Editor のクリックと iPhone のタップを共通処理）
     EditorSim/           Editor 用シミュレータ実装
     ARFoundation/        AR Foundation 実装（iPhone）。asmdef を分け、versionDefines＋defineConstraints で未導入時はコンパイルしない
-    MetaQuest/  (予定)   Meta XR SDK 実装。同上
+    XR/                  Quest（OpenXR）用。組み込みの UnityEngine.XR だけを使うので asmdef を分けない（Meta XR SDK の型は使わない）
     Xreal/      (予定)   NRSDK 実装。同上
   Scripts/Gameplay/    OrdinalScale.Gameplay    敵の配置（Placement/）、今後：命中・HP表示などの MonoBehaviour
   Scripts/UI/          SAO風HUD
