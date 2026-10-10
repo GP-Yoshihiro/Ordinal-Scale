@@ -2,6 +2,7 @@
     "name": "OrdinalScale.Editor.Quest",
     "rootNamespace": "OrdinalScale.EditorTools",
     "references": [
+        "OrdinalScale.Core",
         "OrdinalScale.Platform",
         "OrdinalScale.Gameplay",
         "Unity.InputSystem",

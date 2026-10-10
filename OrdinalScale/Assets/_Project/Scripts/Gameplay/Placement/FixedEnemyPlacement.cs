@@ -1,5 +1,6 @@
 using System;
 using OrdinalScale.Core.Spatial;
+using OrdinalScale.Gameplay.Combat;
 using OrdinalScale.Platform;
 using UnityEngine;
 
@@ -99,8 +100,23 @@ namespace OrdinalScale.Gameplay.Placement
                 ? Instantiate(prefab)
                 : EnemyPlaceholder.Create(placeholderBodyColor, placeholderFaceColor);
 
-            // iPhone の配置と同じく、敵自身が環境へのレイの対象にならないようにする（剣の判定レイヤーは Q1 で決める）
+            // iPhone の配置と同じく、敵自身が環境へのレイの対象にならないようにする。
+            // 剣の判定は物理レイヤーを使わず EnemyHitVolume の寸法で計算するので、レイヤーは剣に影響しない
             EnemyPlaceholder.SetLayerRecursively(enemy, EnemyPlaceholder.IgnoreRaycastLayer);
+
+            // 剣の当たり判定（体全体で1つのカプセル）。仮モデルは寸法が分かっているのでそのまま、Fab モデルは表示範囲から概算（仮）
+            var volume = enemy.GetComponent<EnemyHitVolume>();
+            if (volume == null) volume = enemy.AddComponent<EnemyHitVolume>();
+            if (prefab == null)
+            {
+                volume.Configure(EnemyPlaceholder.BodyHeight, EnemyPlaceholder.BodyDiameter * 0.5f);
+            }
+            else if (EnemyHitVolume.TryEstimate(enemy, out var h, out var r))
+            {
+                volume.Configure(h, r);
+            }
+
+            Debug.Log($"[OrdinalScale][Q1] 敵の当たり判定: 高さ{volume.Height:0.00}m 半径{volume.Radius:0.00}m（{(prefab == null ? "仮モデル" : "モデルの表示範囲から概算・仮")}）", this);
             return enemy;
         }
     }

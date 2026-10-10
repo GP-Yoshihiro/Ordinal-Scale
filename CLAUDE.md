@@ -7,7 +7,7 @@ SAO『オーディナル・スケール』風ARバトルゲームのプロトタ
 - アーキテクチャ: `Claude/docs/architecture.md`
 - STEP 1 のUnity設定手順: `Claude/docs/step1-setup.md`（Windows）、`Claude/docs/iphone-ar-setup.md`（Mac＋iPhone）
 - Quest 3／3S の XR 方式・Q0 の手順: `Claude/docs/quest-xr-setup.md`（OpenXR＋Unity OpenXR: Meta＋AR Foundation。Meta XR Core SDK は使わない）
-- 剣の命中判定（条件確定・判定は未実装、入力の境界 `ISwordPoseSource` は Q0 で実装）: `Claude/docs/sword-input-design.md`。剣・命中に関わる実装とテストは条件 C1〜C8 に従い、指す・選ぶ入力（`IPointerInput`）で命中を判定しない。
+- 剣の命中判定（条件確定。入力の境界 `ISwordPoseSource` は Q0、Core の判定 `SwordStrikeTracker` は Q1 先行で実装済み・Unity 未接続）: `Claude/docs/sword-input-design.md`。剣・命中に関わる実装とテストは条件 C1〜C8 に従い、指す・選ぶ入力（`IPointerInput`）で命中を判定しない。
 - Unity 版は **`6000.5.10f1` に固定**（`OrdinalScale/ProjectSettings/ProjectVersion.txt`）。変更する場合は理由をPMへ報告する。
 - `Packages/manifest.json` と `ProjectSettings/` の出所・変更点: `Claude/docs/unity-project-files.md`。設定ファイルはクラウドで生成できないため、Unity 公式の生成物を使い、手書きしない。
 
