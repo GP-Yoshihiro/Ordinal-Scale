@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using OrdinalScale.Core.Combat;
 using OrdinalScale.Gameplay.Placement;
@@ -77,6 +78,12 @@ namespace OrdinalScale.Gameplay.Combat
 
         public StrikeEventRecorder Recorder => _recorder;
 
+        /// <summary>
+        /// 剣の出来事（命中・ゆっくり接触・空振りの振り終了など）が起きたとき。Q2 の BattleController は Kind == Hit だけを HP に数える。
+        /// 判定は変えず、記録した出来事をそのまま渡す。
+        /// </summary>
+        public event Action<StrikeEvent> Struck;
+
         private void Reset()
         {
             rig = FindAnyObjectByType<PlatformRig>();
@@ -103,6 +110,8 @@ namespace OrdinalScale.Gameplay.Combat
         {
             if (placement != null) placement.Placed -= OnEnemyPlaced;
             EndEnemyFlash();
+            // 判定を止めた（撃破後など）ときに、命中の色が残らないようにする
+            if (bladeView != null) bladeView.SetTint(bladeView.BaseColor);
         }
 
         private void Update()
@@ -208,6 +217,7 @@ namespace OrdinalScale.Gameplay.Combat
         private void Handle(in StrikeEvent e)
         {
             PushRecent(StrikeMessages.ShortCode(e));
+            Struck?.Invoke(e);
 
             if (e.Kind != StrikeEventKind.SwingStarted || logSwingStart)
             {
