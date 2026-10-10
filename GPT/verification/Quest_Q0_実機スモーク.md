@@ -7,12 +7,12 @@
 | 項目 | 記録 |
 | --- | --- |
 | 実施日・担当 | 未記入 |
-| Quest機種・OS版 | 未記入 |
-| Mac接続・開発者モード・USBデバッグ許可 | 未確認 |
+| Quest機種・OS版 | USB表示はQuest 3。OS版は未確認 |
+| Mac接続・開発者モード・USBデバッグ許可 | 2026-10-09にMacのUSB機器として認識。`adb devices -l`は端末なし。ユーザーは開発者モード・USBデバッグ許可の状態を未把握。端末側の確認が必要 |
 | APK導入方法と権限 | 未確認 |
-| Unity版・PR／コミット・APKファイル名 | 未記入 |
+| Unity版・PR／コミット・APKファイル名 | Unity 6000.5.10f1。[PR #7](https://github.com/GP-Yoshihiro/Ordinal-Scale/pull/7)の`ce2c886`までを反映。ローカルAPKは`~/dev/Ordinal-Scale/OrdinalScale/Builds/Android/OrdinalScale_Quest_dev.apk`（GitHubには含めない）。SHA-256：`77707ed4843a36a678608b14b3083b6708fe832e3134a9bb2f3ceedf0b3e19c1` |
 | テスト場所・周囲の安全範囲 | 未記入 |
-| Android設定検証・Editor再生・APKビルドの結果 | 未実施 |
+| Android設定検証・Editor再生・APKビルドの結果 | Unity 6000.5.10f1のAndroid Build Support・SDK/NDK・OpenJDKは導入済み。Q0設定検証はNG 0件（`20261010-114851_Q0_Quest設定検証.txt`）。Editor再生でDemonLord2の出現を確認。マウスでの剣の動きは未確認。初回APKビルドは共通画面方向がPortraitでOpenXR事前検証に失敗（`20261009-105104_Q0_Androidビルド.txt`）。Claudeの自動復元修正を取り込んだ再ビルドは成功（`20261010-114925_Q0_Androidビルド.txt`、エラー0、警告2、75.8 MB）。ビルド中だけLandscape Leftとなり、終了後にPortraitへ復元。実機への導入・起動は未実施 |
 
 ## Q0だけの確認順
 
