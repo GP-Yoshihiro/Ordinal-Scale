@@ -5,8 +5,9 @@ using UnityEngine;
 namespace OrdinalScale.Gameplay.Combat
 {
     /// <summary>
-    /// Q0：ISwordPoseSource から届く刃の姿勢を見える棒として表示し、刃先の速さをログと画面に出す。
-    /// 剣の入力が Gameplay まで届いていることと、Q1 の振り判定へ渡す値（BladeSample）を確かめるための表示で、命中判定はしない。
+    /// ISwordPoseSource から届く刃の姿勢を見える棒として表示し、刃先の速さを定期的にログへ出す。命中判定はしない（SwordHitDetector が行う）。
+    /// Editor ではドラッグ中だけ、Quest ではコントローラを追跡している間だけ刃が見える。
+    /// 刃の色は SwordHitDetector が SetTint で変える（振り中・命中など）。Quest のヘッドセット内でも見える最小限の反応。
     /// </summary>
     public sealed class SwordPoseDebugView : MonoBehaviour
     {
@@ -16,8 +17,11 @@ namespace OrdinalScale.Gameplay.Combat
         [SerializeField] private float bladeThickness = 0.02f;
         [Tooltip("刃先の速さをログに出す間隔（秒）。Quest では adb logcat で読む。")]
         [SerializeField] private float logIntervalSeconds = 2f;
+        [Tooltip("画面左上に刃先の速さを出す（SwordHitDetector の表示と重なるため既定は出さない）。")]
+        [SerializeField] private bool showSpeedLabel = false;
 
         private Transform _blade;
+        private Material _bladeMaterial;
         private BladeSample _previous;
         private bool _hasPrevious;
         private bool _wasTracked;
@@ -28,6 +32,15 @@ namespace OrdinalScale.Gameplay.Combat
 
         /// <summary>最新の刃先の速さ（m/s）。追跡外なら 0。</summary>
         public float TipSpeed => _tipSpeed;
+
+        /// <summary>既定の刃の色。</summary>
+        public Color BaseColor => bladeColor;
+
+        /// <summary>刃の色を変える（SwordHitDetector から呼ぶ）。</summary>
+        public void SetTint(Color color)
+        {
+            if (_bladeMaterial != null) _bladeMaterial.color = color;
+        }
 
         private void Reset()
         {
@@ -59,7 +72,7 @@ namespace OrdinalScale.Gameplay.Combat
 
             if (tracked != _wasTracked)
             {
-                Debug.Log($"[OrdinalScale][Q0] 剣の追跡: {(tracked ? "開始" : "途切れ")}", this);
+                Debug.Log($"[OrdinalScale][Q0] 剣: {(tracked ? "表示（追跡中・ドラッグ中）" : "非表示（追跡の途切れ・ドラッグ終了）")}", this);
                 _wasTracked = tracked;
             }
 
@@ -83,7 +96,7 @@ namespace OrdinalScale.Gameplay.Combat
         private void OnGUI()
         {
             // Editor の確認用（Quest のヘッドセット内には表示されない）
-            if (!_wasTracked) return;
+            if (!showSpeedLabel || !_wasTracked) return;
             if (_labelStyle == null) _labelStyle = new GUIStyle(GUI.skin.label) { fontSize = 18 };
             // 既定フォントに日本語が無い環境でも読めるよう英字で出す
             GUI.Label(new Rect(12f, 12f, 420f, 28f), $"Blade tip speed {_tipSpeed:0.00} m/s", _labelStyle);
@@ -99,10 +112,15 @@ namespace OrdinalScale.Gameplay.Combat
             var go = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             go.name = "BladeDebug";
             go.transform.SetParent(transform, false);
-            // 表示専用。命中判定は Q1 で前後フレームの掃引により行うので、物理コライダーは持たせない
+            // 表示専用。命中判定は Core の掃引で行うので、物理コライダーは持たせない
             Destroy(go.GetComponent<Collider>());
             var r = go.GetComponent<Renderer>();
-            if (r != null) r.material.color = bladeColor;
+            if (r != null)
+            {
+                _bladeMaterial = r.material;
+                _bladeMaterial.color = bladeColor;
+            }
+
             go.SetActive(false);
             return go.transform;
         }

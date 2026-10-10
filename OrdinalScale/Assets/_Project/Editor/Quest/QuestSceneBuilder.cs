@@ -29,11 +29,13 @@ namespace OrdinalScale.EditorTools
     ///     Spatial                        … XRHeadSpatialProvider（XR・Editor 共通）
     ///     XR / Sword (Controller)        … XRControllerSwordPoseSource（XR のときだけ有効）
     ///     Editor / Sword (Mouse)         … EditorSwordPoseSource（XR が無いときだけ有効）
-    ///   Battle                           … FixedEnemyPlacement、SwordPoseDebugView
+    ///   Battle                           … FixedEnemyPlacement、SwordPoseDebugView、SwordHitDetector（Q1：命中の判定と表示）
+    /// 剣の調整値アセット（Assets/_Project/Settings/SwordTuning.asset、仮の値）が無ければ作って割り当てる。
     /// </summary>
     internal static class QuestSceneBuilder
     {
         public const string ScenePath = "Assets/_Project/Scenes/Quest_MR.unity";
+        public const string TuningAssetPath = "Assets/_Project/Settings/SwordTuning.asset";
 
         public static bool Build(bool overwrite)
         {
@@ -129,11 +131,31 @@ namespace OrdinalScale.EditorTools
             SetObject(placement, "rig", rig);
             SetObject(swordView, "rig", rig);
 
+            // Q1：剣の命中判定（Core）を接続し、命中・不命中をログと色で示す
+            var hitDetector = battleGo.AddComponent<SwordHitDetector>();
+            SetObject(hitDetector, "rig", rig);
+            SetObject(hitDetector, "placement", placement);
+            SetObject(hitDetector, "bladeView", swordView);
+            SetObject(hitDetector, "tuning", EnsureTuningAsset());
+
             var saved = EditorSceneManager.SaveScene(scene, ScenePath);
             Debug.Log(saved
                 ? $"[OrdinalScale] Quest シーンを作成しました: {ScenePath}（ビルド対象一覧には追加していません。APK ビルドはメニュー 5 がこのシーンを指定します）"
                 : $"[OrdinalScale] Quest シーンの保存に失敗しました: {ScenePath}");
             return saved;
+        }
+
+        /// <summary>剣の調整値アセットを読み込む。無ければ既定値（仮の値）で作る。既にあれば値は変えない。</summary>
+        public static SwordTuningAsset EnsureTuningAsset()
+        {
+            var asset = AssetDatabase.LoadAssetAtPath<SwordTuningAsset>(TuningAssetPath);
+            if (asset != null) return asset;
+
+            asset = ScriptableObject.CreateInstance<SwordTuningAsset>();
+            AssetDatabase.CreateAsset(asset, TuningAssetPath);
+            AssetDatabase.SaveAssets();
+            Debug.Log($"[OrdinalScale] 剣の調整値アセットを作成しました（仮の値）: {TuningAssetPath}");
+            return asset;
         }
 
         private static void SetObject(Object target, string field, Object value)
@@ -186,12 +208,14 @@ namespace OrdinalScale.EditorTools
                 ARSession session = null;
                 PlatformRig rig = null;
                 FixedEnemyPlacement placement = null;
+                SwordHitDetector hitDetector = null;
                 foreach (var root in scene.GetRootGameObjects())
                 {
                     if (origin == null) origin = root.GetComponentInChildren<XROrigin>(true);
                     if (session == null) session = root.GetComponentInChildren<ARSession>(true);
                     if (rig == null) rig = root.GetComponentInChildren<PlatformRig>(true);
                     if (placement == null) placement = root.GetComponentInChildren<FixedEnemyPlacement>(true);
+                    if (hitDetector == null) hitDetector = root.GetComponentInChildren<SwordHitDetector>(true);
                 }
 
                 r.Check("AR Session", session != null, session != null ? "あり" : "なし");
@@ -209,6 +233,16 @@ namespace OrdinalScale.EditorTools
                 var swordSources = rig != null ? rig.GetComponentsInChildren<ISwordPoseSource>(true).Length : 0;
                 r.Check("PlatformRig と剣の入力源（コントローラ・マウス）", rig != null && swordSources >= 2, $"rig={(rig != null ? "あり" : "なし")} 剣の入力源={swordSources}");
                 r.Check("固定配置（FixedEnemyPlacement）", placement != null, placement != null ? "あり" : "なし");
+
+                // Q1：命中判定の接続と調整値（値は仮。受入時に固定して記録する）
+                var tuningAsset = hitDetector != null ? new SerializedObject(hitDetector).FindProperty("tuning")?.objectReferenceValue as SwordTuningAsset : null;
+                r.Check("剣の命中判定（SwordHitDetector）", hitDetector != null, hitDetector != null ? "あり" : "なし（メニュー3でシーンを作り直す）");
+                r.Check("剣の調整値アセット", tuningAsset != null, tuningAsset != null ? AssetDatabase.GetAssetPath(tuningAsset) : "未設定（Core の既定値で動く）");
+                if (tuningAsset != null)
+                {
+                    r.Info("剣の調整値（仮の値・Quest 実機で未確認）",
+                        tuningAsset.TryCreate(out var t, out var error) ? t.ToString() : $"不正: {error}");
+                }
             }
             finally
             {
