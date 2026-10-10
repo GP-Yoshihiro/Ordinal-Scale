@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="153" result="Passed" total="153" passed="153" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.0777881">
+  <test-suite type="TestSuite" id="1000" name="OrdinalScale" fullname="OrdinalScale" runstate="Runnable" testcasecount="153" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.077788" total="153" passed="153" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1176" name="OrdinalScale.Core.Tests.dll" fullname="/Users/macbook/dev/Ordinal-Scale/OrdinalScale/Library/ScriptAssemblies/OrdinalScale.Core.Tests.dll" runstate="Runnable" testcasecount="153" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.073977" total="153" passed="153" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="22948" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1177" name="OrdinalScale" fullname="OrdinalScale" runstate="Runnable" testcasecount="153" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.073742" total="153" passed="153" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1178" name="Core" fullname="OrdinalScale.Core" runstate="Runnable" testcasecount="153" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.073623" total="153" passed="153" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1179" name="Tests" fullname="OrdinalScale.Core.Tests" runstate="Runnable" testcasecount="153" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.073441" total="153" passed="153" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="BattleScenarioTests" fullname="OrdinalScale.Core.Tests.BattleScenarioTests" classname="OrdinalScale.Core.Tests.BattleScenarioTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.023629" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1006" name="MixedActionsOnlyValidHitsCount" fullname="OrdinalScale.Core.Tests.BattleScenarioTests.MixedActionsOnlyValidHitsCount" methodname="MixedActionsOnlyValidHitsCount" classname="OrdinalScale.Core.Tests.BattleScenarioTests" runstate="Runnable" seed="1267699680" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.011695" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1003" name="NineValidSwingsLeaveOneHp" fullname="OrdinalScale.Core.Tests.BattleScenarioTests.NineValidSwingsLeaveOneHp" methodname="NineValidSwingsLeaveOneHp" classname="OrdinalScale.Core.Tests.BattleScenarioTests" runstate="Runnable" seed="286177064" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000337" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1008" name="RetryResetsAndTheEnemyCanBeDefeatedAgain" fullname="OrdinalScale.Core.Tests.BattleScenarioTests.RetryResetsAndTheEnemyCanBeDefeatedAgain" methodname="RetryResetsAndTheEnemyCanBeDefeatedAgain" classname="OrdinalScale.Core.Tests.BattleScenarioTests" runstate="Runnable" seed="857428440" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000937" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1005" name="SlowPressesNeverReduceHp" fullname="OrdinalScale.Core.Tests.BattleScenarioTests.SlowPressesNeverReduceHp" methodname="SlowPressesNeverReduceHp" classname="OrdinalScale.Core.Tests.BattleScenarioTests" runstate="Runnable" seed="635551342" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.002429" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1007" name="SwingsAfterVictoryDoNotCount" fullname="OrdinalScale.Core.Tests.BattleScenarioTests.SwingsAfterVictoryDoNotCount" methodname="SwingsAfterVictoryDoNotCount" classname="OrdinalScale.Core.Tests.BattleScenarioTests" runstate="Runnable" seed="909183087" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000437" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1002" name="TenValidSwingsDefeatTheEnemy" fullname="OrdinalScale.Core.Tests.BattleScenarioTests.TenValidSwingsDefeatTheEnemy" methodname="TenValidSwingsDefeatTheEnemy" classname="OrdinalScale.Core.Tests.BattleScenarioTests" runstate="Runnable" seed="134246440" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000333" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1004" name="WhiffsNeverReduceHp" fullname="OrdinalScale.Core.Tests.BattleScenarioTests.WhiffsNeverReduceHp" methodname="WhiffsNeverReduceHp" classname="OrdinalScale.Core.Tests.BattleScenarioTests" runstate="Runnable" seed="42194069" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000646" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1009" name="BattleSessionTests" fullname="OrdinalScale.Core.Tests.BattleSessionTests" classname="OrdinalScale.Core.Tests.BattleSessionTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.005279" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1015" name="ChoicesAppearOnlyAfterVictory" fullname="OrdinalScale.Core.Tests.BattleSessionTests.ChoicesAppearOnlyAfterVictory" methodname="ChoicesAppearOnlyAfterVictory" classname="OrdinalScale.Core.Tests.BattleSessionTests" runstate="Runnable" seed="2019040454" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000492" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="DefaultNeedsTenValidHits" fullname="OrdinalScale.Core.Tests.BattleSessionTests.DefaultNeedsTenValidHits" methodname="DefaultNeedsTenValidHits" classname="OrdinalScale.Core.Tests.BattleSessionTests" runstate="Runnable" seed="2143874203" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000116" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1011" name="EachValidHitRemovesOneHp" fullname="OrdinalScale.Core.Tests.BattleSessionTests.EachValidHitRemovesOneHp" methodname="EachValidHitRemovesOneHp" classname="OrdinalScale.Core.Tests.BattleSessionTests" runstate="Runnable" seed="114059437" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000377" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1014" name="HitsAfterVictoryAreIgnored" fullname="OrdinalScale.Core.Tests.BattleSessionTests.HitsAfterVictoryAreIgnored" methodname="HitsAfterVictoryAreIgnored" classname="OrdinalScale.Core.Tests.BattleSessionTests" runstate="Runnable" seed="797785708" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000266" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1018" name="HitsToDefeatIsConfigurable" fullname="OrdinalScale.Core.Tests.BattleSessionTests.HitsToDefeatIsConfigurable" methodname="HitsToDefeatIsConfigurable" classname="OrdinalScale.Core.Tests.BattleSessionTests" runstate="Runnable" seed="404513046" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000074" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1019" name="HitsToDefeatMustBePositive" fullname="OrdinalScale.Core.Tests.BattleSessionTests.HitsToDefeatMustBePositive" methodname="HitsToDefeatMustBePositive" classname="OrdinalScale.Core.Tests.BattleSessionTests" runstate="Runnable" seed="554234645" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.002111" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1012" name="NineHitsDoNotDefeat" fullname="OrdinalScale.Core.Tests.BattleSessionTests.NineHitsDoNotDefeat" methodname="NineHitsDoNotDefeat" classname="OrdinalScale.Core.Tests.BattleSessionTests" runstate="Runnable" seed="921939946" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000190" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1017" name="QuitIsRequestedOnceAfterVictory" fullname="OrdinalScale.Core.Tests.BattleSessionTests.QuitIsRequestedOnceAfterVictory" methodname="QuitIsRequestedOnceAfterVictory" classname="OrdinalScale.Core.Tests.BattleSessionTests" runstate="Runnable" seed="487041222" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000155" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1016" name="RetryRestoresEnemyAndStartsNextRound" fullname="OrdinalScale.Core.Tests.BattleSessionTests.RetryRestoresEnemyAndStartsNextRound" methodname="RetryRestoresEnemyAndStartsNextRound" classname="OrdinalScale.Core.Tests.BattleSessionTests" runstate="Runnable" seed="654557794" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000252" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1013" name="TenthHitDefeatsAndRaisesVictoryOnce" fullname="OrdinalScale.Core.Tests.BattleSessionTests.TenthHitDefeatsAndRaisesVictoryOnce" methodname="TenthHitDefeatsAndRaisesVictoryOnce" classname="OrdinalScale.Core.Tests.BattleSessionTests" runstate="Runnable" seed="1281417302" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000144" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1020" name="BladeSampleTests" fullname="OrdinalScale.Core.Tests.BladeSampleTests" classname="OrdinalScale.Core.Tests.BladeSampleTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.001525" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1025" name="LengthIsHiltToTipDistance" fullname="OrdinalScale.Core.Tests.BladeSampleTests.LengthIsHiltToTipDistance" methodname="LengthIsHiltToTipDistance" classname="OrdinalScale.Core.Tests.BladeSampleTests" runstate="Runnable" seed="726380319" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000522" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1023" name="NoSpeedWhenEitherSampleIsUntracked" fullname="OrdinalScale.Core.Tests.BladeSampleTests.NoSpeedWhenEitherSampleIsUntracked" methodname="NoSpeedWhenEitherSampleIsUntracked" classname="OrdinalScale.Core.Tests.BladeSampleTests" runstate="Runnable" seed="1780297726" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000174" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1024" name="NoSpeedWhenTimeDoesNotAdvance" fullname="OrdinalScale.Core.Tests.BladeSampleTests.NoSpeedWhenTimeDoesNotAdvance" methodname="NoSpeedWhenTimeDoesNotAdvance" classname="OrdinalScale.Core.Tests.BladeSampleTests" runstate="Runnable" seed="1201444415" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000067" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1021" name="TipSpeedIsDistanceOverTime" fullname="OrdinalScale.Core.Tests.BladeSampleTests.TipSpeedIsDistanceOverTime" methodname="TipSpeedIsDistanceOverTime" classname="OrdinalScale.Core.Tests.BladeSampleTests" runstate="Runnable" seed="493148062" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000080" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1022" name="TipSpeedUsesAllThreeAxes" fullname="OrdinalScale.Core.Tests.BladeSampleTests.TipSpeedUsesAllThreeAxes" methodname="TipSpeedUsesAllThreeAxes" classname="OrdinalScale.Core.Tests.BladeSampleTests" runstate="Runnable" seed="1962266944" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000074" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1026" name="DragSwordScenarioTests" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" testcasecount="13" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.004432" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1032" name="BackAndForthWithoutPauseIsOneSwingWithRepeatContact" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.BackAndForthWithoutPauseIsOneSwingWithRepeatContact" methodname="BackAndForthWithoutPauseIsOneSwingWithRepeatContact" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="1451902810" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000458" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1037" name="BladeKeepsItsLengthAndPointsFromShoulderToTip" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.BladeKeepsItsLengthAndPointsFromShoulderToTip" methodname="BladeKeepsItsLengthAndPointsFromShoulderToTip" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="28004633" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000974" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="FastDragAboveTheHeadIsWhiff" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.FastDragAboveTheHeadIsWhiff" methodname="FastDragAboveTheHeadIsWhiff" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="1738237513" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000248" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1029" name="FastDragThroughTheBodyHitsOnce" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.FastDragThroughTheBodyHitsOnce" methodname="FastDragThroughTheBodyHitsOnce" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="1750685175" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000096" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1038" name="HiltLiesOnTheLineFromShoulderToTip" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.HiltLiesOnTheLineFromShoulderToTip" methodname="HiltLiesOnTheLineFromShoulderToTip" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="1714709823" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000486" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1039" name="MoveIgnoresInvalidScreenHeightAndMovesBeforeBegin" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.MoveIgnoresInvalidScreenHeightAndMovesBeforeBegin" methodname="MoveIgnoresInvalidScreenHeightAndMovesBeforeBegin" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="109142987" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000072" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1036" name="NoBladeUnlessDragging" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.NoBladeUnlessDragging" methodname="NoBladeUnlessDragging" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="1973711690" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000087" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1033" name="PausingBetweenSwipesMakesTwoSwingsAndTwoHits" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.PausingBetweenSwipesMakesTwoSwingsAndTwoHits" methodname="PausingBetweenSwipesMakesTwoSwingsAndTwoHits" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="803031015" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000134" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1034" name="ReleasingAndPressingAgainAlsoMakesASeparateSwing" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.ReleasingAndPressingAgainAlsoMakesASeparateSwing" methodname="ReleasingAndPressingAgainAlsoMakesASeparateSwing" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="536406581" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000090" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1031" name="ShakingWhilePressedAgainstTheBodyNeverHits" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.ShakingWhilePressedAgainstTheBodyNeverHits" methodname="ShakingWhilePressedAgainstTheBodyNeverHits" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="405283893" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000165" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1028" name="SlowDragIntoTheBodyIsSlowContact" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.SlowDragIntoTheBodyIsSlowContact" methodname="SlowDragIntoTheBodyIsSlowContact" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="1626371114" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000141" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1030" name="StoppingInsideTheBodyAfterAHitIsHeldContact" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.StoppingInsideTheBodyAfterAHitIsHeldContact" methodname="StoppingInsideTheBodyAfterAHitIsHeldContact" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="637309390" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000149" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1035" name="TipSpeedIsMouseSpeedTimesCoefficient" fullname="OrdinalScale.Core.Tests.DragSwordScenarioTests.TipSpeedIsMouseSpeedTimesCoefficient" methodname="TipSpeedIsMouseSpeedTimesCoefficient" classname="OrdinalScale.Core.Tests.DragSwordScenarioTests" runstate="Runnable" seed="717261569" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000286" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1040" name="EnemyPlacementSessionTests" fullname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests" classname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.002511" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1049" name="AfterRemovalNextValidTapPlacesAgain" fullname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests.AfterRemovalNextValidTapPlacesAgain" methodname="AfterRemovalNextValidTapPlacesAgain" classname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests" runstate="Runnable" seed="1359670634" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000316" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1047" name="BlockedTapKeepsExistingEnemyWhereItWas" fullname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests.BlockedTapKeepsExistingEnemyWhereItWas" methodname="BlockedTapKeepsExistingEnemyWhereItWas" classname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests" runstate="Runnable" seed="896067714" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000170" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1048" name="CountsAndLastResultTrackEveryAttempt" fullname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests.CountsAndLastResultTrackEveryAttempt" methodname="CountsAndLastResultTrackEveryAttempt" classname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests" runstate="Runnable" seed="1739842505" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000153" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1041" name="FirstValidTapPlacesEnemy" fullname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests.FirstValidTapPlacesEnemy" methodname="FirstValidTapPlacesEnemy" classname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests" runstate="Runnable" seed="1041216545" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000105" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1045" name="InvalidTargetDoesNotPlaceEnemy" fullname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests.InvalidTargetDoesNotPlaceEnemy" classname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000600" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1043" name="InvalidTargetDoesNotPlaceEnemy(None,TargetNotOnPlane)" fullname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests.InvalidTargetDoesNotPlaceEnemy(None,TargetNotOnPlane)" methodname="InvalidTargetDoesNotPlaceEnemy" classname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests" runstate="Runnable" seed="729869430" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000207" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1044" name="InvalidTargetDoesNotPlaceEnemy(Vertical,TargetNotHorizontal)" fullname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests.InvalidTargetDoesNotPlaceEnemy(Vertical,TargetNotHorizontal)" methodname="InvalidTargetDoesNotPlaceEnemy" classname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests" runstate="Runnable" seed="1730038268" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000036" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1046" name="NoPlaneDetectedBlocksEvenIfRayHitsSomething" fullname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests.NoPlaneDetectedBlocksEvenIfRayHitsSomething" methodname="NoPlaneDetectedBlocksEvenIfRayHitsSomething" classname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests" runstate="Runnable" seed="1603799425" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000092" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1042" name="SecondValidTapMovesTheSameSingleEnemy" fullname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests.SecondValidTapMovesTheSameSingleEnemy" methodname="SecondValidTapMovesTheSameSingleEnemy" classname="OrdinalScale.Core.Tests.EnemyPlacementSessionTests" runstate="Runnable" seed="702799277" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000090" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1050" name="HealthTests" fullname="OrdinalScale.Core.Tests.HealthTests" classname="OrdinalScale.Core.Tests.HealthTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.002810" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1053" name="DamageReducesHpUntilKilled" fullname="OrdinalScale.Core.Tests.HealthTests.DamageReducesHpUntilKilled" methodname="DamageReducesHpUntilKilled" classname="OrdinalScale.Core.Tests.HealthTests" runstate="Runnable" seed="523818947" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000809" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1055" name="DiedFiresOnceAndFurtherDamageIsIgnored" fullname="OrdinalScale.Core.Tests.HealthTests.DiedFiresOnceAndFurtherDamageIsIgnored" methodname="DiedFiresOnceAndFurtherDamageIsIgnored" classname="OrdinalScale.Core.Tests.HealthTests" runstate="Runnable" seed="2005045558" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000183" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1054" name="OverkillClampsToZeroAndReportsDealtAmount" fullname="OrdinalScale.Core.Tests.HealthTests.OverkillClampsToZeroAndReportsDealtAmount" methodname="OverkillClampsToZeroAndReportsDealtAmount" classname="OrdinalScale.Core.Tests.HealthTests" runstate="Runnable" seed="1990326123" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000202" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1052" name="RejectsNonPositiveMax" fullname="OrdinalScale.Core.Tests.HealthTests.RejectsNonPositiveMax" methodname="RejectsNonPositiveMax" classname="OrdinalScale.Core.Tests.HealthTests" runstate="Runnable" seed="37820467" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000280" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1057" name="ResetRestoresFullHpAndAllowsAnotherKill" fullname="OrdinalScale.Core.Tests.HealthTests.ResetRestoresFullHpAndAllowsAnotherKill" methodname="ResetRestoresFullHpAndAllowsAnotherKill" classname="OrdinalScale.Core.Tests.HealthTests" runstate="Runnable" seed="1037315265" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000212" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1051" name="StartsAtMax" fullname="OrdinalScale.Core.Tests.HealthTests.StartsAtMax" methodname="StartsAtMax" classname="OrdinalScale.Core.Tests.HealthTests" runstate="Runnable" seed="1294232452" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000064" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1056" name="ZeroOrNegativeDamageIsIgnored" fullname="OrdinalScale.Core.Tests.HealthTests.ZeroOrNegativeDamageIsIgnored" methodname="ZeroOrNegativeDamageIsIgnored" classname="OrdinalScale.Core.Tests.HealthTests" runstate="Runnable" seed="804109037" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000083" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1058" name="PlacementGateTests" fullname="OrdinalScale.Core.Tests.PlacementGateTests" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" testcasecount="17" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.002929" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1059" name="AllowsPlacementWhenTrackingWithPlane" fullname="OrdinalScale.Core.Tests.PlacementGateTests.AllowsPlacementWhenTrackingWithPlane" methodname="AllowsPlacementWhenTrackingWithPlane" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="1016361017" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000107" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1064" name="BlocksUntilTrackingIsNormal" fullname="OrdinalScale.Core.Tests.PlacementGateTests.BlocksUntilTrackingIsNormal" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000548" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1061" name="BlocksUntilTrackingIsNormal(Unsupported,TrackingUnsupported)" fullname="OrdinalScale.Core.Tests.PlacementGateTests.BlocksUntilTrackingIsNormal(Unsupported,TrackingUnsupported)" methodname="BlocksUntilTrackingIsNormal" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="505362822" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000088" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1062" name="BlocksUntilTrackingIsNormal(Initializing,TrackingInitializing)" fullname="OrdinalScale.Core.Tests.PlacementGateTests.BlocksUntilTrackingIsNormal(Initializing,TrackingInitializing)" methodname="BlocksUntilTrackingIsNormal" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="222358032" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000043" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1063" name="BlocksUntilTrackingIsNormal(Limited,TrackingLimited)" fullname="OrdinalScale.Core.Tests.PlacementGateTests.BlocksUntilTrackingIsNormal(Limited,TrackingLimited)" methodname="BlocksUntilTrackingIsNormal" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="411722729" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000033" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1065" name="BlocksWhenNoPlaneDetected" fullname="OrdinalScale.Core.Tests.PlacementGateTests.BlocksWhenNoPlaneDetected" methodname="BlocksWhenNoPlaneDetected" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="1174107996" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000062" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1060" name="CameraDeniedTakesPriorityOverEverything" fullname="OrdinalScale.Core.Tests.PlacementGateTests.CameraDeniedTakesPriorityOverEverything" methodname="CameraDeniedTakesPriorityOverEverything" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="185214633" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000049" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1068" name="NegativePlaneCountIsTreatedAsZero" fullname="OrdinalScale.Core.Tests.PlacementGateTests.NegativePlaneCountIsTreatedAsZero" methodname="NegativePlaneCountIsTreatedAsZero" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="1535705062" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000081" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1076" name="OnlyUpwardHorizontalSurfaceAcceptsPlacement" fullname="OrdinalScale.Core.Tests.PlacementGateTests.OnlyUpwardHorizontalSurfaceAcceptsPlacement" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000666" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1071" name="OnlyUpwardHorizontalSurfaceAcceptsPlacement(HorizontalUp,None)" fullname="OrdinalScale.Core.Tests.PlacementGateTests.OnlyUpwardHorizontalSurfaceAcceptsPlacement(HorizontalUp,None)" methodname="OnlyUpwardHorizontalSurfaceAcceptsPlacement" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="654971508" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000079" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1072" name="OnlyUpwardHorizontalSurfaceAcceptsPlacement(None,TargetNotOnPlane)" fullname="OrdinalScale.Core.Tests.PlacementGateTests.OnlyUpwardHorizontalSurfaceAcceptsPlacement(None,TargetNotOnPlane)" methodname="OnlyUpwardHorizontalSurfaceAcceptsPlacement" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="1922210155" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000046" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1073" name="OnlyUpwardHorizontalSurfaceAcceptsPlacement(Vertical,TargetNotHorizontal)" fullname="OrdinalScale.Core.Tests.PlacementGateTests.OnlyUpwardHorizontalSurfaceAcceptsPlacement(Vertical,TargetNotHorizontal)" methodname="OnlyUpwardHorizontalSurfaceAcceptsPlacement" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="662120094" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000042" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1074" name="OnlyUpwardHorizontalSurfaceAcceptsPlacement(HorizontalDown,TargetNotHorizontal)" fullname="OrdinalScale.Core.Tests.PlacementGateTests.OnlyUpwardHorizontalSurfaceAcceptsPlacement(HorizontalDown,TargetNotHorizontal)" methodname="OnlyUpwardHorizontalSurfaceAcceptsPlacement" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="121991655" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000039" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1075" name="OnlyUpwardHorizontalSurfaceAcceptsPlacement(Other,TargetNotHorizontal)" fullname="OrdinalScale.Core.Tests.PlacementGateTests.OnlyUpwardHorizontalSurfaceAcceptsPlacement(Other,TargetNotHorizontal)" methodname="OnlyUpwardHorizontalSurfaceAcceptsPlacement" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="497688846" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000050" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1077" name="SurfaceCheckComesAfterStateChecks" fullname="OrdinalScale.Core.Tests.PlacementGateTests.SurfaceCheckComesAfterStateChecks" methodname="SurfaceCheckComesAfterStateChecks" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="1192668074" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000074" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1070" name="TargetEvaluationReportsStateProblemFirst" fullname="OrdinalScale.Core.Tests.PlacementGateTests.TargetEvaluationReportsStateProblemFirst" methodname="TargetEvaluationReportsStateProblemFirst" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="2118081272" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000078" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1069" name="TargetOffPlaneIsRejectedEvenWhenReady" fullname="OrdinalScale.Core.Tests.PlacementGateTests.TargetOffPlaneIsRejectedEvenWhenReady" methodname="TargetOffPlaneIsRejectedEvenWhenReady" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="891345949" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000074" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1067" name="TrackingNormalizesStaleCameraDenial" fullname="OrdinalScale.Core.Tests.PlacementGateTests.TrackingNormalizesStaleCameraDenial" methodname="TrackingNormalizesStaleCameraDenial" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="244271414" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000128" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="UnknownPermissionDoesNotBlockOnceTracking" fullname="OrdinalScale.Core.Tests.PlacementGateTests.UnknownPermissionDoesNotBlockOnceTracking" methodname="UnknownPermissionDoesNotBlockOnceTracking" classname="OrdinalScale.Core.Tests.PlacementGateTests" runstate="Runnable" seed="1360093113" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000056" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1078" name="PlacementMathTests" fullname="OrdinalScale.Core.Tests.PlacementMathTests" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.002489" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="1082" name="EnemyTurnsTowardPlayer" fullname="OrdinalScale.Core.Tests.PlacementMathTests.EnemyTurnsTowardPlayer" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.001003" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1079" name="EnemyTurnsTowardPlayer(0.0f,1.0f,0.0f)" fullname="OrdinalScale.Core.Tests.PlacementMathTests.EnemyTurnsTowardPlayer(0.0f,1.0f,0.0f)" methodname="EnemyTurnsTowardPlayer" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" seed="460422109" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000198" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1080" name="EnemyTurnsTowardPlayer(1.0f,0.0f,90.0f)" fullname="OrdinalScale.Core.Tests.PlacementMathTests.EnemyTurnsTowardPlayer(1.0f,0.0f,90.0f)" methodname="EnemyTurnsTowardPlayer" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" seed="3452489" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000492" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1081" name="EnemyTurnsTowardPlayer(-1.0f,0.0f,-90.0f)" fullname="OrdinalScale.Core.Tests.PlacementMathTests.EnemyTurnsTowardPlayer(-1.0f,0.0f,-90.0f)" methodname="EnemyTurnsTowardPlayer" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" seed="1519035693" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000032" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1083" name="PlayerBehindGivesHalfTurn" fullname="OrdinalScale.Core.Tests.PlacementMathTests.PlayerBehindGivesHalfTurn" methodname="PlayerBehindGivesHalfTurn" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" seed="1590238941" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000077" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1086" name="PointInFrontFollowsHorizontalGaze" fullname="OrdinalScale.Core.Tests.PlacementMathTests.PointInFrontFollowsHorizontalGaze" methodname="PointInFrontFollowsHorizontalGaze" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" seed="593890293" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000120" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1087" name="PointInFrontIgnoresLookingDown" fullname="OrdinalScale.Core.Tests.PlacementMathTests.PointInFrontIgnoresLookingDown" methodname="PointInFrontIgnoresLookingDown" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" seed="1856493264" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000087" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1088" name="PointInFrontNormalizesDiagonalGaze" fullname="OrdinalScale.Core.Tests.PlacementMathTests.PointInFrontNormalizesDiagonalGaze" methodname="PointInFrontNormalizesDiagonalGaze" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" seed="134936830" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000080" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1090" name="PointInFrontRejectsNonPositiveDistance" fullname="OrdinalScale.Core.Tests.PlacementMathTests.PointInFrontRejectsNonPositiveDistance" methodname="PointInFrontRejectsNonPositiveDistance" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" seed="1130488614" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000057" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1089" name="PointInFrontUndefinedWhenLookingStraightDown" fullname="OrdinalScale.Core.Tests.PlacementMathTests.PointInFrontUndefinedWhenLookingStraightDown" methodname="PointInFrontUndefinedWhenLookingStraightDown" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" seed="1719816667" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000080" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1085" name="SamePositionHasNoDefinedFacing" fullname="OrdinalScale.Core.Tests.PlacementMathTests.SamePositionHasNoDefinedFacing" methodname="SamePositionHasNoDefinedFacing" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" seed="553042816" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000061" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1084" name="UsesRelativePositionNotAbsolute" fullname="OrdinalScale.Core.Tests.PlacementMathTests.UsesRelativePositionNotAbsolute" methodname="UsesRelativePositionNotAbsolute" classname="OrdinalScale.Core.Tests.PlacementMathTests" runstate="Runnable" seed="1150159361" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000078" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1091" name="PlacementMessagesTests" fullname="OrdinalScale.Core.Tests.PlacementMessagesTests" classname="OrdinalScale.Core.Tests.PlacementMessagesTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.002685" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1095" name="DescribeDistinguishesPlacedAndMoved" fullname="OrdinalScale.Core.Tests.PlacementMessagesTests.DescribeDistinguishesPlacedAndMoved" methodname="DescribeDistinguishesPlacedAndMoved" classname="OrdinalScale.Core.Tests.PlacementMessagesTests" runstate="Runnable" seed="1419162089" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000477" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1094" name="DescribeIncludesAttemptNumberCodeAndHint" fullname="OrdinalScale.Core.Tests.PlacementMessagesTests.DescribeIncludesAttemptNumberCodeAndHint" methodname="DescribeIncludesAttemptNumberCodeAndHint" classname="OrdinalScale.Core.Tests.PlacementMessagesTests" runstate="Runnable" seed="1187937422" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000310" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1092" name="EveryBlockReasonHasItsOwnExplicitHint" fullname="OrdinalScale.Core.Tests.PlacementMessagesTests.EveryBlockReasonHasItsOwnExplicitHint" methodname="EveryBlockReasonHasItsOwnExplicitHint" classname="OrdinalScale.Core.Tests.PlacementMessagesTests" runstate="Runnable" seed="9042827" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000754" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1093" name="NoneHasNoHint" fullname="OrdinalScale.Core.Tests.PlacementMessagesTests.NoneHasNoHint" methodname="NoneHasNoHint" classname="OrdinalScale.Core.Tests.PlacementMessagesTests" runstate="Runnable" seed="595419046" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000079" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1096" name="StrikeEventRecorderTests" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.005673" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1098" name="ContactOutsideSwingIsSlowContact" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests.ContactOutsideSwingIsSlowContact" methodname="ContactOutsideSwingIsSlowContact" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" seed="2003458355" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.001254" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1107" name="EveryKindHasJapaneseAndShortText" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests.EveryKindHasJapaneseAndShortText" methodname="EveryKindHasJapaneseAndShortText" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" seed="1646712566" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.001717" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1099" name="HoldingAfterHitIsOneHitAndOneHeldContact" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests.HoldingAfterHitIsOneHitAndOneHeldContact" methodname="HoldingAfterHitIsOneHitAndOneHeldContact" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" seed="1747438933" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000395" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1101" name="PressThenSwingWhileTouchingIsContactWithoutHit" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests.PressThenSwingWhileTouchingIsContactWithoutHit" methodname="PressThenSwingWhileTouchingIsContactWithoutHit" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" seed="1524000875" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000140" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1105" name="ProcessAppendsWithoutClearingAndReturnsCount" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests.ProcessAppendsWithoutClearingAndReturnsCount" methodname="ProcessAppendsWithoutClearingAndReturnsCount" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" seed="2017268313" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000142" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1102" name="RecontactInSameSwingIsRepeatContact" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests.RecontactInSameSwingIsRepeatContact" methodname="RecontactInSameSwingIsRepeatContact" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" seed="1896758572" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000190" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1106" name="ResetClearsCounters" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests.ResetClearsCounters" methodname="ResetClearsCounters" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" seed="1303272390" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000097" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1103" name="SeparateSwingsAreCountedSeparately" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests.SeparateSwingsAreCountedSeparately" methodname="SeparateSwingsAreCountedSeparately" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" seed="1656922435" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000139" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1100" name="SingleFrameContactIsNotHeld" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests.SingleFrameContactIsNotHeld" methodname="SingleFrameContactIsNotHeld" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" seed="2052369391" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000114" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1104" name="SwingEndedByReleaseKeepsTheReason" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests.SwingEndedByReleaseKeepsTheReason" methodname="SwingEndedByReleaseKeepsTheReason" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" seed="1775794812" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000162" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1097" name="SwingWithoutContactIsWhiff" fullname="OrdinalScale.Core.Tests.StrikeEventRecorderTests.SwingWithoutContactIsWhiff" methodname="SwingWithoutContactIsWhiff" classname="OrdinalScale.Core.Tests.StrikeEventRecorderTests" runstate="Runnable" seed="267030162" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000199" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1108" name="SurfaceClassifierTests" fullname="OrdinalScale.Core.Tests.SurfaceClassifierTests" classname="OrdinalScale.Core.Tests.SurfaceClassifierTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.001441" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="1112" name="ClassifiesAxisAlignedNormals" fullname="OrdinalScale.Core.Tests.SurfaceClassifierTests.ClassifiesAxisAlignedNormals" classname="OrdinalScale.Core.Tests.SurfaceClassifierTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000623" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1109" name="ClassifiesAxisAlignedNormals(1.0f,HorizontalUp)" fullname="OrdinalScale.Core.Tests.SurfaceClassifierTests.ClassifiesAxisAlignedNormals(1.0f,HorizontalUp)" methodname="ClassifiesAxisAlignedNormals" classname="OrdinalScale.Core.Tests.SurfaceClassifierTests" runstate="Runnable" seed="1066778170" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000269" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1110" name="ClassifiesAxisAlignedNormals(-1.0f,HorizontalDown)" fullname="OrdinalScale.Core.Tests.SurfaceClassifierTests.ClassifiesAxisAlignedNormals(-1.0f,HorizontalDown)" methodname="ClassifiesAxisAlignedNormals" classname="OrdinalScale.Core.Tests.SurfaceClassifierTests" runstate="Runnable" seed="1986369548" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000027" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1111" name="ClassifiesAxisAlignedNormals(0.0f,Vertical)" fullname="OrdinalScale.Core.Tests.SurfaceClassifierTests.ClassifiesAxisAlignedNormals(0.0f,Vertical)" methodname="ClassifiesAxisAlignedNormals" classname="OrdinalScale.Core.Tests.SurfaceClassifierTests" runstate="Runnable" seed="1561767074" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000054" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1116" name="NaNNormalIsTreatedAsNoSurface" fullname="OrdinalScale.Core.Tests.SurfaceClassifierTests.NaNNormalIsTreatedAsNoSurface" methodname="NaNNormalIsTreatedAsNoSurface" classname="OrdinalScale.Core.Tests.SurfaceClassifierTests" runstate="Runnable" seed="1964751462" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000049" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1113" name="SlightlyTiltedFloorIsStillHorizontal" fullname="OrdinalScale.Core.Tests.SurfaceClassifierTests.SlightlyTiltedFloorIsStillHorizontal" methodname="SlightlyTiltedFloorIsStillHorizontal" classname="OrdinalScale.Core.Tests.SurfaceClassifierTests" runstate="Runnable" seed="2046398570" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000059" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1115" name="SlightlyTiltedWallIsStillVertical" fullname="OrdinalScale.Core.Tests.SurfaceClassifierTests.SlightlyTiltedWallIsStillVertical" methodname="SlightlyTiltedWallIsStillVertical" classname="OrdinalScale.Core.Tests.SurfaceClassifierTests" runstate="Runnable" seed="1220551243" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000085" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1114" name="SlopeBeyondToleranceIsNotHorizontal" fullname="OrdinalScale.Core.Tests.SurfaceClassifierTests.SlopeBeyondToleranceIsNotHorizontal" methodname="SlopeBeyondToleranceIsNotHorizontal" classname="OrdinalScale.Core.Tests.SurfaceClassifierTests" runstate="Runnable" seed="67167095" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000094" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1117" name="SwingDetectorTests" fullname="OrdinalScale.Core.Tests.SwingDetectorTests" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" testcasecount="13" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.003115" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1119" name="BelowStartSpeedStaysIdle" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.BelowStartSpeedStaysIdle" methodname="BelowStartSpeedStaysIdle" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="1935270466" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000311" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1129" name="DuplicateTimestampDoesNotChangeState" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.DuplicateTimestampDoesNotChangeState" methodname="DuplicateTimestampDoesNotChangeState" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="1870519741" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000194" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1122" name="EndsOnlyAfterSlowForHoldTime" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.EndsOnlyAfterSlowForHoldTime" methodname="EndsOnlyAfterSlowForHoldTime" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="1209956426" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000184" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1118" name="FirstSampleHasNoSpeed" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.FirstSampleHasNoSpeed" methodname="FirstSampleHasNoSpeed" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="1266536385" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000103" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1127" name="JumpIsNotCountedAsSwing" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.JumpIsNotCountedAsSwing" methodname="JumpIsNotCountedAsSwing" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="760021797" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000111" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1128" name="LongGapBetweenSamplesInterruptsTheSwing" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.LongGapBetweenSamplesInterruptsTheSwing" methodname="LongGapBetweenSamplesInterruptsTheSwing" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="1960950184" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000083" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1124" name="MinimumSwingDurationDelaysTheEnd" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.MinimumSwingDurationDelaysTheEnd" methodname="MinimumSwingDurationDelaysTheEnd" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="1548359972" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000123" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1125" name="NextSwingGetsNextId" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.NextSwingGetsNextId" methodname="NextSwingGetsNextId" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="635512960" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000127" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1130" name="ResetStartsCountingFromZero" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.ResetStartsCountingFromZero" methodname="ResetStartsCountingFromZero" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="346197440" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000189" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1123" name="ShortDipDoesNotSplitTheSwing" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.ShortDipDoesNotSplitTheSwing" methodname="ShortDipDoesNotSplitTheSwing" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="954341877" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000119" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1121" name="SpeedBetweenEndAndStartKeepsSwinging" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.SpeedBetweenEndAndStartKeepsSwinging" methodname="SpeedBetweenEndAndStartKeepsSwinging" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="1325809367" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000191" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1120" name="StartSpeedStartsASwingWithNewId" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.StartSpeedStartsASwingWithNewId" methodname="StartSpeedStartsASwingWithNewId" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="2000410238" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000121" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1126" name="TrackingLossEndsTheSwingAndRecoveryIsNotASwing" fullname="OrdinalScale.Core.Tests.SwingDetectorTests.TrackingLossEndsTheSwingAndRecoveryIsNotASwing" methodname="TrackingLossEndsTheSwingAndRecoveryIsNotASwing" classname="OrdinalScale.Core.Tests.SwingDetectorTests" runstate="Runnable" seed="952996189" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000170" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1131" name="SwordContactTests" fullname="OrdinalScale.Core.Tests.SwordContactTests" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.005161" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1142" name="BladeRadiusExtendsReach" fullname="OrdinalScale.Core.Tests.SwordContactTests.BladeRadiusExtendsReach" methodname="BladeRadiusExtendsReach" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="599589068" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000113" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1135" name="ClosestPointCanBeAnEndpoint" fullname="OrdinalScale.Core.Tests.SwordContactTests.ClosestPointCanBeAnEndpoint" methodname="ClosestPointCanBeAnEndpoint" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="350197381" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000053" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1133" name="CrossingSegmentsHaveZeroDistance" fullname="OrdinalScale.Core.Tests.SwordContactTests.CrossingSegmentsHaveZeroDistance" methodname="CrossingSegmentsHaveZeroDistance" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="262225235" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000049" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1136" name="DegeneratePointSegmentsWork" fullname="OrdinalScale.Core.Tests.SwordContactTests.DegeneratePointSegmentsWork" methodname="DegeneratePointSegmentsWork" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="1675260217" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000055" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1147" name="InvalidCapsuleIsRejected" fullname="OrdinalScale.Core.Tests.SwordContactTests.InvalidCapsuleIsRejected" methodname="InvalidCapsuleIsRejected" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="1452871259" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000374" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1132" name="ParallelSegmentsDistance" fullname="OrdinalScale.Core.Tests.SwordContactTests.ParallelSegmentsDistance" methodname="ParallelSegmentsDistance" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="2020422499" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000053" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1134" name="SkewSegmentsUseClosestInteriorPoints" fullname="OrdinalScale.Core.Tests.SwordContactTests.SkewSegmentsUseClosestInteriorPoints" methodname="SkewSegmentsUseClosestInteriorPoints" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="1837522834" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000054" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1144" name="SweepCatchesABladeThatCrossesBetweenFrames" fullname="OrdinalScale.Core.Tests.SwordContactTests.SweepCatchesABladeThatCrossesBetweenFrames" methodname="SweepCatchesABladeThatCrossesBetweenFrames" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="535809644" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000091" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1145" name="SweepIgnoresUntrackedPreviousSample" fullname="OrdinalScale.Core.Tests.SwordContactTests.SweepIgnoresUntrackedPreviousSample" methodname="SweepIgnoresUntrackedPreviousSample" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="2038662534" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000125" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1146" name="SweepThatStaysOutsideDoesNotTouch" fullname="OrdinalScale.Core.Tests.SwordContactTests.SweepThatStaysOutsideDoesNotTouch" methodname="SweepThatStaysOutsideDoesNotTouch" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="532806071" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000071" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1143" name="UntrackedBladeNeverTouches" fullname="OrdinalScale.Core.Tests.SwordContactTests.UntrackedBladeNeverTouches" methodname="UntrackedBladeNeverTouches" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="1048740016" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000128" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1141" name="WholeBodyIsOneHitVolume" fullname="OrdinalScale.Core.Tests.SwordContactTests.WholeBodyIsOneHitVolume" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.002001" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1137" name="WholeBodyIsOneHitVolume(1.2f,True)" fullname="OrdinalScale.Core.Tests.SwordContactTests.WholeBodyIsOneHitVolume(1.2f,True)" methodname="WholeBodyIsOneHitVolume" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="14001656" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.001510" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1138" name="WholeBodyIsOneHitVolume(0.1f,True)" fullname="OrdinalScale.Core.Tests.SwordContactTests.WholeBodyIsOneHitVolume(0.1f,True)" methodname="WholeBodyIsOneHitVolume" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="1371077233" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000035" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1139" name="WholeBodyIsOneHitVolume(1.55f,True)" fullname="OrdinalScale.Core.Tests.SwordContactTests.WholeBodyIsOneHitVolume(1.55f,True)" methodname="WholeBodyIsOneHitVolume" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="1434759431" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000026" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1140" name="WholeBodyIsOneHitVolume(1.7f,False)" fullname="OrdinalScale.Core.Tests.SwordContactTests.WholeBodyIsOneHitVolume(1.7f,False)" methodname="WholeBodyIsOneHitVolume" classname="OrdinalScale.Core.Tests.SwordContactTests" runstate="Runnable" seed="585222117" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000031" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestFixture" id="1148" name="SwordHitJudgeTests" fullname="OrdinalScale.Core.Tests.SwordHitJudgeTests" classname="OrdinalScale.Core.Tests.SwordHitJudgeTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.001941" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1149" name="ContactStartDuringSwingIsHit" fullname="OrdinalScale.Core.Tests.SwordHitJudgeTests.ContactStartDuringSwingIsHit" methodname="ContactStartDuringSwingIsHit" classname="OrdinalScale.Core.Tests.SwordHitJudgeTests" runstate="Runnable" seed="542553759" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000179" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1150" name="ContactStartOutsideSwingIsNotHit" fullname="OrdinalScale.Core.Tests.SwordHitJudgeTests.ContactStartOutsideSwingIsNotHit" methodname="ContactStartOutsideSwingIsNotHit" classname="OrdinalScale.Core.Tests.SwordHitJudgeTests" runstate="Runnable" seed="1144390521" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000131" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1151" name="ContinuedContactNeverHitsEvenWhenSwingStarts" fullname="OrdinalScale.Core.Tests.SwordHitJudgeTests.ContinuedContactNeverHitsEvenWhenSwingStarts" methodname="ContinuedContactNeverHitsEvenWhenSwingStarts" classname="OrdinalScale.Core.Tests.SwordHitJudgeTests" runstate="Runnable" seed="1417573937" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000118" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1156" name="ForgetClearsContactOfThatEnemy" fullname="OrdinalScale.Core.Tests.SwordHitJudgeTests.ForgetClearsContactOfThatEnemy" methodname="ForgetClearsContactOfThatEnemy" classname="OrdinalScale.Core.Tests.SwordHitJudgeTests" runstate="Runnable" seed="1525389251" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000373" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1153" name="NewSwingAllowsAnotherHit" fullname="OrdinalScale.Core.Tests.SwordHitJudgeTests.NewSwingAllowsAnotherHit" methodname="NewSwingAllowsAnotherHit" classname="OrdinalScale.Core.Tests.SwordHitJudgeTests" runstate="Runnable" seed="330728452" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000125" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1155" name="NoContactNeverHits" fullname="OrdinalScale.Core.Tests.SwordHitJudgeTests.NoContactNeverHits" methodname="NoContactNeverHits" classname="OrdinalScale.Core.Tests.SwordHitJudgeTests" runstate="Runnable" seed="1360567944" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000077" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1154" name="OneSwingCanHitEachEnemyOnce" fullname="OrdinalScale.Core.Tests.SwordHitJudgeTests.OneSwingCanHitEachEnemyOnce" methodname="OneSwingCanHitEachEnemyOnce" classname="OrdinalScale.Core.Tests.SwordHitJudgeTests" runstate="Runnable" seed="1292554473" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000092" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1152" name="SecondContactInSameSwingIsAlreadyHit" fullname="OrdinalScale.Core.Tests.SwordHitJudgeTests.SecondContactInSameSwingIsAlreadyHit" methodname="SecondContactInSameSwingIsAlreadyHit" classname="OrdinalScale.Core.Tests.SwordHitJudgeTests" runstate="Runnable" seed="1518874901" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000113" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1157" name="SwordStrikeScenarioTests" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" testcasecount="13" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.004535" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1158" name="FastSwingThroughBodyHitsOnce" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.FastSwingThroughBodyHitsOnce" methodname="FastSwingThroughBodyHitsOnce" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="1688584609" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000982" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1169" name="HigherStartThresholdTurnsTheSameMotionIntoAPress" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.HigherStartThresholdTurnsTheSameMotionIntoAPress" methodname="HigherStartThresholdTurnsTheSameMotionIntoAPress" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="1989159890" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000244" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1162" name="LeavingAndReenteringWithinOneSwingCountsOnce" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.LeavingAndReenteringWithinOneSwingCountsOnce" methodname="LeavingAndReenteringWithinOneSwingCountsOnce" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="911782701" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000382" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1163" name="NextSwingAfterTheFirstEndsHitsAgain" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.NextSwingAfterTheFirstEndsHitsAgain" methodname="NextSwingAfterTheFirstEndsHitsAgain" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="1774185946" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000167" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1160" name="PressedThenMovedFastWithoutLeavingDoesNotHit" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.PressedThenMovedFastWithoutLeavingDoesNotHit" methodname="PressedThenMovedFastWithoutLeavingDoesNotHit" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="1992818093" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000315" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1165" name="ReappearingInsideBodyAfterTrackingLossIsNotASwing" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.ReappearingInsideBodyAfterTrackingLossIsNotASwing" methodname="ReappearingInsideBodyAfterTrackingLossIsNotASwing" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="1250202201" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000131" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1170" name="ResetClearsSwingAndContactHistory" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.ResetClearsSwingAndContactHistory" methodname="ResetClearsSwingAndContactHistory" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="2135183727" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000143" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1159" name="SlowPressDoesNotHit" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.SlowPressDoesNotHit" methodname="SlowPressDoesNotHit" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="1998487267" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000144" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1161" name="StayingInContactDuringSwingCountsOnce" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.StayingInContactDuringSwingCountsOnce" methodname="StayingInContactDuringSwingCountsOnce" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="1844341837" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000121" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1164" name="SwingThatMissesTheBodyDoesNotHit" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.SwingThatMissesTheBodyDoesNotHit" methodname="SwingThatMissesTheBodyDoesNotHit" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="2108167197" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000208" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1168" name="TenSeparateSwingsGiveTenHits" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.TenSeparateSwingsGiveTenHits" methodname="TenSeparateSwingsGiveTenHits" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="1997714596" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000311" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1166" name="TrackingJumpIntoBodyIsNotASwing" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.TrackingJumpIntoBodyIsNotASwing" methodname="TrackingJumpIntoBodyIsNotASwing" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="620365580" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000157" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1167" name="VeryFastSwingDoesNotPassThroughBody" fullname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests.VeryFastSwingDoesNotPassThroughBody" methodname="VeryFastSwingDoesNotPassThroughBody" classname="OrdinalScale.Core.Tests.SwordStrikeScenarioTests" runstate="Runnable" seed="336596723" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000192" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1171" name="SwordTuningTests" fullname="OrdinalScale.Core.Tests.SwordTuningTests" classname="OrdinalScale.Core.Tests.SwordTuningTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.001261" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1172" name="DefaultsMatchDesignDocument" fullname="OrdinalScale.Core.Tests.SwordTuningTests.DefaultsMatchDesignDocument" methodname="DefaultsMatchDesignDocument" classname="OrdinalScale.Core.Tests.SwordTuningTests" runstate="Runnable" seed="462565387" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000146" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1175" name="DescriptionContainsValuesForTheRecord" fullname="OrdinalScale.Core.Tests.SwordTuningTests.DescriptionContainsValuesForTheRecord" methodname="DescriptionContainsValuesForTheRecord" classname="OrdinalScale.Core.Tests.SwordTuningTests" runstate="Runnable" seed="368989720" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000332" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1173" name="EndSpeedAboveStartSpeedIsRejected" fullname="OrdinalScale.Core.Tests.SwordTuningTests.EndSpeedAboveStartSpeedIsRejected" methodname="EndSpeedAboveStartSpeedIsRejected" classname="OrdinalScale.Core.Tests.SwordTuningTests" runstate="Runnable" seed="952516410" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000199" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1174" name="NonPositiveStartSpeedIsRejected" fullname="OrdinalScale.Core.Tests.SwordTuningTests.NonPositiveStartSpeedIsRejected" methodname="NonPositiveStartSpeedIsRejected" classname="OrdinalScale.Core.Tests.SwordTuningTests" runstate="Runnable" seed="2012327908" result="Passed" start-time="2026-10-10 03:36:42Z" end-time="2026-10-10 03:36:42Z" duration="0.000100" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /Users/macbook/Library/Application Support/GP-Yoshihiro/OrdinalScale/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
