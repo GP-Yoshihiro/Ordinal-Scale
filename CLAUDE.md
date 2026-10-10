@@ -6,7 +6,8 @@ SAO『オーディナル・スケール』風ARバトルゲームのプロトタ
 - AI組織と連携手順: `Claude/docs/ai-organization.md`
 - アーキテクチャ: `Claude/docs/architecture.md`
 - STEP 1 のUnity設定手順: `Claude/docs/step1-setup.md`（Windows）、`Claude/docs/iphone-ar-setup.md`（Mac＋iPhone）
-- 剣の命中判定（条件確定・未実装）: `Claude/docs/sword-input-design.md`。剣・命中に関わる実装とテストは条件 C1〜C8 に従い、指す・選ぶ入力（`IPointerInput`）で命中を判定しない。
+- Quest 3／3S の XR 方式・Q0 の手順: `Claude/docs/quest-xr-setup.md`（OpenXR＋Unity OpenXR: Meta＋AR Foundation。Meta XR Core SDK は使わない）
+- 剣の命中判定（条件確定・判定は未実装、入力の境界 `ISwordPoseSource` は Q0 で実装）: `Claude/docs/sword-input-design.md`。剣・命中に関わる実装とテストは条件 C1〜C8 に従い、指す・選ぶ入力（`IPointerInput`）で命中を判定しない。
 - Unity 版は **`6000.5.10f1` に固定**（`OrdinalScale/ProjectSettings/ProjectVersion.txt`）。変更する場合は理由をPMへ報告する。
 - `Packages/manifest.json` と `ProjectSettings/` の出所・変更点: `Claude/docs/unity-project-files.md`。設定ファイルはクラウドで生成できないため、Unity 公式の生成物を使い、手書きしない。
 
@@ -37,7 +38,8 @@ tools/CoreTests/          … Unityなしで Core 層をビルド・テストす
 | `OrdinalScale.Core` | `Scripts/Core` | なし（**UnityEngine禁止**、純C#） |
 | `OrdinalScale.Platform` | `Scripts/Platform` | Core, UnityEngine（SDK非依存の抽象・Editor実装） |
 | `OrdinalScale.Platform.ARFoundation` | `Scripts/Platform/ARFoundation` | Core, Platform, AR Foundation（導入時のみコンパイル） |
-| `OrdinalScale.Editor` | `Editor/` | Editor専用ツール（iOS設定の適用・検証・ビルド） |
+| `OrdinalScale.Editor` | `Editor/` | Editor専用ツール（iOS設定の適用・検証・ビルド、Quest用パッケージの追加） |
+| `OrdinalScale.Editor.Quest` | `Editor/Quest/` | Quest（Android・OpenXR）設定の適用・シーン作成・検証・APKビルド（OpenXR 導入時のみコンパイル） |
 | `OrdinalScale.Gameplay` | `Scripts/Gameplay` | Core, Platform の**インターフェースのみ**（S2 の敵配置から使用開始） |
 
 - Gameplay / UI から Meta XR SDK・NRSDK の型を直接参照しない。必要なら `Platform/Abstractions` にインターフェースを足す。

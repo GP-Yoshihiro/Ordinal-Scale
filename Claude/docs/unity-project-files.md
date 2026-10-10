@@ -52,3 +52,14 @@
 - この構成で Unity Hub 3.21.0 が「Add project from disk」でプロジェクトとして認識するか（Hub の判定条件は公開されておらず、クラウドでは確認できない）。認識しない場合はコマンドで直接開く（`iphone-ar-setup.md` 1-2 手順4）。
 - `6000.5.0b7` で保存された設定を `6000.5.10f1` で開いたときの自動更新の有無。
 - パッケージが上表の版で解決されるか。
+
+## Quest 用パッケージ（2026-10-09 追加予定・未反映）
+
+Quest 3／3S（Q0）で次の2つを追加する。`manifest.json` を手で書き換えず、Unity のメニュー **OrdinalScale > Quest MR > 1. XRパッケージを追加** から Package Manager に追加させ、生成された `manifest.json` と `packages-lock.json` をコミットする（このリポジトリにはまだ入っていない）。
+
+| パッケージ | 版 | 備考 |
+| --- | --- | --- |
+| com.unity.xr.openxr | 1.17.1 | Unity 6000.5 向け released 版（Unity マニュアル）。依存：XR Management 4.4.0、Input System 1.6.3、Core Utils 2.3.0 以上 |
+| com.unity.xr.meta-openxr | 2.5.1 | Unity 6000.5 向け released 版。依存：OpenXR 1.15.1、AR Foundation 6.5.0、Composition Layers 2.4.0、Core Utils 2.5.1 以上 |
+
+選定理由とセットアップ手順は [quest-xr-setup.md](quest-xr-setup.md)。Android の Player 設定（IL2CPP・ARM64・最小 API 32・Vulkan）も同じ手順のメニュー 2 が Unity の API で書き込むので、`ProjectSettings.asset` は手で編集しない。

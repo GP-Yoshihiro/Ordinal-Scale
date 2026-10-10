@@ -1,6 +1,6 @@
 # 検証の証拠
 
-iPhone AR 先行検証（S1〜S5）の証拠を置く場所。Unity のメニュー **OrdinalScale > iOS AR** の「2. 設定を検証」「3. iOS開発ビルド」はここにテキストを自動保存する（`YYYYMMDD-HHMMSS_S1_….txt`）。
+iPhone AR 先行検証（S1〜S5）と Quest（Q0〜）の証拠を置く場所。Unity のメニュー **OrdinalScale > iOS AR** の「2. 設定を検証」「3. iOS開発ビルド」、**OrdinalScale > Quest MR** の「4. 設定を検証」「5. Android開発ビルド」はここにテキストを自動保存する（`YYYYMMDD-HHMMSS_S1_….txt`、`…_Q0_….txt`）。
 
 - 画像・動画は `S<番号>_<内容>.png/.mov` の名前で置く。30MB を超える動画はリポジトリに入れず、保存場所だけを表に書く。
 - **実行した人・日時・端末が分かるものだけ**を証拠にする。未実施の行は「未実施」のまま残す。
@@ -42,3 +42,21 @@ iPhone AR 先行検証（S1〜S5）の証拠を置く場所。Unity のメニュ
 | 誤って配置された（動いた）ことがあったか | 未実施 |
 | Xcode コンソールの `[OrdinalScale][S2]` 行 | 未実施（`S2_xcode_log.txt`） |
 | 敵の大きさ・色・浮き沈みなど気づいた点 | 未実施 |
+
+## Q0 記録表（開発者が記入。Quest 実機は不要）
+
+手順は `Claude/docs/quest-xr-setup.md` 2章。Editor と Android ビルドの結果は**準備の証拠**で、Quest 実機での合格を意味しない。
+
+| 項目 | 記入欄 |
+| --- | --- |
+| 実施日時・実施者・コミット | 未実施 |
+| Mac／PC（機種・OS版） | 未実施 |
+| Android Build Support の追加にかかった時間 | 未実施 |
+| パッケージ追加後の版（openxr / meta-openxr / compositionlayers） | 未実施（設定検証テキストに自動記録） |
+| コンパイルエラーの有無（あれば全文） | 未実施 |
+| Project Validation（Android）に残った警告・エラー | 未実施 |
+| 設定検証の NG 件数（ファイル名） | 未実施 |
+| Editor 再生：敵が正面2mに立つ／刃が追従／刃先速度が変わる／Game ビュー外で途切れ | 未実施（`Q0_editor.png`） |
+| Android ビルド結果・所要時間・APKサイズ（ファイル名） | 未実施 |
+| iPhone 経路の回帰（iOS 設定検証の NG 件数） | 未実施 |
+| 気づいた問題・所要時間の実績 | 未実施 |
