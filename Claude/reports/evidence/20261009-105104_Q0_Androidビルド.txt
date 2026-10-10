@@ -1,0 +1,19 @@
+# Q0 Androidビルド  2026-10-09 10:51:04
+Machine: Mac OS X 26.6.2 / 8192MB RAM
+[NG] ビルド結果: Failed
+[--] 出力先: /Users/macbook/dev/Ordinal-Scale/OrdinalScale/Builds/Android/OrdinalScale_Quest_dev.apk
+[--] APKサイズ: なし
+[--] 所要時間: 00:00:03
+[--] エラー／警告: 4 / 2
+[--] シーン: Assets/_Project/Scenes/Quest_MR.unity
+[--] Unity版: 6000.5.10f1
+[--] Application ID: com.gpyoshihiro.ordinalscale
+[--] 署名: Unity 既定のデバッグ鍵（キーストアはリポジトリに入れない）
+[--] Package com.unity.xr.openxr: 1.17.1
+[--] Package com.unity.xr.meta-openxr: 2.5.1
+[--] Package com.unity.xr.arfoundation: 6.5.1
+[--] エラー（Build player）: Error building Player: 3 errors
+[--] エラー（Preprocess Player）: Meta Quest HMDs only support Landscape Left orientation.
+[--] エラー（Preprocess Player）: Double click to fix OpenXR Project Validation Issues.
+[--] エラー（Preprocess Player）: BuildFailedException: OpenXR Build Failed.
+NG: 1

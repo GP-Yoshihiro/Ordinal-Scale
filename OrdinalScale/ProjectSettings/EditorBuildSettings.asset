@@ -9,5 +9,11 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/iPhone_AR.unity
     guid: 29cac351109b041d28e962a7622b5d7e
   m_configObjects:
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 56f75e575e87d45e186dc97f2a9474a3,
+      type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: df15f09b46d4e4309872d7d469efb9af,
+      type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e0e00b2fe47c94d78a2098343bb32e03,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: e3610bc8838c34b458e7fce5365d7601,
       type: 2}
