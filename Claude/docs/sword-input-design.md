@@ -118,7 +118,7 @@
 | 4章のテスト | 「10回の有効な命中で `Health(10)` が撃破」以外はすべて実装。撃破は Q2 の範囲のため「10回の振りで命中10回」までを確認 |
 | 追加したテスト | 振りの最短時間・ヒステリシス・サンプル間隔の空き・同時刻サンプル、体全体が同じ当たり判定（C6）、刃の太さ、1振りで複数の敵、しきい値を変えると同じ動きが命中／押し当てに変わること（C8） |
 | テストの効き目 | 規則（C1/C2・C3・C5・掃引・飛び・ヒステリシス・最短時間）を1つずつ外した版で、それぞれ対応するテストが失敗することを確認 |
-| 未実装（Unity 側） | `SwordHitDetector`（Gameplay）、`EditorSwordPoseSource` のドラッグ操作と画面速度→刃先速度の換算、`SwordTuning` を Unity から調整する ScriptableObject |
-| 未確認 | Unity Editor でのコンパイル・Test Runner での実行、Quest 実機での全項目（6章）。しきい値はすべて仮の値 |
+| Unity 側（2026-10-10 実装） | `SwordHitDetector`（Gameplay：判定の接続・ログ・色）、`EditorSwordPoseSource` のドラッグ操作と換算（Core の `DragBladeModel`）、`SwordTuningAsset`（Inspector で調整）、`EnemyHitVolume`（体のカプセル）、出来事の分類 `StrikeEventRecorder`（Core）。Editor 手順は [quest-xr-setup.md](quest-xr-setup.md) 2-3 |
+| 確認状況 | Core 112件は開発者の Unity EditMode で成功（2026-10-10、`Claude/reports/evidence/20261010-115406_Q1_Unity_EditMode.xml`）。10-10 追加分（Core 24件・Unity 側の接続）は **Unity では未確認**。Quest 実機での全項目（6章）は未確認。しきい値・換算係数はすべて仮の値 |
 
 判定の順序（同じフレームで「接触していない」→「触れ続け」→「振り中でない」→「この振りで命中済み」の順に理由を1つ返す）は、ログで不命中の原因を区別できるようにするため。
