@@ -1,0 +1,17 @@
+# Q0 Androidビルド  2026-10-10 11:49:25
+Machine: Mac OS X 26.6.2 / 8192MB RAM
+[OK] ビルド結果: Succeeded
+[--] ビルド中の画面の向き: LandscapeLeft（変更前 Portrait、一時的に変更）
+[OK] ビルド後の画面の向き（元の値に復元）: Portrait
+[--] 出力先: /Users/macbook/dev/Ordinal-Scale/OrdinalScale/Builds/Android/OrdinalScale_Quest_dev.apk
+[--] APKサイズ: 75.8 MB
+[--] 所要時間: 00:00:33
+[--] エラー／警告: 0 / 2
+[--] シーン: Assets/_Project/Scenes/Quest_MR.unity
+[--] Unity版: 6000.5.10f1
+[--] Application ID: com.gpyoshihiro.ordinalscale
+[--] 署名: Unity 既定のデバッグ鍵（キーストアはリポジトリに入れない）
+[--] Package com.unity.xr.openxr: 1.17.1
+[--] Package com.unity.xr.meta-openxr: 2.5.1
+[--] Package com.unity.xr.arfoundation: 6.5.1
+NG: 0
