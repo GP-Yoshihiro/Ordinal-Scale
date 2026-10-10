@@ -1,0 +1,13 @@
+# Q1 APK静的検査 2026-10-10
+
+Unity 6000.5.10f1 / PR #8 e694393 + Q1生成シーン・SwordTuning.asset
+APK: OrdinalScale/Builds/Android/OrdinalScale_Quest_dev.apk（GitHubには含めない）
+SHA-256: 52d49e6a9ff3b010f48a236699fd9c275c0cabe59379d97c3d6cdf52bdbeea8b
+BuildPipeline: Succeeded / Error 0 / Warning 2（20261010-122726_Q0_Androidビルド.txt）
+画面方向: ビルド中LandscapeLeft、終了後Portraitへ復元
+Application ID: com.gpyoshihiro.ordinalscale
+Native code: arm64-v8a
+OpenXR: org.khronos.openxr.permission.OPENXR / OPENXR_SYSTEM
+Feature: android.hardware.vr.headtracking / com.oculus.feature.PASSTHROUGH
+APK署名: apksigner verify --verbose成功。v2署名、signer 1。
+Questへの導入・起動・パススルー・剣入力は未実施。開発者モードとUSBデバッグ準備後に別途検証する。
