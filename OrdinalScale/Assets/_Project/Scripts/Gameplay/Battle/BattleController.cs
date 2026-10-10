@@ -325,7 +325,8 @@ namespace OrdinalScale.Gameplay.Battle
             // 中央：決着と2択（E4・Q-5）。日本語が出ない環境でも読めるよう英字を併記
             var w = 420f;
             var h = 190f;
-            GUILayout.BeginArea(new Rect((Screen.width - w) * 0.5f, (Screen.height - h) * 0.5f, w, h), GUI.skin.box);
+            // Q4 のヘッドセット内パネル（画面の中央より下に見える）と重ならないよう、画面の上寄りに出す
+            GUILayout.BeginArea(new Rect((Screen.width - w) * 0.5f, Screen.height * 0.05f, w, h), GUI.skin.box);
             GUILayout.Label(_session.State == BattleState.Victory ? "VICTORY" : "DEFEAT", _titleStyle);
             GUILayout.Space(10f);
             foreach (var choice in _session.AvailableChoices)
