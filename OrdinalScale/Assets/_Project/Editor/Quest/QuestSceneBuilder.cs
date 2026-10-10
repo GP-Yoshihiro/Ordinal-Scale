@@ -146,6 +146,8 @@ namespace OrdinalScale.EditorTools
             SetObject(battle, "placement", placement);
             SetObject(battle, "detector", hitDetector);
             SetObject(battle, "view", battleView);
+            // Q3：敵がプレイヤーの頭の位置へ近づくために使う
+            SetObject(battle, "rig", rig);
 
             var saved = EditorSceneManager.SaveScene(scene, ScenePath);
             Debug.Log(saved
@@ -251,6 +253,12 @@ namespace OrdinalScale.EditorTools
                 var battleHits = battle != null ? new SerializedObject(battle).FindProperty("hitsToDefeat") : null;
                 r.Check("戦闘の進行（BattleController：HP・撃破・終了／再挑戦）", battle != null && battle.GetComponent<BattleView>() != null,
                     battle != null ? $"あり（撃破に必要な有効命中 {(battleHits != null ? battleHits.intValue.ToString() : "?")}・試遊で調整する値）" : "なし（メニュー3でシーンを作り直す）");
+                var battleSo = battle != null ? new SerializedObject(battle) : null;
+                var battleRig = battleSo != null ? battleSo.FindProperty("rig") : null;
+                var playerHp = battleSo != null ? battleSo.FindProperty("playerMaxHp") : null;
+                r.Check("敵の移動・反撃とプレイヤーの敗北（Q3：BattleController の PlatformRig）", battleRig != null && battleRig.objectReferenceValue != null,
+                    battleRig == null ? "項目なし（メニュー3でシーンを作り直す）"
+                    : battleRig.objectReferenceValue != null ? $"あり（プレイヤーHP {(playerHp != null ? playerHp.intValue.ToString() : "?")}・仮の値）" : "未設定（メニュー3でシーンを作り直す）");
                 r.Check("剣の調整値アセット", tuningAsset != null, tuningAsset != null ? AssetDatabase.GetAssetPath(tuningAsset) : "未設定（Core の既定値で動く）");
                 if (tuningAsset != null)
                 {
