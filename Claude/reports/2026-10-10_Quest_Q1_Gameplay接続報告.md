@@ -20,7 +20,7 @@
 | --- | --- |
 | `4cd3134` | Core：出来事の分類 `StrikeEventRecorder`・文言 `StrikeMessages`、Editor のドラッグ剣モデル `DragBladeModel`、テスト24件 |
 | `3f34c46` | Gameplay／Platform／Editor：`SwordHitDetector`・`SwordTuningAsset`・`EnemyHitVolume`、ドラッグ式の `EditorSwordPoseSource`、刃の色を変える `SwordPoseDebugView.SetTint`、シーン生成と設定検証の更新 |
-| （本報告と同じコミット） | 手順書 `quest-xr-setup.md` 2-3（Q1 の確認7場面）・5章、設計書 7章、`evidence/README.md` の Q1 記録表、本報告 |
+| `93e4183` | 手順書 `quest-xr-setup.md` 2-3（Q1 の確認7場面）・5章、設計書 7章、`evidence/README.md` の Q1 記録表、本報告 |
 
 ## 実装の内容
 
