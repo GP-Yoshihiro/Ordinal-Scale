@@ -164,6 +164,7 @@ namespace OrdinalScale.EditorTools
             var choiceUi = battleGo.AddComponent<BattleChoiceUI>();
             SetObject(choiceUi, "battle", battle);
             SetObject(choiceUi, "rig", rig);
+            SetObject(battle, "choiceUi", choiceUi);
 
             var saved = EditorSceneManager.SaveScene(scene, ScenePath);
             Debug.Log(saved

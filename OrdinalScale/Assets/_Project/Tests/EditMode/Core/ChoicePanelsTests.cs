@@ -72,6 +72,20 @@ namespace OrdinalScale.Core.Tests
         }
 
         [Test]
+        public void TwoInputSourcesShareTheSameLimits()
+        {
+            // パネル（剣先＋トリガー）と Editor の画面ボタンは同じ ChoiceSelector を通す：
+            // どちらからでも待ち時間中は選べず、片方で選んだらもう片方でも選べない
+            var s = new ChoiceSelector(0.6);
+            s.Show(5.0);
+            Assert.That(s.Update(5.2, true, 1), Is.EqualTo(-1), "画面ボタン：待ち時間中");
+            Assert.That(s.IsArmed(5.2), Is.False, "画面ボタンは無効表示");
+            Assert.That(s.Update(5.7, true, 0), Is.EqualTo(0), "パネルで終了を選ぶ");
+            Assert.That(s.IsArmed(5.8), Is.False, "選択済みなので画面ボタンも無効");
+            Assert.That(s.Update(5.8, true, 1), Is.EqualTo(-1), "画面ボタンで再挑戦を重ねて選べない");
+        }
+
+        [Test]
         public void HiddenPanelsCannotBeSelected()
         {
             var s = new ChoiceSelector(0.0);

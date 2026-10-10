@@ -10,7 +10,8 @@ namespace OrdinalScale.Gameplay.Battle
     ///   以後は動かさない（頭を動かしても狙いやすいように固定）。
     /// - 剣先（コントローラの向き）をパネルに向けると明るくなり、先に小さな白い点が出る。トリガーの押し始めで決定。
     /// - 誤操作防止：表示から0.6秒は選べない、表示前から押していたトリガーは数えない、1回選んだら表示し直すまで選ばない（Core の ChoiceSelector）。
-    /// - Editor ではマウスのクリック（ScreenPointerInput）でも同じパネルを選べる。画面中央のボタン（BattleController）も残す。
+    /// - Editor ではマウスのクリック（ScreenPointerInput）でも同じパネルを選べる。画面上寄りのボタン（BattleController）も
+    ///   TryChooseFromScreenButton を通るので、待ち時間と1回だけの制限をパネルと共有する。
     /// 入力は PlatformRig.Pointer（IPointerInput）だけを見る。Quest 実機での見え方・選びやすさは未確認。
     /// </summary>
     [DefaultExecutionOrder(160)]
@@ -43,6 +44,19 @@ namespace OrdinalScale.Gameplay.Battle
         private Transform _reticle;
         private TextMesh _header;
         private int _hover = -1;
+
+        /// <summary>今選べるか（表示中・待ち時間が過ぎた・まだ選んでいない）。画面ボタンの有効・無効に使う。</summary>
+        public bool IsArmed => _selector.IsArmed(Time.timeAsDouble);
+
+        /// <summary>
+        /// Editor の画面ボタンからの選択。パネルと同じ ChoiceSelector を通すので、表示から0.6秒の待ちと1回だけの制限を共有する。
+        /// 選べなかったら false（パネルが出ていない・待ち時間中・選択済み）。
+        /// </summary>
+        public bool TryChooseFromScreenButton(BattleChoice choice)
+        {
+            if (!_selector.IsShown) return false;
+            return Decide(_selector.Update(Time.timeAsDouble, true, choice == BattleChoice.Quit ? QuitIndex : RetryIndex), "画面ボタン");
+        }
 
         private void Reset()
         {
@@ -81,12 +95,17 @@ namespace OrdinalScale.Gameplay.Battle
 
             var selectPressed = pointer.TryConsumeSelect(out var selectRay);
             var hit = selectPressed ? HitIndex(selectRay, out _) : -1;
-            var chosen = _selector.Update(Time.timeAsDouble, selectPressed, hit);
-            if (chosen < 0) return;
+            Decide(_selector.Update(Time.timeAsDouble, selectPressed, hit), "剣先で指してトリガー／Editor はクリック");
+        }
+
+        private bool Decide(int chosen, string source)
+        {
+            if (chosen < 0) return false;
 
             var choice = chosen == QuitIndex ? BattleChoice.Quit : BattleChoice.Retry;
-            Debug.Log($"[OrdinalScale][Q4] ヘッドセット内の2択：{(choice == BattleChoice.Quit ? "終了" : "再挑戦")}を選択（剣先で指してトリガー／Editor はクリック）", this);
+            Debug.Log($"[OrdinalScale][Q4] 2択：{(choice == BattleChoice.Quit ? "終了" : "再挑戦")}を選択（{source}）", this);
             battle.Choose(choice);
+            return true;
         }
 
         private void ShowPanels(bool victory)
