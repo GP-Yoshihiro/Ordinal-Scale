@@ -5,7 +5,9 @@ namespace OrdinalScale.Gameplay.Battle
     /// <summary>
     /// 戦闘の最小限の表示（E3：HP の減少が見える）。プレハブやマテリアルのアセットを増やさず、実行時にプリミティブで作る。
     /// - 敵の頭上の HP バー（背景＋赤い残量。左詰めで減る）。常にカメラの方を向く。
-    /// - 撃破時の「VICTORY」文字（敵がいた位置の上）。
+    /// - その下にプレイヤーの HP バー（青。Q3）。
+    /// - 敵の攻撃の予備動作中、敵の頭上に赤い予告の印（Q3。この間に下がれば避けられる）。
+    /// - 決着時の「VICTORY」／「DEFEAT」の文字（敵がいた位置の上）。
     /// どちらもワールド空間に置くので、Editor の Game ビューと Quest のヘッドセット内の両方に出る（Quest では未確認）。
     /// 「終了」「再挑戦」の操作は Q2 では Editor の画面ボタン（BattleController）。Quest のコントローラでの選択は Q4。
     /// </summary>
@@ -17,16 +19,22 @@ namespace OrdinalScale.Gameplay.Battle
         [SerializeField, Min(0f)] private float barAboveHead = 0.2f;
         [SerializeField] private Color barBackColor = new Color(0.12f, 0.12f, 0.12f);
         [SerializeField] private Color barFillColor = new Color(0.95f, 0.2f, 0.2f);
+        [SerializeField] private Color playerFillColor = new Color(0.25f, 0.55f, 1f);
+        [SerializeField] private Color warningColor = new Color(1f, 0.15f, 0.1f);
         [SerializeField] private Color victoryColor = new Color(1f, 0.85f, 0.2f);
+        [SerializeField] private Color defeatColor = new Color(0.6f, 0.75f, 1f);
         [Tooltip("VICTORY の文字の高さ（床からの m）。")]
         [SerializeField, Min(0.2f)] private float victoryHeight = 1.4f;
 
         private Transform _barRoot;
         private Transform _fill;
+        private Transform _playerFill;
+        private Transform _warning;
         private TextMesh _victory;
         private Transform _target;
         private float _targetHeight = 1.6f;
         private float _ratio = 1f;
+        private float _playerRatio = 1f;
         private Vector3 _victoryAnchor;
         private Camera _camera;
 
@@ -37,7 +45,22 @@ namespace OrdinalScale.Gameplay.Battle
             _barRoot.SetParent(transform, false);
             CreateQuad("Back", _barRoot, barBackColor, new Vector3(barWidth, barHeight, 0.005f), Vector3.zero);
             _fill = CreateQuad("Fill", _barRoot, barFillColor, new Vector3(barWidth, barHeight * 0.75f, 0.006f), new Vector3(0f, 0f, -0.006f));
+            // プレイヤーの HP（Q3）：敵のバーのすぐ下に青で出す（ヘッドセット内でも被弾が分かるように）
+            var playerY = -barHeight * 1.4f;
+            CreateQuad("PlayerBack", _barRoot, barBackColor, new Vector3(barWidth, barHeight * 0.6f, 0.005f), new Vector3(0f, playerY, 0f));
+            _playerFill = CreateQuad("PlayerFill", _barRoot, playerFillColor, new Vector3(barWidth, barHeight * 0.45f, 0.006f), new Vector3(0f, playerY, -0.006f));
             _barRoot.gameObject.SetActive(false);
+
+            // 攻撃の予告の印（Q3）
+            var warning = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            warning.name = "AttackWarning";
+            warning.transform.SetParent(transform, false);
+            warning.transform.localScale = Vector3.one * 0.15f;
+            Destroy(warning.GetComponent<Collider>());
+            var wr = warning.GetComponent<Renderer>();
+            if (wr != null) wr.material.color = warningColor;
+            _warning = warning.transform;
+            warning.SetActive(false);
 
             var label = new GameObject("VictoryLabel");
             label.transform.SetParent(transform, false);
@@ -77,6 +100,23 @@ namespace OrdinalScale.Gameplay.Battle
             _fill.gameObject.SetActive(_ratio > 0f);
         }
 
+        /// <summary>プレイヤーの HP（Q3）。</summary>
+        public void SetPlayerHealth(int current, int max)
+        {
+            _playerRatio = max > 0 ? Mathf.Clamp01((float)current / max) : 0f;
+            if (_playerFill == null) return;
+            var y = -barHeight * 1.4f;
+            _playerFill.localScale = new Vector3(barWidth * _playerRatio, barHeight * 0.45f, 0.006f);
+            _playerFill.localPosition = new Vector3(-(1f - _playerRatio) * barWidth * 0.5f, y, -0.006f);
+            _playerFill.gameObject.SetActive(_playerRatio > 0f);
+        }
+
+        /// <summary>敵の攻撃の予備動作の予告（Q3）。</summary>
+        public void ShowAttackWarning(bool visible)
+        {
+            if (_warning != null && _warning.gameObject.activeSelf != visible) _warning.gameObject.SetActive(visible);
+        }
+
         public void HideHealthBar()
         {
             _barRoot.gameObject.SetActive(false);
@@ -85,6 +125,14 @@ namespace OrdinalScale.Gameplay.Battle
         /// <summary>撃破の表示。position は敵の足元。</summary>
         public void ShowVictory(bool visible, Vector3 position)
         {
+            ShowResult(visible, true, position);
+        }
+
+        /// <summary>決着の表示（勝利なら VICTORY、敗北なら DEFEAT）。position は敵の足元。</summary>
+        public void ShowResult(bool visible, bool victory, Vector3 position)
+        {
+            _victory.text = victory ? "VICTORY" : "DEFEAT";
+            _victory.color = victory ? victoryColor : defeatColor;
             _victoryAnchor = position + Vector3.up * victoryHeight;
             _victory.gameObject.SetActive(visible);
         }
@@ -106,6 +154,11 @@ namespace OrdinalScale.Gameplay.Battle
                     var p = _target.position + Vector3.up * (_targetHeight + barAboveHead);
                     _barRoot.SetPositionAndRotation(p, Billboard(p, cam));
                 }
+            }
+
+            if (_warning != null && _warning.gameObject.activeSelf && _target != null)
+            {
+                _warning.position = _target.position + Vector3.up * (_targetHeight + barAboveHead + barHeight * 2.5f);
             }
 
             if (_victory.gameObject.activeSelf)
