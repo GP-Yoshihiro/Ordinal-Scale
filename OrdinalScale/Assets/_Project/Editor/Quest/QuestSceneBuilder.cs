@@ -1,3 +1,4 @@
+using OrdinalScale.Gameplay.Battle;
 using OrdinalScale.Gameplay.Combat;
 using OrdinalScale.Gameplay.Placement;
 using OrdinalScale.Platform;
@@ -29,7 +30,8 @@ namespace OrdinalScale.EditorTools
     ///     Spatial                        … XRHeadSpatialProvider（XR・Editor 共通）
     ///     XR / Sword (Controller)        … XRControllerSwordPoseSource（XR のときだけ有効）
     ///     Editor / Sword (Mouse)         … EditorSwordPoseSource（XR が無いときだけ有効）
-    ///   Battle                           … FixedEnemyPlacement、SwordPoseDebugView、SwordHitDetector（Q1：命中の判定と表示）
+    ///   Battle                           … FixedEnemyPlacement、SwordPoseDebugView、SwordHitDetector（Q1：命中の判定と表示）、
+    ///                                      BattleController・BattleView（Q2：HP・撃破・終了／再挑戦）
     /// 剣の調整値アセット（Assets/_Project/Settings/SwordTuning.asset、仮の値）が無ければ作って割り当てる。
     /// </summary>
     internal static class QuestSceneBuilder
@@ -138,6 +140,13 @@ namespace OrdinalScale.EditorTools
             SetObject(hitDetector, "bladeView", swordView);
             SetObject(hitDetector, "tuning", EnsureTuningAsset());
 
+            // Q2：有効な命中を敵の HP へ接続し、撃破・勝利表示・「終了」「再挑戦」を通す
+            var battleView = battleGo.AddComponent<BattleView>();
+            var battle = battleGo.AddComponent<BattleController>();
+            SetObject(battle, "placement", placement);
+            SetObject(battle, "detector", hitDetector);
+            SetObject(battle, "view", battleView);
+
             var saved = EditorSceneManager.SaveScene(scene, ScenePath);
             Debug.Log(saved
                 ? $"[OrdinalScale] Quest シーンを作成しました: {ScenePath}（ビルド対象一覧には追加していません。APK ビルドはメニュー 5 がこのシーンを指定します）"
@@ -209,6 +218,7 @@ namespace OrdinalScale.EditorTools
                 PlatformRig rig = null;
                 FixedEnemyPlacement placement = null;
                 SwordHitDetector hitDetector = null;
+                BattleController battle = null;
                 foreach (var root in scene.GetRootGameObjects())
                 {
                     if (origin == null) origin = root.GetComponentInChildren<XROrigin>(true);
@@ -216,6 +226,7 @@ namespace OrdinalScale.EditorTools
                     if (rig == null) rig = root.GetComponentInChildren<PlatformRig>(true);
                     if (placement == null) placement = root.GetComponentInChildren<FixedEnemyPlacement>(true);
                     if (hitDetector == null) hitDetector = root.GetComponentInChildren<SwordHitDetector>(true);
+                    if (battle == null) battle = root.GetComponentInChildren<BattleController>(true);
                 }
 
                 r.Check("AR Session", session != null, session != null ? "あり" : "なし");
@@ -237,6 +248,9 @@ namespace OrdinalScale.EditorTools
                 // Q1：命中判定の接続と調整値（値は仮。受入時に固定して記録する）
                 var tuningAsset = hitDetector != null ? new SerializedObject(hitDetector).FindProperty("tuning")?.objectReferenceValue as SwordTuningAsset : null;
                 r.Check("剣の命中判定（SwordHitDetector）", hitDetector != null, hitDetector != null ? "あり" : "なし（メニュー3でシーンを作り直す）");
+                var battleHits = battle != null ? new SerializedObject(battle).FindProperty("hitsToDefeat") : null;
+                r.Check("戦闘の進行（BattleController：HP・撃破・終了／再挑戦）", battle != null && battle.GetComponent<BattleView>() != null,
+                    battle != null ? $"あり（撃破に必要な有効命中 {(battleHits != null ? battleHits.intValue.ToString() : "?")}・試遊で調整する値）" : "なし（メニュー3でシーンを作り直す）");
                 r.Check("剣の調整値アセット", tuningAsset != null, tuningAsset != null ? AssetDatabase.GetAssetPath(tuningAsset) : "未設定（Core の既定値で動く）");
                 if (tuningAsset != null)
                 {
