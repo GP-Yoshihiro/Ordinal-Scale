@@ -7,8 +7,16 @@ namespace OrdinalScale.Core.Tests
     /// <summary>出来事の分類（空振り・ゆっくり接触・触れ続け・同じ振りでの再接触・別の振り）を、判定結果を直接与えて確かめる。</summary>
     public class StrikeEventRecorderTests
     {
-        private readonly StrikeEventRecorder _rec = new StrikeEventRecorder();
-        private readonly List<StrikeEvent> _events = new List<StrikeEvent>();
+        // NUnit は同じフィクスチャのインスタンスを全テストで使い回すため、テストごとに作り直す
+        private StrikeEventRecorder _rec;
+        private List<StrikeEvent> _events;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _rec = new StrikeEventRecorder();
+            _events = new List<StrikeEvent>();
+        }
 
         private static SwingState Idle(int id) => new SwingState(SwingPhase.Idle, id, 0.1f, true, SwingBreak.None);
         private static SwingState Started(int id, float v = 2f) => new SwingState(SwingPhase.Started, id, v, true, SwingBreak.None);
