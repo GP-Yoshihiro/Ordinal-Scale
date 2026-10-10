@@ -86,6 +86,25 @@ echo $?   # 0 = 成功
 結果は `Claude/reports/evidence/README.md` の Q1 記録表に書き、Console の `[OrdinalScale][Q1]` 行を `Q1_editor_log.txt` として保存する。
 ここでの合否は **Editor の代替操作での区別**の確認で、Quest のコントローラでの「斬った／押し当てた」の感覚やしきい値の妥当性は確認できない（5章）。
 
+#### Q2 の確認：HP・撃破・終了／再挑戦（E3・E4）
+
+**Q2 の変更を取り込んだら、メニュー3で `Quest_MR.unity` をもう一度作り直す**（`BattleController`・`BattleView` が追加される）。メニュー4で `戦闘の進行（BattleController…）` が OK になることを確認してから再生する。
+
+画面右上に `Q2 battle  round N`・`enemy HP 現在/最大`・`valid hits`・`state`（FIGHTING／VICTORY）が出る。敵の頭上には赤い HP バーが出て、命中のたびに右から短くなる。Console には `[OrdinalScale][Q2] …` が日本語で出る。撃破に必要な有効命中数は `Battle` の `BattleController` の `Hits To Defeat`（初期10・試遊で調整する値。再生中の変更は次の再生から反映）。
+
+| # | 場面 | 操作 | 期待 |
+| --- | --- | --- | --- |
+| Q2-1 | 9回では撃破しない | Q1 の場面3（有効な命中）を9回。振りの間は毎回0.3秒ほど止める | `enemy HP 1/10`・`valid hits 9`・`state FIGHTING`。HP バーが残り1割。`敵HP 9/10 … 敵HP 1/10` のログが9行 |
+| Q2-2 | 空振り・押し当てでは減らない | 続けて Q1 の場面1（空振り）と場面2（ゆっくり接触）、4b（押し当てたまま振る）、5（1振りでの再接触の2回目）を数回ずつ | HP は 1/10 のまま。`[OrdinalScale][Q2] 敵HP` のログが増えない（Q1 のログ・回数は増える） |
+| Q2-3 | 10回目で撃破 | 有効な命中をもう1回 | `敵HP 0/10`、`撃破：有効命中 10 回（ラウンド 1）…`。敵が光ってから約0.4秒で消え、`VICTORY` の文字（敵がいた位置の上）と、画面中央に `VICTORY` と「終了 / Quit」「再挑戦 / Retry」のボタン。`state VICTORY` |
+| Q2-4 | 撃破後は攻撃無効 | 撃破後に敵がいた場所で速く払う | 左上の Q1 の表示が消える（剣の判定が止まっている）。HP・`valid hits` は変わらない。刃は水色のまま（黄・赤にならない） |
+| Q2-5 | 再挑戦 | 「再挑戦 / Retry」を押す | `再挑戦：ラウンド 2。敵・HP（10/10）・剣の判定を初期化`。約1秒後に敵が正面に再び立ち、HP バーが満タン、左上の Q1 の回数が0。`round 2`・`state FIGHTING` |
+| Q2-6 | 再挑戦後も同じ回数で撃破 | 有効な命中を10回 | 9回目まで撃破せず、10回目で `撃破：有効命中 10 回（ラウンド 2）` |
+| Q2-7 | 終了（Editor） | 撃破後に「終了 / Quit」を押す | `終了要求を受け付けました（Editor ではアプリを閉じない…）`。右上に `QUIT REQUESTED`、中央に `Quit requested …`。再生は止まらない。もう一度押してもログは増えない |
+| Q2-8 | 撃破前は2択が出ない | 再生直後（撃破前） | 中央の2択は出ない |
+
+結果は `Claude/reports/evidence/README.md` の Q2 記録表に書き、Console の `[OrdinalScale][Q2]` 行を `Q2_editor_log.txt` として保存する。**Quest 実機での表示（HP バー・VICTORY の文字）、`Application.Quit` でアプリが閉じるか、ヘッドセット内からの2択の操作は未確認**（2択のコントローラ操作は Q4）。
+
 ### 2-4. コミットしてよいもの・いけないもの
 
 - コミットする：`Packages/manifest.json`・`Packages/packages-lock.json`、`ProjectSettings/*.asset`、`Assets/XR/` 配下（OpenXR の設定アセットを含む）、`Assets/_Project/Scenes/Quest_MR.unity`、新しく生成された `.meta`、`Claude/reports/evidence/` の検証・ビルドのテキスト。
@@ -138,6 +157,7 @@ A は製品の範囲を変えない（Q-1 は「敵1体がパススルーの現�
 - 起動して OpenXR が Quest 3／3S で初期化されるか、パススルーが表示されるか（背景が黒いままなら URP の設定を確認）
 - 床の高さ（追跡原点 Floor）と敵の足元が一致して見えるか、2m が安全範囲に収まるか
 - 剣の判定（Q1）：振り開始・終了の速さのしきい値（1.5／0.6 m/s・仮）が「斬った」「押し当てた」の感覚に合うか、速い振りの取りこぼし、追跡の途切れでの誤命中、敵が光る反応が見えるか（`Claude/docs/sword-input-design.md` 6章）
+- 戦闘（Q2）：敵の頭上の HP バーと `VICTORY` の文字がパススルー越しに見えるか、「終了」で `Application.Quit` によりアプリが閉じるか（Editor ではログのみ）。2択はヘッドセット内から選べない（画面ボタンは Editor 専用、コントローラでの選択は Q4）
 - コントローラの追跡と刃の向き（`bladeLocalEuler` の初期値 0,0,0 で「握った拳から前へ」伸びるか）
 - フレームレート（URP のポストプロセス・HDR は iPhone と共有のため未調整）
 - 導入方法：開発者モードの有効化（Meta の開発者登録と規約同意が必要）と `adb install`、または学校の管理方法。いずれもユーザー判断
