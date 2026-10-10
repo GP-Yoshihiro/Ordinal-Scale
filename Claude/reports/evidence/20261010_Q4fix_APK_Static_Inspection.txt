@@ -1,0 +1,13 @@
+Quest Q4 APK 静的検査
+日時: 2026-10-10
+対象: OrdinalScale/Builds/Android/OrdinalScale_Quest_dev.apk（非公開、Git非コミット）
+
+結果: PASS
+- apksigner verify: Verified; v2署名=true; signer=Android Debug; RSA 2048
+- aapt dump badging: package=com.gpyoshihiro.ordinalscale
+- aapt dump badging: native-code=arm64-v8a
+- AndroidManifest.xml: org.khronos.openxr.permission.OPENXR / OPENXR_SYSTEM
+- AndroidManifest.xml: com.oculus.feature.PASSTHROUGH required=true
+- APK内にarm64-v8a/libUnityOpenXR.so、libopenxr_loader.so、libil2cpp.soあり
+
+使用ツール: Unity 6000.5.10f1 Android SDK build-tools 36.0.0 (apksigner, aapt), unzip

@@ -31,7 +31,8 @@ namespace OrdinalScale.EditorTools
     ///     XR / Sword (Controller)        … XRControllerSwordPoseSource（XR のときだけ有効）
     ///     Editor / Sword (Mouse)         … EditorSwordPoseSource（XR が無いときだけ有効）
     ///   Battle                           … FixedEnemyPlacement、SwordPoseDebugView、SwordHitDetector（Q1：命中の判定と表示）、
-    ///                                      BattleController・BattleView（Q2：HP・撃破・終了／再挑戦）
+    ///                                      BattleController・BattleView（Q2：HP・撃破・終了／再挑戦）、BattleChoiceUI（Q4：ヘッドセット内の2択）
+    ///     XR / Pointer (Controller)・Editor / Pointer (Mouse)（Q4：2択を選ぶ入力）
     /// 剣の調整値アセット（Assets/_Project/Settings/SwordTuning.asset、仮の値）が無ければ作って割り当てる。
     /// </summary>
     internal static class QuestSceneBuilder
@@ -120,6 +121,16 @@ namespace OrdinalScale.EditorTools
             SetObject(spatial, "floorReference", originGo.transform);
             SetObject(controllerSword, "trackingSpace", offsetGo.transform);
             SetObject(mouseSword, "viewCamera", camera);
+
+            // Q4：決着後の2択を選ぶ「指す・選ぶ」入力。Quest は剣先の向き＋トリガー、Editor はマウスのクリック
+            var controllerPointerGo = new GameObject("Pointer (Controller)");
+            controllerPointerGo.transform.SetParent(xrGo.transform, false);
+            var controllerPointer = controllerPointerGo.AddComponent<XRControllerPointerInput>();
+            SetObject(controllerPointer, "trackingSpace", offsetGo.transform);
+            var mousePointerGo = new GameObject("Pointer (Mouse)");
+            mousePointerGo.transform.SetParent(editorGo.transform, false);
+            var mousePointer = mousePointerGo.AddComponent<ScreenPointerInput>();
+            SetObject(mousePointer, "pointerCamera", camera);
             SetObject(runtimeSwitch, "editorCamera", cameraGo.transform);
             SetArray(runtimeSwitch, "xrOnlyObjects", xrGo);
             SetArray(runtimeSwitch, "editorOnlyObjects", editorGo);
@@ -148,6 +159,12 @@ namespace OrdinalScale.EditorTools
             SetObject(battle, "view", battleView);
             // Q3：敵がプレイヤーの頭の位置へ近づくために使う
             SetObject(battle, "rig", rig);
+
+            // Q4：決着後の「終了」「再挑戦」をヘッドセット内のパネルで選ぶ
+            var choiceUi = battleGo.AddComponent<BattleChoiceUI>();
+            SetObject(choiceUi, "battle", battle);
+            SetObject(choiceUi, "rig", rig);
+            SetObject(battle, "choiceUi", choiceUi);
 
             var saved = EditorSceneManager.SaveScene(scene, ScenePath);
             Debug.Log(saved
@@ -221,6 +238,7 @@ namespace OrdinalScale.EditorTools
                 FixedEnemyPlacement placement = null;
                 SwordHitDetector hitDetector = null;
                 BattleController battle = null;
+                BattleChoiceUI choiceUi = null;
                 foreach (var root in scene.GetRootGameObjects())
                 {
                     if (origin == null) origin = root.GetComponentInChildren<XROrigin>(true);
@@ -229,6 +247,7 @@ namespace OrdinalScale.EditorTools
                     if (placement == null) placement = root.GetComponentInChildren<FixedEnemyPlacement>(true);
                     if (hitDetector == null) hitDetector = root.GetComponentInChildren<SwordHitDetector>(true);
                     if (battle == null) battle = root.GetComponentInChildren<BattleController>(true);
+                    if (choiceUi == null) choiceUi = root.GetComponentInChildren<BattleChoiceUI>(true);
                 }
 
                 r.Check("AR Session", session != null, session != null ? "あり" : "なし");
@@ -245,6 +264,8 @@ namespace OrdinalScale.EditorTools
 
                 var swordSources = rig != null ? rig.GetComponentsInChildren<ISwordPoseSource>(true).Length : 0;
                 r.Check("PlatformRig と剣の入力源（コントローラ・マウス）", rig != null && swordSources >= 2, $"rig={(rig != null ? "あり" : "なし")} 剣の入力源={swordSources}");
+                var pointerSources = rig != null ? rig.GetComponentsInChildren<IPointerInput>(true).Length : 0;
+                r.Check("2択を選ぶ入力（Q4：コントローラ・マウス）", rig != null && pointerSources >= 2, $"指す・選ぶ入力={pointerSources}（メニュー3でシーンを作り直すと2）");
                 r.Check("固定配置（FixedEnemyPlacement）", placement != null, placement != null ? "あり" : "なし");
 
                 // Q1：命中判定の接続と調整値（値は仮。受入時に固定して記録する）
@@ -259,6 +280,7 @@ namespace OrdinalScale.EditorTools
                 r.Check("敵の移動・反撃とプレイヤーの敗北（Q3：BattleController の PlatformRig）", battleRig != null && battleRig.objectReferenceValue != null,
                     battleRig == null ? "項目なし（メニュー3でシーンを作り直す）"
                     : battleRig.objectReferenceValue != null ? $"あり（プレイヤーHP {(playerHp != null ? playerHp.intValue.ToString() : "?")}・仮の値）" : "未設定（メニュー3でシーンを作り直す）");
+                r.Check("ヘッドセット内の2択パネル（Q4：BattleChoiceUI）", choiceUi != null, choiceUi != null ? "あり（剣先で指してトリガー）" : "なし（メニュー3でシーンを作り直す）");
                 r.Check("剣の調整値アセット", tuningAsset != null, tuningAsset != null ? AssetDatabase.GetAssetPath(tuningAsset) : "未設定（Core の既定値で動く）");
                 if (tuningAsset != null)
                 {

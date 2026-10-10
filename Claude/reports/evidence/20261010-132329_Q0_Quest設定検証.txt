@@ -1,0 +1,47 @@
+# Q0 Quest設定検証  2026-10-10 13:23:28
+Machine: Mac OS X 26.6.2 / 8192MB RAM
+[OK] Unity版: 6000.5.10f1（固定版: 6000.5.10f1）
+[OK] Android Build Support（Unity Hub のモジュール）: 導入済み
+[--] 現在のビルドターゲット: Android
+[OK] Package com.unity.xr.openxr: 1.17.1
+[OK] Package com.unity.xr.meta-openxr: 2.5.1
+[OK] Package com.unity.xr.arfoundation: 6.5.1
+[OK] Package com.unity.xr.arkit: 6.5.1
+[OK] Package com.unity.xr.management: 4.6.1
+[OK] Package com.unity.xr.core-utils: 2.6.0
+[OK] Package com.unity.inputsystem: 1.20.0
+[OK] Package com.unity.render-pipelines.universal: 17.5.0
+[OK] Application ID: com.gpyoshihiro.ordinalscale
+[OK] Scripting Backend: IL2CPP
+[OK] Target Architectures: ARM64
+[OK] Minimum API Level: 32（必要: 32 以上）
+[OK] Graphics API（先頭が Vulkan）: Vulkan
+[OK] XR Plug-in (Android) OpenXR: OpenXRLoader
+[OK] XR Initialize on Startup (Android): True
+[OK] OpenXR機能 Meta Quest Support: 有効
+[OK] OpenXR機能 Oculus Touch Controller Profile: 有効
+[OK] OpenXR機能 Meta Quest Touch Plus Controller Profile（Quest 3／3S 付属）: 有効
+[OK] OpenXR機能 Meta Quest: Session: 有効
+[OK] OpenXR機能 Meta Quest: Camera (Passthrough): 有効
+[OK] iPhone: XR Plug-in (iOS) Apple ARKit のまま: ARKitLoader
+[OK] iPhone: ビルド対象の先頭シーン: Assets/_Project/Scenes/iPhone_AR.unity
+[OK] 画面の向き（保存値は iPhone 用の Portrait）: Portrait（Quest ビルド時だけ Landscape Left に切り替え、ビルド後に戻す）
+[OK] Quest ビルドの一時変更が残っていない: なし
+[--] Quest の APK ビルド方法: メニュー5 または BuildApkFromCommandLine を使う（File > Build Profiles から直接ビルドすると向きの検証で失敗する）
+[OK] Quest シーン: Assets/_Project/Scenes/Quest_MR.unity
+[OK] AR Session: あり
+[OK] XR Origin（追跡原点 Floor）: Floor
+[OK] カメラ背景（単色・アルファ0）: SolidColor alpha=0
+[OK] ARCameraManager（パススルー）: あり
+[OK] TrackedPoseDriver（頭部）: あり
+[OK] PlatformRig と剣の入力源（コントローラ・マウス）: rig=あり 剣の入力源=2
+[OK] 2択を選ぶ入力（Q4：コントローラ・マウス）: 指す・選ぶ入力=2（メニュー3でシーンを作り直すと2）
+[OK] 固定配置（FixedEnemyPlacement）: あり
+[OK] 剣の命中判定（SwordHitDetector）: あり
+[OK] 戦闘の進行（BattleController：HP・撃破・終了／再挑戦）: あり（撃破に必要な有効命中 10・試遊で調整する値）
+[OK] 敵の移動・反撃とプレイヤーの敗北（Q3：BattleController の PlatformRig）: あり（プレイヤーHP 5・仮の値）
+[OK] ヘッドセット内の2択パネル（Q4：BattleChoiceUI）: あり（剣先で指してトリガー）
+[OK] 剣の調整値アセット: Assets/_Project/Settings/SwordTuning.asset
+[--] 剣の調整値（仮の値・Quest 実機で未確認）: start=1.5m/s end=0.6m/s hold=80ms minSwing=100ms jump=0.5m gap=100ms bladeR=0.02m sweep=0.05m x16
+[--] URP: Quest 推奨（HDR・ポストプロセス無効）は iPhone と共有の URP アセットに関わるため Q4 で別の品質設定として扱う
+NG: 0

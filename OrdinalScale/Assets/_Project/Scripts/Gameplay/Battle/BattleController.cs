@@ -23,6 +23,8 @@ namespace OrdinalScale.Gameplay.Battle
         [SerializeField] private FixedEnemyPlacement placement;
         [SerializeField] private SwordHitDetector detector;
         [SerializeField] private BattleView view;
+        [Tooltip("Q4：ヘッドセット内の2択。設定されていれば、画面ボタンの選択もこれを通して待ち時間と1回だけの制限を共有する。")]
+        [SerializeField] private BattleChoiceUI choiceUi;
         [Tooltip("プレイヤーの頭の位置を得るリグ（Q3）。")]
         [SerializeField] private PlatformRig rig;
 
@@ -83,6 +85,7 @@ namespace OrdinalScale.Gameplay.Battle
             if (placement == null) placement = FindAnyObjectByType<FixedEnemyPlacement>();
             if (detector == null) detector = FindAnyObjectByType<SwordHitDetector>();
             if (view == null) view = FindAnyObjectByType<BattleView>();
+            if (choiceUi == null) choiceUi = FindAnyObjectByType<BattleChoiceUI>();
             if (rig == null) rig = FindAnyObjectByType<PlatformRig>();
             if (placement == null || detector == null)
                 Debug.LogError($"[{nameof(BattleController)}] FixedEnemyPlacement または SwordHitDetector がありません。", this);
@@ -134,7 +137,10 @@ namespace OrdinalScale.Gameplay.Battle
             {
                 var choice = _pendingChoice.Value;
                 _pendingChoice = null;
-                Choose(choice);
+                // Q4：パネルがあれば同じ選択の規則（表示から0.6秒の待ち・1回だけ）を通す。無ければ従来どおり
+                if (choiceUi == null) Choose(choice);
+                else if (!choiceUi.TryChooseFromScreenButton(choice))
+                    Debug.Log($"[OrdinalScale][Q4] 画面ボタンの「{Label(choice)}」は無視（表示直後の待ち時間中、または選択済み）", this);
             }
 
             if (_hideAt >= 0f && Time.time >= _hideAt)
@@ -325,13 +331,19 @@ namespace OrdinalScale.Gameplay.Battle
             // 中央：決着と2択（E4・Q-5）。日本語が出ない環境でも読めるよう英字を併記
             var w = 420f;
             var h = 190f;
-            GUILayout.BeginArea(new Rect((Screen.width - w) * 0.5f, (Screen.height - h) * 0.5f, w, h), GUI.skin.box);
+            // Q4 のヘッドセット内パネル（画面の中央より下に見える）と重ならないよう、画面の上寄りに出す
+            GUILayout.BeginArea(new Rect((Screen.width - w) * 0.5f, Screen.height * 0.05f, w, h), GUI.skin.box);
             GUILayout.Label(_session.State == BattleState.Victory ? "VICTORY" : "DEFEAT", _titleStyle);
             GUILayout.Space(10f);
+            // パネルと同じく、選べない間（表示直後・選択済み）はボタンを無効にする
+            var saved = GUI.enabled;
+            GUI.enabled = choiceUi == null || choiceUi.IsArmed;
             foreach (var choice in _session.AvailableChoices)
             {
                 if (GUILayout.Button(Label(choice), _buttonStyle, GUILayout.Height(48f))) _pendingChoice = choice;
             }
+
+            GUI.enabled = saved;
 
             if (_session.QuitRequested) GUILayout.Label("Quit requested (Editor keeps running; see Console)", _hudStyle);
             GUILayout.EndArea();
