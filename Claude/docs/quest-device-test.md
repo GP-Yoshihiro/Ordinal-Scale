@@ -1,6 +1,6 @@
 # Quest 3／3S 実機確認の手順（Q5）
 
-状態：**手順とツールは用意済み・実機では未実施**（2026-10-24、Claude）。
+状態：**手順とツールは用意済み。クラウドで Unity API への型検査とスクリプトの動作確認は済み。Unity Editor と実機では未実施**（2026-10-24、Claude）。
 対象：`GPT/plans/2026-10-09_Quest戦闘開発.md` の Q5「起動→パススルー→剣接触→反撃→勝敗→再挑戦の順に確認手順と修正優先順位を固める。完成済み機能だけを先行して測る」。
 受入の記録先は GPT の `GPT/verification/Quest_Q0_実機スモーク.md`（段階 A）と `GPT/verification/Quest_実機受入記録票.md`（段階 C・D）。Claude はそれらを編集しない。この手順で作られる証拠ファイルをもとに GPT が転記する。
 
@@ -16,12 +16,24 @@
 | --- | --- | --- |
 | 開発者モード | スマホの Meta Horizon アプリ > デバイス > ヘッドセットの設定 > 開発者モード。**Meta の開発者組織への登録と規約への同意が必要**（Meta アカウントでのログインを伴う） | ユーザー（規約同意のため Claude は行わない） |
 | 学校の端末の場合 | 管理者が開発者モード・USB デバッグ・開発版 APK の導入を許可しているか | ユーザー（管理者へ確認） |
-| 使う APK | このブランチの最新コミットで Unity メニュー5から作った APK（6章のとおり Q5 のコード変更を含むため、作り直しが1回必要）。SHA-256 を記録 | 開発者 |
+| 使う APK | このブランチの最新コミットで `tools/quest/prepare_apk.sh`（6章）から作った APK（Q5 のコード変更を含むため、作り直しが1回必要）。SHA-256 を記録 | 開発者 |
 | 場所と安全範囲 | 2章の広さを満たす場所。ガーディアン（境界）を「ルームスケール」で設定 | ユーザー・開発者 |
 | 受入時の固定値 | 撃破に必要な有効命中 **10**、プレイヤー HP **5**、敵の距離 2m・安全範囲 半径1m（いずれも現在の仮の値）。段階 C の前に変えるなら、変えた値で APK を作り直してから受入する | GPT（受入条件）・Claude（技術値） |
 | 人数 | **2人推奨**：装着者と、Mac の画面でログを見て記録する人 | ユーザー |
 
 導入は `adb install`（下の `tools/quest/quest_device.sh`）を使う。Meta Quest Developer Hub（ドラッグで導入）も使えるが、Meta アカウントでのログインが要るためユーザー判断とする。
+
+### 1-1. 開発者モードを有効にする（ユーザーが行う）
+
+Meta 側の画面の名前や条件は変わることがある。クラウドからは Meta の開発者サイトを開けないため、この節は2026年10月時点で Claude が知っている手順で、現地で確かめていない。違っていたら、実際の画面の名前を記録票に残す。
+
+1. ヘッドセットを登録した Meta アカウントで、Meta の開発者サイト（developers.meta.com）にログインし、**開発者組織（Organization）を作る**か既存の組織に参加する。規約への同意と、アカウントの確認（電話番号など）を求められることがある。
+2. スマホの **Meta Horizon アプリ** → メニュー → デバイス → 対象のヘッドセット → ヘッドセットの設定 → **開発者モード**をオン。
+3. ヘッドセットを再起動する。
+4. Mac とヘッドセットを **データ通信できる USB-C ケーブル**でつなぎ、ヘッドセットをかぶって「USB デバッグを許可しますか」で**許可**（「このコンピュータを常に許可」にチェック）。
+5. Mac で `tools/quest/quest_device.sh check` → `OK: 端末は使える状態です` になれば準備完了。
+
+学校の管理端末でスマホアプリに開発者モードの項目が出ない場合は、管理者へ確認する。そこで中断し、理由を記録票に残す。
 
 ## 2. 必要な広さと安全
 
@@ -54,7 +66,7 @@ tools/quest/quest_device.sh install   # 既定は OrdinalScale/Builds/Android/Or
 
 ## 4. 確認の順番
 
-各段階は `run <ラベル>` で始める。**アプリを起動し直し**、`[OrdinalScale]` の行とエラーを Mac に表示しながら保存する。終わったら Mac で **Ctrl-C**。集計が表示され、次の2つが保存される。
+各段階は `run <ラベル>` で始める。**装着する人がヘッドセットをかぶって立ち位置についたら、記録する人が Enter** を押す。アプリが起動し直り、`[OrdinalScale]` の行とエラーが Mac に表示されながら保存される。終わったら Mac で **Ctrl-C**。集計が表示され、次の2つが保存される。
 
 - `Claude/reports/evidence/YYYYMMDD-HHMMSS_Q5_<ラベル>_ログ.txt`：集計と `[OrdinalScale]`・エラーの行（コミットする）
 - `OrdinalScale/Builds/DeviceLogs/…_logcat_full.txt`：生ログ（`.gitignore` 済み。GitHub に入れない）
@@ -81,7 +93,7 @@ tools/quest/quest_device.sh run q0-smoke
 
 | # | 確認（Q0 記録票の行） | 合格の目安 | ログの証拠 |
 | --- | --- | --- | --- |
-| A1 | 起動する（1） | アプリが開き、数秒で表示される | `実行環境: XR (…)`。`XRなし` なら OpenXR が動いていない（P0） |
+| A1 | 起動する（1） | アプリが開き、数秒で表示される | `実行環境: XR (…)`。`XRなし` なら OpenXR が動いていない（P0）。集計の「起動オプション」が `os_sword_practice=false（Intent あり）` |
 | A2 | パススルー（2） | 現実の部屋がカラーで見える。黒・灰色のままは不合格 | ― |
 | A3 | 頭の追跡（3） | 頭を左右に振っても部屋と敵がずれない・揺れない | ― |
 | A4 | 敵の位置（4） | 正面約2m の床に敵が立つ。足元が床から浮く・沈む量を目測（cm）で記録 | `敵を正面に配置: dist=2.00m floorY=…` |
@@ -96,7 +108,7 @@ tools/quest/quest_device.sh run q0-smoke
 tools/quest/quest_device.sh run sword --practice
 ```
 
-`--practice` は**剣の測定モード**：敵は動かず攻撃せず、命中しても HP を減らさない（Mac に `[Q5] 剣の測定モード…` と表示される）。しきい値を測るための補助で、**受入（Q-2）の合否はここでは決めない**（段階 C で決める）。
+`--practice` は**剣の測定モード**：敵は動かず攻撃せず、命中しても HP を減らさない（Mac に `[Q5] 起動オプション os_sword_practice=true` と `[Q5] 剣の測定モード…` が表示される。`=false` なら敵が動くので Ctrl-C で止めて Claude へ連絡。P2）。しきい値を測るための補助で、**受入（Q-2）の合否はここでは決めない**（段階 C で決める）。
 
 各場面を**5回ずつ**、場面ごとに一呼吸おいて行う。記録者は場面の区切りで Mac の表示に目印（場面番号）をメモする。
 
@@ -186,20 +198,42 @@ tools/quest/quest_device.sh run walk-1
 | 変更 | 内容 |
 | --- | --- |
 | `tools/quest/quest_device.sh` | check／install／run（`--practice`）／summary／running／stop。macOS 標準の bash 3.2 で動く。端末のシリアル番号は証拠ファイルに書かない |
-| `Platform/LaunchOptions.cs` | 起動 Intent の真偽値を読む（Android のみ。Editor・iOS は常に false） |
+| `Platform/LaunchOptions.cs` | 起動 Intent の真偽値を読む（Android のみ。Editor・iOS は常に false）。読んだ値をログに出す |
+| `tools/quest/prepare_apk.sh` | 実機の前の Unity 側の確認（EditMode テスト・設定検証・APK ビルド・APK の静的検査）を Mac で1コマンドにまとめる |
+| `tools/UnityTypeCheck` | クラウドで Core／Platform／Gameplay 層を Unity の API（UnityEngine.Modules 2021.3.33）に対して型検査する |
+
+クラウドで確認済み（2026-10-24）：
+
+- `dotnet build tools/UnityTypeCheck -p:UnityDefine=UNITY_ANDROID`（`UNITY_IOS`・`UNITY_EDITOR` も）が成功。わざと型の誤りを入れると Android の場合だけ失敗することも確認し、検査が効いていることを見た。Unity 6 の本体でのコンパイルではない（AR Foundation・Input System・Editor のコードは対象外）。
+- スクリプトは、本物の adb 34.0.4（端末なし）と、端末の応答をまねた偽の adb で、check の各状態（使える／未許可／端末なし）、install、run（Enter 待ち・測定モード・起動する Activity が分からないときの既定値・起動失敗の検出・Ctrl-C での停止と保存）、summary、running を確認した。`prepare_apk.sh` は Unity・aapt・apksigner の偽物で、成功・コンパイル失敗・テスト失敗・ビルド失敗・静的検査 NG の各経路を確認した（本物の Unity ではまだ動かしていない）。
 | `Gameplay/Battle/BattleController.cs` | 剣の測定モード（起動オプション `os_sword_practice`、Editor は Inspector の Sword Practice）。オフのときの動作は Q4 と同じ |
 
 開発者の Mac で、実機の前に次を1回だけ行う（APK を作り直すのはここだけ）：
 
-1. Unity で開いてコンパイル（新しい `LaunchOptions.cs.meta` が作られるのでコミット）、EditMode のテストがすべて成功
-2. Editor の確認：`Quest_MR.unity` を開き、`Battle` の `BattleController` で Sword Practice をオンにして再生（**シーンは保存しない**）。右上が `Q5 SWORD PRACTICE`、敵が動かず、命中しても赤いバーが減らないこと。オフに戻して再生し、Q4 までと同じく敵が近づいて攻撃すること
-3. メニュー4で NG 0、メニュー5で APK を1回ビルドし、3章の `install`
+```bash
+cd ~/dev/Ordinal-Scale
+git fetch origin && git checkout claude/eloquent-ritchie-5txq53 && git pull
+# Unity Editor でこのプロジェクトを開いていれば閉じてから
+tools/quest/prepare_apk.sh
+```
+
+`prepare_apk.sh` は次を順に行い、途中で失敗したらそこで止まって、Claude へ渡すものを表示する。
+
+| # | 内容 | 合格 | 証拠（`Claude/reports/evidence/`） |
+| --- | --- | --- | --- |
+| 1 | EditMode テスト（バッチ実行） | すべて成功 | `…_Q5_Unity_EditMode.xml` |
+| 2 | 設定検証＋APK ビルド（メニュー4・5 と同じ `BuildApkFromCommandLine`） | NG 0・ビルド成功・画面の向きの復元 | `…_Q0_Quest設定検証.txt`、`…_Q0_Androidビルド.txt` |
+| 3 | APK の静的検査（パッケージ名・arm64-v8a・起動できる Activity・OpenXR の権限・パススルーの宣言・署名） | NG 0 | `…_Q5_APK静的検査.txt`（SHA-256 も記録） |
+
+終わったら、evidence の今回のファイルと、Unity が作った `LaunchOptions.cs.meta` をコミットする（APK と `Builds/` はコミットしない）。
+
+任意（Editor で測定モードを見たい場合、約5分）：`Quest_MR.unity` を開き、`Battle` の `BattleController` で Sword Practice をオンにして再生する（**シーンは保存しない**）。右上が `Q5 SWORD PRACTICE` になり、敵が動かず、命中しても赤いバーが減らないことを確かめる。オフに戻して再生し、Q4 までと同じく敵が近づいて攻撃することも確かめる。実機では段階 B の最初に同じことが分かるので、省いてもよい。
 
 ## 7. 時間の目安（最初の実機枠）
 
 | 内容 | 目安 |
 | --- | --- |
 | 開発者モード・USB デバッグの初回設定 | 30〜60分（アカウント登録の状況による） |
-| 6章の Unity 確認と APK ビルド | 30分 |
+| 6章の `prepare_apk.sh`（待ち時間が大半） | 20〜40分 |
 | 段階 A／B／C／D | 20／30／30／20分 |
 | 合計 | **約2.5〜3時間**（しきい値の作り直し1回ごとに＋20分） |

@@ -143,9 +143,9 @@ iPhone AR 先行検証（S1〜S5）と Quest（Q0〜）の証拠を置く場所�
 | 項目 | 記入欄 |
 | --- | --- |
 | 実施日時・実施者・コミット | 未実施 |
-| コンパイル・EditMode の件数と結果（`LaunchOptions.cs.meta` のコミット） | 未実施 |
-| Editor：Sword Practice オン／オフの確認（6章の2） | 未実施 |
-| メニュー4の NG 件数・APK ビルド（ファイル名）・APK の SHA-256 | 未実施 |
+| `tools/quest/prepare_apk.sh`：EditMode の件数（XML）・設定検証の NG 件数・APK ビルド・静的検査（ファイル名）・APK の SHA-256 | 未実施 |
+| `LaunchOptions.cs.meta` のコミット | 未実施 |
+| （任意）Editor：Sword Practice オン／オフの確認 | 未実施 |
 | `check` の機種・OS の行 | 未実施 |
 | 段階 A／B／C／D のログファイル名 | 未実施 |
 | 段階 B で決めた剣の開始・終了の速さ（変えた場合は理由） | 未実施 |
