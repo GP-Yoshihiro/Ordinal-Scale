@@ -19,6 +19,8 @@ set -u
 
 PACKAGE="com.gpyoshihiro.ordinalscale"
 PRACTICE_EXTRA="os_sword_practice"   # LaunchOptions.SwordPractice と同じ文字列
+# 起動する Activity が解決できないときの既定（ProjectSettings の androidApplicationEntry: 1 = Activity）
+DEFAULT_ACTIVITY="$PACKAGE/com.unity3d.player.UnityPlayerActivity"
 UNITY_VERSION="6000.5.10f1"
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 DEFAULT_APK="$REPO_ROOT/OrdinalScale/Builds/Android/OrdinalScale_Quest_dev.apk"
@@ -54,7 +56,8 @@ sha256_of() {
 # 接続状態を1語で返す：device / unauthorized / offline / none / many
 device_state() {
     local lines n
-    lines="$("$ADB_BIN" devices | sed '1d' | awk 'NF >= 2 {print $2}')"
+    # 端末の行は「シリアル<TAB>状態」。デーモン起動の案内（標準エラー）や見出しの行は数えない
+    lines="$("$ADB_BIN" devices 2>/dev/null | awk -F '\t' 'NF >= 2 {split($2, w, " "); print w[1]}')"
     n="$(printf '%s\n' "$lines" | grep -c . || true)"
     if [ "$n" -eq 0 ]; then echo none
     elif [ "$n" -gt 1 ]; then echo many
@@ -115,21 +118,23 @@ cmd_install() {
 
 # $1 = 1 なら剣の測定モードで起動。-S で動いているアプリを止めてから起動する（起動オプションを確実に渡すため）
 start_app() {
-    local practice="$1" activity
-    activity="$("$ADB_BIN" shell cmd package resolve-activity --brief -c android.intent.category.LAUNCHER "$PACKAGE" 2>/dev/null | tr -d '\r' | tail -1)"
+    local practice="$1" activity out
+    activity="$("$ADB_BIN" shell cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.LAUNCHER "$PACKAGE" 2>/dev/null | tr -d '\r' | tail -1)"
     case "$activity" in
-        */*)
-            if [ "$practice" = 1 ]; then
-                "$ADB_BIN" shell am start -S -n "$activity" --ez "$PRACTICE_EXTRA" true >/dev/null || return 1
-            else
-                "$ADB_BIN" shell am start -S -n "$activity" >/dev/null || return 1
-            fi ;;
-        *)
-            [ "$practice" = 1 ] && { echo "起動する Activity が分からないため、測定モードの起動オプションを渡せません" >&2; return 1; }
-            "$ADB_BIN" shell am force-stop "$PACKAGE"
-            "$ADB_BIN" shell monkey -p "$PACKAGE" -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1 || return 1 ;;
+        "$PACKAGE"/*) ;;
+        *) echo "起動する Activity を端末から得られないため、既定の $DEFAULT_ACTIVITY を使います" >&2
+           activity="$DEFAULT_ACTIVITY" ;;
     esac
-    echo "起動: ${activity:-$PACKAGE}$([ "$practice" = 1 ] && echo "（剣の測定モード）")。ヘッドセットを装着して確認"
+    if [ "$practice" = 1 ]; then
+        out="$("$ADB_BIN" shell am start -S -n "$activity" --ez "$PRACTICE_EXTRA" true 2>&1 | tr -d '\r')"
+    else
+        out="$("$ADB_BIN" shell am start -S -n "$activity" 2>&1 | tr -d '\r')"
+    fi
+    # am start は失敗しても終了コード 0 のことがあるので、表示の Error で判定する
+    case "$out" in
+        *Error*|*error:*) echo "$out" >&2; return 1 ;;
+    esac
+    echo "起動: $activity$([ "$practice" = 1 ] && echo "（剣の測定モード）")"
 }
 
 cmd_run() {
@@ -149,6 +154,11 @@ cmd_run() {
     mkdir -p "$RAW_DIR" "$EVIDENCE_DIR"
     raw="$RAW_DIR/${stamp}_Q5_${label}_logcat_full.txt"
     filtered="$EVIDENCE_DIR/${stamp}_Q5_${label}_ログ.txt"
+
+    if [ -t 0 ]; then
+        echo "装着する人がヘッドセットをかぶり、立ち位置についたら Enter（ログの採取とアプリの起動を始める）"
+        read -r _
+    fi
 
     "$ADB_BIN" logcat -c
     "$ADB_BIN" logcat -v time Unity:V AndroidRuntime:E DEBUG:E libc:F '*:S' > "$raw" &
@@ -217,6 +227,7 @@ summarize() {
     echo "- 実行環境: $(first_line '実行環境:' "$f")"
     echo "- 敵の配置: $(first_line '敵を正面に配置' "$f")"
     echo "- 剣の調整値: $(first_line '剣の調整値' "$f")"
+    echo "- 起動オプション: $(first_line '[Q5] 起動オプション' "$f")"
     echo "- 剣の測定モード: $(first_line '[Q5] 剣の測定モード' "$f")（測定モードの命中 $(count '測定モードの命中' "$f") 回）"
     echo "- 剣の表示/非表示の切り替え: $(count '[Q0] 剣: ' "$f") 回（うち非表示 $(count '[Q0] 剣: 非表示' "$f")）"
     echo "- 剣（Q1）: 命中 $(count '[Q1] 命中 振り#' "$f")／振り $(count '終了 最大' "$f")／空振り $(count '結果=空振り' "$f")／ゆっくり接触 $(count '不命中：ゆっくり接触' "$f")／同じ振りで再接触 $(count '不命中：同じ振り' "$f")／触れ続け $(count '触れ続け（追加の命中なし）' "$f")"
