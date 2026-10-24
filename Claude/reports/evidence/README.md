@@ -135,3 +135,18 @@ iPhone AR 先行検証（S1〜S5）と Quest（Q0〜）の証拠を置く場所�
 | APK ビルド（メニュー5）：結果・エラー／警告・サイズ・画面の向きの復元（ファイル名） | 未実施 |
 | APK 静的検査：署名・arm64-v8a・OpenXR の権限・`com.oculus.feature.PASSTHROUGH` | 未実施 |
 | 気づいた問題 | 未実施 |
+
+## Q5 記録表（開発者が記入。実機の前の Unity 確認と、実機でのログ）
+
+手順は `Claude/docs/quest-device-test.md`。実機のログは `tools/quest/quest_device.sh run <ラベル>` が `YYYYMMDD-HHMMSS_Q5_<ラベル>_ログ.txt` としてここに保存する（生ログは `OrdinalScale/Builds/DeviceLogs/` に残り、GitHub に入れない）。合否は GPT の記録票に転記される。
+
+| 項目 | 記入欄 |
+| --- | --- |
+| 実施日時・実施者・コミット | 未実施 |
+| コンパイル・EditMode の件数と結果（`LaunchOptions.cs.meta` のコミット） | 未実施 |
+| Editor：Sword Practice オン／オフの確認（6章の2） | 未実施 |
+| メニュー4の NG 件数・APK ビルド（ファイル名）・APK の SHA-256 | 未実施 |
+| `check` の機種・OS の行 | 未実施 |
+| 段階 A／B／C／D のログファイル名 | 未実施 |
+| 段階 B で決めた剣の開始・終了の速さ（変えた場合は理由） | 未実施 |
+| 気づいた問題（5章の優先度つき） | 未実施 |
