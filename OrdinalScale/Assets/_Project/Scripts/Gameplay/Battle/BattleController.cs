@@ -16,6 +16,8 @@ namespace OrdinalScale.Gameplay.Battle
     ///   「VICTORY」／「DEFEAT」と「終了」「再挑戦」を出す。
     /// - 再挑戦：敵とプレイヤーの HP、剣の判定、敵の行動を初期化し、敵を正面に置き直す。終了：実機は Application.Quit、Editor はログ。
     /// 2択の操作は Editor の画面ボタン（Quest のコントローラでの選択は Q4）。数値はすべて仮の値で、受入時に固定して記録する。
+    /// - 剣の測定モード（Q5）：敵は動かず攻撃せず、命中しても HP を減らさない（決着しない）。剣のしきい値を実機で測るための補助で、
+    ///   受入（Q-1〜Q-6）には使わない。Quest は起動オプション、Editor は Inspector の Sword Practice で有効にする。
     /// </summary>
     [DefaultExecutionOrder(150)]
     public sealed class BattleController : MonoBehaviour
@@ -56,6 +58,10 @@ namespace OrdinalScale.Gameplay.Battle
         [Tooltip("画面右上に HP と状態、決着後に2択を出す（Editor 用。Quest のヘッドセット内には出ない）。")]
         [SerializeField] private bool showHud = true;
 
+        [Header("実機検証の補助（Q5）")]
+        [Tooltip("剣の測定モード：敵は動かず攻撃せず、命中しても HP を減らさない。Quest では起動オプション os_sword_practice でも有効になる。受入では使わない。")]
+        [SerializeField] private bool swordPractice;
+
         private BattleSession _session;
         private EnemyBrain _brain;
         private bool _brainReady;
@@ -69,6 +75,8 @@ namespace OrdinalScale.Gameplay.Battle
         private GUIStyle _titleStyle;
         private GUIStyle _buttonStyle;
         private BattleChoice? _pendingChoice;
+        private bool _practice;
+        private int _practiceHits;
 
         public BattleSession Session => _session;
 
@@ -102,6 +110,10 @@ namespace OrdinalScale.Gameplay.Battle
             _idleHash = Animator.StringToHash(idleState);
             Debug.Log($"[OrdinalScale][Q2] 戦闘開始：撃破に必要な有効命中 {_session.HitsToDefeat}・プレイヤーHP {_session.PlayerHealth.Max}（仮の値）", this);
             Debug.Log($"[OrdinalScale][Q3] 敵の行動（仮の値・Quest 実機で未確認）: {settings}", this);
+
+            _practice = swordPractice || LaunchOptions.GetBool(LaunchOptions.SwordPractice);
+            if (_practice)
+                Debug.Log($"[OrdinalScale][Q5] 剣の測定モード：敵は動かず攻撃せず、命中しても HP を減らさない（{(swordPractice ? "Inspector" : "起動オプション")}）。受入には使わない", this);
         }
 
         private EnemyBrainSettings CreateBrainSettings()
@@ -156,7 +168,7 @@ namespace OrdinalScale.Gameplay.Battle
 
         private void UpdateEnemy()
         {
-            if (!_brainReady || _session.State != BattleState.Fighting) return;
+            if (_practice || !_brainReady || _session.State != BattleState.Fighting) return;
             var enemy = placement != null ? placement.Enemy : null;
             if (enemy == null || !enemy.activeInHierarchy || rig == null || rig.Spatial == null) return;
 
@@ -215,6 +227,12 @@ namespace OrdinalScale.Gameplay.Battle
         private void OnStruck(StrikeEvent e)
         {
             if (e.Kind != StrikeEventKind.Hit) return;
+            if (_practice)
+            {
+                _practiceHits++;
+                Debug.Log($"[OrdinalScale][Q5] 測定モードの命中 {_practiceHits} 回目（振り#{e.SwingId}・HP は減らさない）", this);
+                return;
+            }
 
             var result = _session.RegisterValidHit();
             var hp = _session.EnemyHealth;
@@ -318,7 +336,7 @@ namespace OrdinalScale.Gameplay.Battle
             var hp = _session.EnemyHealth;
             var php = _session.PlayerHealth;
             GUILayout.BeginArea(new Rect(Screen.width - 330f, 10f, 320f, 150f), GUI.skin.box);
-            GUILayout.Label($"Q3 battle   round {_session.Round}", _hudStyle);
+            GUILayout.Label(_practice ? $"Q5 SWORD PRACTICE   hits {_practiceHits} (HP not reduced)" : $"Q3 battle   round {_session.Round}", _hudStyle);
             GUILayout.Label($"enemy HP {hp.Current}/{hp.Max}   valid hits {_session.ValidHits}", _hudStyle);
             GUILayout.Label($"player HP {php.Current}/{php.Max}   enemy hits {_session.EnemyAttackHits}" +
                             (Time.time < _playerHitFlashUntil ? "   << HIT!" : ""), _hudStyle);
