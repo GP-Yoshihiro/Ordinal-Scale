@@ -22,7 +22,10 @@ namespace OrdinalScale.Platform
                 using (var activity = player.GetStatic<AndroidJavaObject>("currentActivity"))
                 using (var intent = activity?.Call<AndroidJavaObject>("getIntent"))
                 {
-                    return intent != null && intent.Call<bool>("getBooleanExtra", key, false);
+                    var value = intent != null && intent.Call<bool>("getBooleanExtra", key, false);
+                    // 実機で起動オプションが渡ったかをログで確かめられるようにする（tools/quest/quest_device.sh の集計に出る）
+                    Debug.Log($"[OrdinalScale][Q5] 起動オプション {key}={(value ? "true" : "false")}（Intent {(intent != null ? "あり" : "なし")}）");
+                    return value;
                 }
             }
             catch (System.Exception e)
