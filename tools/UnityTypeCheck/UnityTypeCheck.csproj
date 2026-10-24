@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Unity Editor を起動できない環境（クラウド）で、Platform / Gameplay 層（UnityEngine 依存）の C# を
+    Unity の API に対して型検査するためのプロジェクト。実行・テストはしない（ビルドが通るかだけを見る）。
+
+    参照は NuGet の UnityEngine.Modules 2021.3.33（UnityEngine の各モジュールの参照用 DLL）。Unity 6 より古い版なので、
+    Unity 6 で増えた API を使うとここでは失敗し、Unity 6 で消えた API を使ってもここでは通る。最終確認は Unity Editor で行う。
+
+    対象外（Unity のパッケージや UnityEditor が必要なため）：
+      - Platform/ARFoundation（AR Foundation）、Editor/（UnityEditor）、Tests/
+      - #if OS_HAS_INPUT_SYSTEM などパッケージ導入時だけ有効になる部分（定義しないので読み飛ばされる）
+
+    使い方（プラットフォームごとに1回ずつ）：
+      dotnet build tools/UnityTypeCheck -p:UnityDefine=UNITY_ANDROID
+      dotnet build tools/UnityTypeCheck -p:UnityDefine=UNITY_IOS
+      dotnet build tools/UnityTypeCheck -p:UnityDefine=UNITY_EDITOR
+  -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- CS0649/CS0414：Inspector で設定する [SerializeField] の「代入されない／使われない」警告（Unity でも出さない扱い） -->
+    <NoWarn>$(NoWarn);CS0649;CS0414</NoWarn>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <UnityDefine Condition="'$(UnityDefine)' == ''">UNITY_ANDROID</UnityDefine>
+    <DefineConstants>$(UnityDefine)</DefineConstants>
+    <IntermediateOutputPath>obj/$(UnityDefine)/</IntermediateOutputPath>
+    <OutputPath>bin/$(UnityDefine)/</OutputPath>
+    <Scripts>../../OrdinalScale/Assets/_Project/Scripts</Scripts>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(Scripts)/Core/**/*.cs" />
+    <Compile Include="$(Scripts)/Platform/**/*.cs" Exclude="$(Scripts)/Platform/ARFoundation/**" />
+    <Compile Include="$(Scripts)/Gameplay/**/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="UnityEngine.Modules" Version="2021.3.33" />
+  </ItemGroup>
+
+</Project>

@@ -29,6 +29,8 @@ Claude/                   … Claude側の役割定義・設計書・PM向け報
 GPT/                      … PM（GPT）の領域（書き換え禁止）
 OrdinalScale/             … Unityプロジェクト
 tools/CoreTests/          … Unityなしで Core 層をビルド・テストする .NET プロジェクト
+tools/UnityTypeCheck/     … Unityなしで Platform / Gameplay 層を型検査する .NET プロジェクト
+tools/quest/              … Quest 実機の確認・導入・ログ採取のスクリプト（手順は Claude/docs/quest-device-test.md）
 ```
 
 ## レイヤー規約（詳細は architecture.md）
@@ -50,10 +52,11 @@ tools/CoreTests/          … Unityなしで Core 層をビルド・テストす
 ```bash
 dotnet test tools/CoreTests                                   # Core 層のユニットテスト
 dotnet format whitespace tools/CoreTests/CoreTests.csproj --verify-no-changes   # 整形チェック
+dotnet build tools/UnityTypeCheck -p:UnityDefine=UNITY_ANDROID   # Platform / Gameplay 層の型検査（UNITY_IOS・UNITY_EDITOR も）
 ```
 
 - Core のテストは Unity の Test Runner（EditMode）でも同じファイルが動く。
-- **クラウド環境では Unity Editor を起動できない。** Platform / Gameplay 層（UnityEngine依存）のコンパイルと動作は、開発者のローカルEditorでの確認が必要。報告では「Editorで確認済み」と「未確認」を必ず分けて書く。
+- **クラウド環境では Unity Editor を起動できない。** Platform / Gameplay 層（UnityEngine依存）は `tools/UnityTypeCheck`（Unity 2021.3 の参照 DLL）で型だけ検査できるが、Unity 6 でのコンパイルと動作は開発者のローカルEditorでの確認が必要。報告では「Editorで確認済み」と「未確認」を必ず分けて書く。
 - C# は Unity 6 に合わせて C# 9 まで（`LangVersion 9.0`）。
 
 ## Git

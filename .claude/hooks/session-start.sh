@@ -22,3 +22,4 @@ export DOTNET_NOLOGO=1
 } >> "${CLAUDE_ENV_FILE:-/dev/null}"
 
 dotnet restore "$CLAUDE_PROJECT_DIR/tools/CoreTests/CoreTests.csproj" --nologo -v q
+dotnet restore "$CLAUDE_PROJECT_DIR/tools/UnityTypeCheck/UnityTypeCheck.csproj" --nologo -v q -p:UnityDefine=UNITY_ANDROID || true
